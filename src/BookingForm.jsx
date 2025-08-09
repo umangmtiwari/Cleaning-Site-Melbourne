@@ -1,0 +1,214 @@
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Container, TextField, Button } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ShieldIcon from '@mui/icons-material/Shield';
+import StarIcon from '@mui/icons-material/Star';
+
+export default function BookingForm() {
+  const [formData, setFormData] = useState({ name: '', contact: '', email: '' });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // List of images for the slideshow
+  const images = [
+    '/home1.jpg', 
+    '/home2.jpg', 
+    '/home3.jpg', 
+    '/home4.jpg', 
+    '/home5.jpg'
+  ];
+
+  // Change the image every 5 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(intervalId); // Clean up on component unmount
+  }, [images.length]); // Include images.length as a dependency
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = () => {
+    const subject = encodeURIComponent("Service Booking Request");
+    const body = encodeURIComponent(`Name: ${formData.name}\nContact: ${formData.contact}\nEmail: ${formData.email}`);
+    window.location.href = `mailto:services@melbourneclean.com?subject=${subject}&body=${body}`;
+  };
+
+  return (
+    <>
+      {/* Booking Form Section with Slideshow */}
+      <Box
+        sx={{
+            fontFamily: 'DM Sans, sans-serif',
+          py: 20, // Increased padding to make the image taller
+          backgroundColor: '#f5f5f5',
+          textAlign: 'center',
+          backgroundImage: `url(${images[currentImageIndex]})`, // Dynamically changing image
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transition: 'background-image 1s ease', // Smooth transition between images
+          position: 'relative', // To position the overlay
+        }}
+      >
+        {/* Overlay for better text visibility */}
+        <Box
+          sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark overlay
+            zIndex: 1,
+          }}
+        />
+
+        <Typography 
+          variant="h4" 
+          gutterBottom 
+          sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            color: 'white', 
+            position: 'relative', 
+            zIndex: 2, // Ensure text is above the overlay
+          }}
+        >
+          Sparkling Clean Homes Start Here
+        </Typography>
+        
+        <Typography 
+          variant="subtitle1" 
+          sx={{
+            fontFamily: 'DM Sans, sans-serif',
+            color: 'white', 
+            position: 'relative', 
+            zIndex: 2, // Ensure text is above the overlay
+          }}
+        >
+          Book your professional home, bathroom, or kitchen cleaning service today with MelbourneClean.
+        </Typography>
+      </Box>
+
+      {/* Booking Form */}
+      <Container maxWidth="md" sx={{ my: 5 }}>
+        <Typography variant="h5" sx={{ textAlign: 'center', color: '#2E8B57' }} gutterBottom>Book a Service</Typography>
+        <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', flexDirection: 'row', gap: 2 }}>
+          <TextField
+            label="Name"
+            name="name"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            value={formData.name}
+            sx={{
+                fontFamily: 'DM Sans, sans-serif',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#2E8B57', // Green border for text fields
+                },
+                '&:hover fieldset': {
+                  borderColor: '#2E8B57', // Green on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2E8B57', // Green when focused
+                },
+              },
+            }}
+          />
+          <TextField
+            label="Contact No"
+            name="contact"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            value={formData.contact}
+            sx={{
+                fontFamily: 'DM Sans, sans-serif',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#2E8B57',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#2E8B57',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2E8B57',
+                },
+              },
+            }}
+          />
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            value={formData.email}
+            sx={{fontFamily: 'DM Sans, sans-serif',
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#2E8B57',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#2E8B57',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#2E8B57',
+                },
+              },
+            }}
+          />
+        </Box>
+
+<Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 2 }}>
+  <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
+    <ShieldIcon fontSize="small" />
+    200% Guarantee
+  </Typography>
+  <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
+    <CheckCircleIcon fontSize="small" />
+    Fully Insured
+  </Typography>
+  <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
+    <StarIcon fontSize="small" />
+    5 Star Rated Service
+  </Typography>
+</Box>
+
+
+
+<Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'center', mt: 3 }}>
+  <Button
+    variant="contained"
+    sx={{
+        fontFamily: 'DM Sans, sans-serif',
+      backgroundColor: '#2E8B57',  // Green button color
+      color: 'white',
+      borderRadius: '50px',  // Rounded corners for a modern look
+      fontSize: '1.1rem',  // Slightly larger text for better readability
+      fontWeight: 'bold',  // Bold text for more emphasis
+      padding: '12px 24px',  // More padding for a comfortable click area
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',  // Subtle shadow for depth
+      '&:hover': {
+        backgroundColor: '#248C48',  // Darker green on hover
+        boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',  // Shadow becomes stronger on hover
+        transform: 'translateY(-3px)',  // Slight lift effect when hovered
+      },
+      transition: 'all 0.3s ease',  // Smooth transition for all effects
+    }}
+    startIcon={<EmailIcon />}
+    onClick={handleSubmit}
+  >
+    Book Service
+  </Button>
+</Box>
+
+      </Container>
+    </>
+  );
+}
