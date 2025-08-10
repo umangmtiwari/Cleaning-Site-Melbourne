@@ -12,6 +12,7 @@ import Pricing from './Pricing'; // Your Pricing page component
 import AboutUs from './AboutUs'; // Example About Us page
 import ContactUs from './ContactUs'; // Example Contact Us page
 import Services from './Services'; // Example Services page
+import Chatbot from './Chatbot';
 
 export default function MelbourneClean() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -55,6 +56,7 @@ export default function MelbourneClean() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/services" element={<Services />} />
         </Routes>
+        <Chatbot />
 
         {/* Footer - always visible */}
         <Footer />
