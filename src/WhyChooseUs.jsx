@@ -154,11 +154,12 @@ export default function WhyChooseUs() {
     fontFamily: 'DM Sans, sans-serif',
     display: 'flex',
     flexDirection: { xs: 'column', md: 'row' },  // Stack on small screens, row on medium and up
-    bgcolor: '#2D7F3F',
+    bgcolor: '#0099CC',
     color: 'white',
     maxWidth: '1200px',
     margin: '0 auto',
     borderRadius: '8px',
+    marginBottom: 5,
     padding: 2,  // Add padding for smaller screens
   }}
 >
@@ -195,7 +196,14 @@ export default function WhyChooseUs() {
         fontSize: { xs: '0.9rem', sm: '1rem', md: '1.2rem' },  // Adjust font size
       }}
     >
-      We were born to clean. We’re just wired that way. There’s nothing we like better than getting stuck in to a dirty home and making it sparkle again.
+      At Clean Commerce, cleaning isn’t just a job,it’s what we were made to do. We take genuine pride in transforming messy homes into sparkling spaces, and we’re not afraid to roll up our sleeves to make it happen.
+
+      
+We’re a Melbourne based team with a passion for excellence and a drive to innovate. In fact, we were the first local cleaning company to introduce a high-tech online booking platform, making it easier than ever for our clients to schedule a clean with just a few clicks.
+That’s because we believe great service starts with convenience.
+
+Whether it’s a one-off deep clean or regular upkeep, we bring energy, care, and attention to detail to every home we visit. We love what we do—and it shows in the results.
+
     </Typography>
 
     <Typography
@@ -214,7 +222,7 @@ export default function WhyChooseUs() {
         <Button
           variant="contained"
           sx={{
-            background: 'linear-gradient(45deg, #6E9F4E, #2D7F3F)',
+            background: 'linear-gradient(45deg, #006699, #006699)',
             color: 'white',
             borderRadius: '30px',
             fontFamily: 'DM Sans, sans-serif',
@@ -222,7 +230,7 @@ export default function WhyChooseUs() {
             fontWeight: 'bold',
             fontSize: { xs: '0.9rem', sm: '1rem' },  // Adjust font size
             '&:hover': {
-              background: 'linear-gradient(45deg, #2D7F3F, #6E9F4E)',
+              background: 'linear-gradient(45deg, #006699, #006699)',
               transform: 'scale(1.05)',
               transition: 'transform 0.3s ease',
             },
@@ -237,7 +245,7 @@ export default function WhyChooseUs() {
         <Button
           variant="contained"
           sx={{
-            background: 'linear-gradient(45deg, #5CA456, #4B8F46)',
+            background: 'linear-gradient(45deg, #006699, #006699)',
             color: 'white',
             borderRadius: '30px',
             fontFamily: 'DM Sans, sans-serif',
@@ -245,7 +253,7 @@ export default function WhyChooseUs() {
             fontWeight: 'bold',
             fontSize: { xs: '0.9rem', sm: '1rem' },
             '&:hover': {
-              background: 'linear-gradient(45deg, #4B8F46, #5CA456)',
+              background: 'linear-gradient(45deg, #006699, #006699)',
               transform: 'scale(1.05)',
               transition: 'transform 0.3s ease',
             },

@@ -23,16 +23,16 @@ const BookNowButton = styled(Button)(() => ({
   fontWeight: 700,
   fontSize: '1rem',              // slightly smaller font
   textTransform: 'none',
-  background: 'linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%)',
+  background: 'linear-gradient(135deg, #006699 0%, #006699 100%)',
   color: 'white',
   borderRadius: '30px',          // smaller rounding
   padding: '10px 24px',          // reduced padding for smaller height & width
-  boxShadow: '0 3px 10px rgba(76, 175, 80, 0.4)',
+  boxShadow: '0 3px 10px rgba(0, 140, 255, 0.4)',
   transition: 'all 0.3s ease',
   letterSpacing: '0.03em',
   '&:hover': {
-    background: 'linear-gradient(135deg, #388E3C 0%, #4CAF50 100%)',
-    boxShadow: '0 5px 15px rgba(56, 142, 60, 0.6)',
+    background: 'linear-gradient(135deg, #006699 0%, #006699 100%)',
+    boxShadow: '0 5px 15px rgba(0, 123, 255, 0.6)',
     transform: 'scale(1.05)',
   },
   '&:active': {
@@ -55,9 +55,9 @@ const ResponsiveAppBar = () => {
     <AppBar 
       position="sticky" 
       sx={{ 
-        backgroundColor: '#1b4332', 
+        backgroundColor: '#0099CC', 
         borderBottom: '5px solid transparent',  
-        backgroundImage: `linear-gradient(to top, #1b4332, #1b4332), url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%2240%22 viewBox=%220 0 400 40%22%3E%3Cpath d=%22M0,0 Q50,15 100,0 T200,0 T300,0 T400,0 L400,40 L0,40 Z%22 fill=%22%2366BB6A%22/%3E%3C/svg%3E")`
+        backgroundImage: `linear-gradient(to top, #0099CC, #0099CC), url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%2240%22 viewBox=%220 0 400 40%22%3E%3Cpath d=%22M0,0 Q50,15 100,0 T200,0 T300,0 T400,0 L400,40 L0,40 Z%22 fill=%22%2366BB6A%22/%3E%3C/svg%3E")`
 
       }}
     >
@@ -168,11 +168,11 @@ const ResponsiveAppBar = () => {
             <BookNowButton sx={{
               ml: 2,
               '&:hover': {
-                backgroundColor: '#45a049',  // Darker green on hover
+                backgroundColor: '#006699',  // Darker green on hover
               },
               // Adjust color for small screens
               '@media (max-width:600px)': {
-                backgroundColor: '#45a049',  // Darker green for small screen
+                backgroundColor: '#006699',  // Darker green for small screen
                 color: 'black',
               }
             }}>Book Now</BookNowButton>

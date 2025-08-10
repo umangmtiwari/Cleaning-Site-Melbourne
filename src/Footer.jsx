@@ -9,14 +9,14 @@ import {
   Stack,
   Link,
 } from '@mui/material';
-import { Instagram, Email, Phone, Star } from '@mui/icons-material';
+import { Facebook, Instagram, Email, Phone, Star } from '@mui/icons-material';
 
 export default function Footer() {
   return (
             <Box
       component="footer"
       sx={{
-        backgroundColor: '#1b4332',
+        backgroundColor: '#0099CC',
         color: '#fff',
         py: 6,
         fontFamily: 'DM Sans, sans-serif',
@@ -59,6 +59,10 @@ export default function Footer() {
                 <Link href="https://www.instagram.com" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Instagram /></IconButton>
                 </Link>
+                <Link href="https://www.facebook.com" target="_blank" rel="noopener" color="inherit">
+                  <IconButton color="inherit"><Facebook /></IconButton>
+                </Link>
+                
                 <Link href="mailto:contact@CleanCommerce.com" color="inherit">
                   <IconButton color="inherit"><Email /></IconButton>
                 </Link>
@@ -80,7 +84,7 @@ export default function Footer() {
                 variant="contained"
                 href="/"
                 sx={{
-                  backgroundColor: '#2D6A4F',
+                  backgroundColor: '#006699',
                   borderRadius: 30,
                   px: 4,
                   py: 1.5,
@@ -88,7 +92,7 @@ export default function Footer() {
                   textTransform: 'none',
                   transition: 'transform 0.3s ease-in-out',
                   '&:hover': {
-                    backgroundColor: '#40916C',
+                    backgroundColor: '#006699',
                     transform: 'scale(1.05)',
                   },
                 }}

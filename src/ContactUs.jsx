@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { IconButton, Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import { Email as EmailIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { Instagram, Email, Phone, Star } from '@mui/icons-material';
+import { Facebook, Instagram, Email, Phone, Star } from '@mui/icons-material';
 
 const ContactUs = () => {
+  // Initializing state with empty default values for the fields
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
-    propertyType: '',
+    propertyType: '',  // Empty string as default
     services: [],
-    frequency: '',
-    propertySize: '',
+    serviceType: '',  // Empty string as default
+    serviceNeed: '',  // Empty string as default
     additionalInfo: '',
   });
 
+  // Handle change for all form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -25,6 +27,7 @@ const ContactUs = () => {
     });
   };
 
+  // Handle checkbox changes (for services)
   const handleCheckboxChange = (e) => {
     const { value } = e.target;
     setFormData({
@@ -35,10 +38,20 @@ const ContactUs = () => {
     });
   };
 
+  // Handle form submission (build the mailto link)
   const handleSubmit = () => {
     const subject = encodeURIComponent("Service Booking Request");
-    const body = encodeURIComponent(`Name: ${formData.firstName} ${formData.lastName}\nContact: ${formData.phone}\nEmail: ${formData.email}\nProperty Type: ${formData.propertyType}\nServices: ${formData.services.join(', ')}\nFrequency: ${formData.frequency}\nProperty Size: ${formData.propertySize}\nAdditional Info: ${formData.additionalInfo}`);
-    window.location.href = `mailto:services@CleanCommerce.com?subject=${subject}&body=${body}`;
+    const body = encodeURIComponent(`
+      Name: ${formData.firstName} ${formData.lastName}
+      Contact: ${formData.phone}
+      Email: ${formData.email}
+      Property Type: ${formData.propertyType}
+      Services: ${formData.services.join(', ')}
+      Frequency: ${formData.serviceNeed}
+      Additional Info: ${formData.additionalInfo}
+    `);
+
+    window.location.href = `mailto:services@cleancommerce.com.au?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -106,106 +119,149 @@ const ContactUs = () => {
       <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'space-between', gap: 2 }}>
         {/* Left Side: Contact Info */}
         <Box sx={{ flex: 1 }}>
-  <Typography variant="h6" sx={{ color: '#2E8B57', fontWeight: 'bold', marginBottom: 2 }}>Contact Info</Typography>
+  <Typography variant="h6" sx={{ color: '#006699', fontWeight: 'bold', marginBottom: 2 }}>Contact Info</Typography>
   
-  <TextField
-    label="First Name"
-    name="firstName"
-    variant="outlined"
-    fullWidth
-    onChange={handleChange}
-    value={formData.firstName}
-    sx={{
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&:hover fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#2E8B57',
-        },
+<TextField
+  required
+  label="First Name"
+  name="firstName"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.firstName}
+  sx={{
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#006699',
       },
-      marginBottom: 2, // Add space below each input field
-    }}
-  />
-  
-  <TextField
-    label="Last Name"
-    name="lastName"
-    variant="outlined"
-    fullWidth
-    onChange={handleChange}
-    value={formData.lastName}
-    sx={{
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&:hover fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#2E8B57',
-        },
+      '&:hover fieldset': {
+        borderColor: '#006699',
       },
-      marginBottom: 2, // Add space below each input field
-    }}
-  />
-  
-  <TextField
-    label="Phone"
-    name="phone"
-    variant="outlined"
-    fullWidth
-    onChange={handleChange}
-    value={formData.phone}
-    sx={{
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&:hover fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#2E8B57',
-        },
+      '&.Mui-focused fieldset': {
+        borderColor: '#006699',
       },
-      marginBottom: 2, // Add space below each input field
-    }}
-  />
-  
-  <TextField
-    label="Email"
-    name="email"
-    type="email"
-    variant="outlined"
-    fullWidth
-    onChange={handleChange}
-    value={formData.email}
-    sx={{
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&:hover fieldset': {
-          borderColor: '#2E8B57',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#2E8B57',
-        },
+    },
+    marginBottom: 2, // Add space below each input field
+  }}
+/>
+
+<TextField
+  required
+  label="Last Name"
+  name="lastName"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.lastName}
+  sx={{
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#006699',
       },
-      marginBottom: 2, // Add space below each input field
-    }}
-  />
-  
+      '&:hover fieldset': {
+        borderColor: '#006699',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#006699',
+      },
+    },
+    marginBottom: 2, // Add space below each input field
+  }}
+/>
+
+<TextField
+  required
+  label="Phone"
+  name="phone"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.phone}
+  sx={{
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#006699',
+      },
+      '&:hover fieldset': {
+        borderColor: '#006699',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#006699',
+      },
+    },
+    marginBottom: 2, // Add space below each input field
+  }}
+/>
+
+<TextField
+  required
+  label="Email"
+  name="email"
+  type="email"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.email}
+  sx={{
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#006699',
+      },
+      '&:hover fieldset': {
+        borderColor: '#006699',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#006699',
+      },
+    },
+    marginBottom: 2, // Add space below each input field
+  }}
+/>
+
+{/* Property Type */}
+          <FormControl fullWidth sx={{ marginBottom: 2 }} error={formData.propertyType === ''}>
+            <InputLabel required>Property Type</InputLabel>
+            <Select
+              label="Property Type"
+              name="propertyType"
+              value={formData.propertyType}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value="House">House</MenuItem>
+              <MenuItem value="Apartment">Apartment</MenuItem>
+              <MenuItem value="Office">Office</MenuItem>
+              <MenuItem value="Unit">Unit</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* Type of Service */}
+          <FormControl fullWidth sx={{ marginBottom: 2 }} error={formData.serviceType === ''}>
+            <InputLabel required>Type of Service</InputLabel>
+            <Select
+              label="Type of Service"
+              name="serviceType"
+              value={formData.serviceType}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value="FlatRate">Flat Rate</MenuItem>
+              <MenuItem value="SpringClean">Spring Clean</MenuItem>
+              <MenuItem value="EndOfLease">End of Lease</MenuItem>
+            </Select>
+          </FormControl>
+
+
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
               <Link href="https://www.instagram.com" target="_blank" sx={{ color: 'white', ml: 2 }}>
                 <IconButton>
                   <Instagram />
                 </IconButton>
+              </Link>
+              <Link href="https://www.instagram.com" target="_blank" sx={{ color: 'white', ml: 2 }}>
+              <IconButton>
+                <Facebook/>
+              </IconButton>
               </Link>
               <Link href="mailto:contact@CleanCommerce.com" sx={{ color: 'white', ml: 2 }}>
                 <IconButton>
@@ -221,31 +277,12 @@ const ContactUs = () => {
 </Box>
 
         {/* Right Side: Service & Property Info */}
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h6" sx={{ color: '#2E8B57', fontWeight: 'bold' }} marginBottom={2}>Service Info</Typography>
-          <FormControl fullWidth>
-            <InputLabel>Property Type</InputLabel>
-            <Select
-              label="Property Type"
-              name="propertyType"
-              value={formData.propertyType}
-              onChange={handleChange}
-              sx={{ marginBottom: 2 }}
-            >
-              <MenuItem value="House">House</MenuItem>
-              <MenuItem value="Apartment">Apartment</MenuItem>
-              <MenuItem value="Office">Office</MenuItem>
-            </Select>
-          </FormControl>
-
+        <Box sx={{ flex: 1, marginTop: 5 }}>
+          
           <FormGroup>
             <FormControlLabel
               control={<Checkbox checked={formData.services.includes('General Cleaning')} onChange={handleCheckboxChange} value="General Cleaning" />}
               label="General Cleaning"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={formData.services.includes('Window Cleaning')} onChange={handleCheckboxChange} value="Window Cleaning" />}
-              label="Window Cleaning"
             />
             <FormControlLabel
               control={<Checkbox checked={formData.services.includes('Vacate Cleaning')} onChange={handleCheckboxChange} value="Vacate Cleaning" />}
@@ -259,21 +296,81 @@ const ContactUs = () => {
               control={<Checkbox checked={formData.services.includes('Carpet Cleaning')} onChange={handleCheckboxChange} value="Carpet Cleaning" />}
               label="Carpet Cleaning"
             />
-            <FormControlLabel
-              control={<Checkbox checked={formData.services.includes('Construction Cleaning')} onChange={handleCheckboxChange} value="Construction Cleaning" />}
-              label="Construction Cleaning"
-            />
           </FormGroup>
+          
+{/* Service Frequency */}
+          <FormControl fullWidth sx={{ marginBottom: 2 }} error={formData.serviceNeed === ''}>
+            <InputLabel required>How often do you need this service?</InputLabel>
+            <Select
+              label="Service Need"
+              name="serviceNeed"
+              value={formData.serviceNeed}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value="OnceOff">Once-Off</MenuItem>
+              <MenuItem value="Weekly">Weekly</MenuItem>
+              <MenuItem value="Fortnightly">Fortnightly</MenuItem>
+              <MenuItem value="Monthly">Monthly</MenuItem>
+              <MenuItem value="Quarterly">Quarterly</MenuItem>
+              <MenuItem value="BiAnnually">Bi-Annually</MenuItem>
+            </Select>
+          </FormControl>
+          
+          <Typography variant="subtitle1" gutterBottom>
+  Property Size
+</Typography>
 
-          <TextField
-            label="Property Size"
-            name="propertySize"
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            value={formData.propertySize}
-            sx={{ marginBottom: 2 }}
-          />
+<Box display="flex" gap={2} flexWrap="wrap" marginBottom={2}>
+  {/* Bedroom */}
+  <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bedroom === ''}>
+    <InputLabel required>Bedroom</InputLabel>
+    <Select
+      name="bedroom"
+      value={formData.bedroom}
+      label="Bedroom"
+      onChange={handleChange}
+      required
+    >
+      {Array.from({ length: 6 }, (_, i) => (
+        <MenuItem key={i} value={i}>{i}</MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+
+  {/* Bathroom */}
+  <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bathroom === ''}>
+    <InputLabel required>Bathroom</InputLabel>
+    <Select
+      name="bathroom"
+      value={formData.bathroom}
+      label="Bathroom"
+      onChange={handleChange}
+      required
+    >
+      {Array.from({ length: 6 }, (_, i) => (
+        <MenuItem key={i} value={i}>{i}</MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+
+  {/* Kitchen */}
+  <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.kitchen === ''}>
+    <InputLabel required>Kitchen</InputLabel>
+    <Select
+      name="kitchen"
+      value={formData.kitchen}
+      label="Kitchen"
+      onChange={handleChange}
+      required
+    >
+      {Array.from({ length: 6 }, (_, i) => (
+        <MenuItem key={i} value={i}>{i}</MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</Box>
+
 
           <TextField
             label="Additional Info"
@@ -290,7 +387,7 @@ const ContactUs = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: '#2E8B57',
+              backgroundColor: '#006699',
               color: 'white',
               borderRadius: '50px',
               fontSize: '1.1rem',
@@ -298,7 +395,7 @@ const ContactUs = () => {
               padding: '12px 24px',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               '&:hover': {
-                backgroundColor: '#248C48',
+                backgroundColor: '#006699',
                 boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',
                 transform: 'translateY(-3px)',
               },

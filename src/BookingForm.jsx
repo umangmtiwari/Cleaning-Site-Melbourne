@@ -95,7 +95,7 @@ export default function BookingForm() {
 
       {/* Booking Form */}
       <Container maxWidth="md" sx={{ my: 5 }}>
-        <Typography variant="h5" sx={{ textAlign: 'center', color: '#2E8B57' }} gutterBottom>Book a Service</Typography>
+        <Typography variant="h5" sx={{ textAlign: 'center', color: '#006699' }} gutterBottom>Get a Quote</Typography>
         <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', flexDirection: 'row', gap: 2 }}>
           <TextField
             label="Name"
@@ -108,13 +108,13 @@ export default function BookingForm() {
                 fontFamily: 'DM Sans, sans-serif',
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#2E8B57', // Green border for text fields
+                  borderColor: '#006699', // Green border for text fields
                 },
                 '&:hover fieldset': {
-                  borderColor: '#2E8B57', // Green on hover
+                  borderColor: '#006699', // Green on hover
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#2E8B57', // Green when focused
+                  borderColor: '#006699', // Green when focused
                 },
               },
             }}
@@ -130,13 +130,13 @@ export default function BookingForm() {
                 fontFamily: 'DM Sans, sans-serif',
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#2E8B57',
+                  borderColor: '#006699',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#2E8B57',
+                  borderColor: '#006699',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#2E8B57',
+                  borderColor: '#006699',
                 },
               },
             }}
@@ -152,13 +152,13 @@ export default function BookingForm() {
             sx={{fontFamily: 'DM Sans, sans-serif',
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#2E8B57',
+                  borderColor: '#006699',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#2E8B57',
+                  borderColor: '#006699',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#2E8B57',
+                  borderColor: '#006699',
                 },
               },
             }}
@@ -166,15 +166,15 @@ export default function BookingForm() {
         </Box>
 
 <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 2 }}>
-  <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
+  <Typography variant="body2" sx={{ color: '#006699', display: 'flex', alignItems: 'center' }}>
     <ShieldIcon fontSize="small" />
     200% Guarantee
   </Typography>
-  <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
+  <Typography variant="body2" sx={{ color: '#006699', display: 'flex', alignItems: 'center' }}>
     <CheckCircleIcon fontSize="small" />
     Fully Insured
   </Typography>
-  <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
+  <Typography variant="body2" sx={{ color: '#006699', display: 'flex', alignItems: 'center' }}>
     <StarIcon fontSize="small" />
     5 Star Rated Service
   </Typography>
@@ -187,7 +187,7 @@ export default function BookingForm() {
     variant="contained"
     sx={{
         fontFamily: 'DM Sans, sans-serif',
-      backgroundColor: '#2E8B57',  // Green button color
+      backgroundColor: '#006699',  // Green button color
       color: 'white',
       borderRadius: '50px',  // Rounded corners for a modern look
       fontSize: '1.1rem',  // Slightly larger text for better readability
@@ -195,7 +195,7 @@ export default function BookingForm() {
       padding: '12px 24px',  // More padding for a comfortable click area
       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',  // Subtle shadow for depth
       '&:hover': {
-        backgroundColor: '#248C48',  // Darker green on hover
+        backgroundColor: '#006699',  // Darker green on hover
         boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',  // Shadow becomes stronger on hover
         transform: 'translateY(-3px)',  // Slight lift effect when hovered
       },
@@ -204,7 +204,7 @@ export default function BookingForm() {
     startIcon={<EmailIcon />}
     onClick={handleSubmit}
   >
-    Book Service
+    Get a Quote
   </Button>
 </Box>
 

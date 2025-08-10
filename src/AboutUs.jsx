@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // Custom styled components
 const HeroSection = styled(Box)(({ theme }) => ({
-  background: 'linear-gradient(to right, #4CAF50, #2E8B57)',
+  background: 'linear-gradient(to right, #006699, #006699)',
   color: 'white',
   padding: theme.spacing(6, 0),
   textAlign: 'center',
@@ -55,7 +55,7 @@ const AboutUs = () => {
       variant="contained"
       size="large"
       sx={{
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#006699',
         color: 'white',
         fontSize: '1.1rem',
         padding: '12px 30px',
@@ -64,7 +64,7 @@ const AboutUs = () => {
         fontWeight: 'bold',
         textTransform: 'none',
         '&:hover': {
-          backgroundColor: '#45a049',
+          backgroundColor: '#006699',
           boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
           transform: 'scale(1.05)',
           transition: 'transform 0.3s ease, background-color 0.3s ease',
@@ -139,7 +139,7 @@ const AboutUs = () => {
         variant="contained"
         size="large"
         sx={{
-          backgroundColor: '#4CAF50',
+          backgroundColor: '#006699',
           color: 'white',
           fontSize: '1.1rem',
           padding: '12px 30px',
@@ -148,7 +148,7 @@ const AboutUs = () => {
           fontWeight: 'bold',
           textTransform: 'none',
           '&:hover': {
-            backgroundColor: '#45a049',
+            backgroundColor: '#006699',
             boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
             transform: 'scale(1.05)',
             transition: 'transform 0.3s ease, background-color 0.3s ease',

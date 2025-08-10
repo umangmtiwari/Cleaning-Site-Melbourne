@@ -60,13 +60,13 @@ const Pricing = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: '#2E8B57',
+            backgroundColor: '#006699',
             color: 'white',
             fontSize: '1.1rem',
             padding: '12px 30px',
             borderRadius: '30px',
             '&:hover': {
-              backgroundColor: '#248c48',
+              backgroundColor: '#006699',
             },
           }}
           href="#cleaning-rates" // Link to the CleaningRates section
@@ -97,13 +97,13 @@ const Pricing = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: '#4CAF50',
+            backgroundColor: '#006699',
             color: 'white',
             fontSize: '1.1rem',
             padding: '12px 30px',
             borderRadius: '30px',
             '&:hover': {
-              backgroundColor: '#45a049',
+              backgroundColor: '#006699',
             },
           }}
           href="/"
@@ -121,7 +121,7 @@ const Pricing = () => {
       </div>
 
       {/* Email Subscription Section */}
-      <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 5, backgroundColor: '#2E8B57', color: 'white', padding: '30px 20px', borderRadius: '10px' }}>
+      <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 5, backgroundColor: '#0099CC', color: 'white', padding: '30px 20px', borderRadius: '10px' }}>
         <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 900, textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
  }}>
           Any particular requirement, Please let us know!
@@ -141,7 +141,7 @@ const Pricing = () => {
                 borderRadius: '30px',
                 '&:hover': {
                   backgroundColor: 'white',
-                  color: '#2E8B57',
+                  color: '#006699',
                 },
               }}
               startIcon={<EmailIcon />}

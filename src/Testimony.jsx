@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Card, CardContent, Typography, Avatar, Box, Rating, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'; // Import arrow icons
 
@@ -8,43 +8,43 @@ const testimonialsData = [
     name: 'Emma', 
     rating: 5, 
     review: "Clean Commerce transformed my home! So professional and efficient. Highly recommend.", 
-    profilePic: 'https://randomuser.me/api/portraits/women/1.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Emma&background=random'
   },
   { 
     name: 'Raj', 
     rating: 4, 
     review: "The service was great, with fantastic attention to detail. Very happy with the results.", 
-    profilePic: 'https://randomuser.me/api/portraits/men/2.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Raj&background=random'
   },
   { 
     name: 'Sophie', 
     rating: 5, 
     review: "Absolutely amazing! My house looks spotless. The team was friendly and fast!", 
-    profilePic: 'https://randomuser.me/api/portraits/women/3.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Sophie&background=random'
   },
   { 
     name: 'Liam', 
     rating: 4, 
     review: "Great service, but I think they could improve the scheduling process a bit. Still a great experience!", 
-    profilePic: 'https://randomuser.me/api/portraits/men/4.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Liam&background=random'
   },
   { 
     name: 'Olivia', 
     rating: 5, 
     review: "Best cleaning service ever! On time, professional, and my house looks incredible.", 
-    profilePic: 'https://randomuser.me/api/portraits/women/5.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Olivia&background=random'
   },
   { 
     name: 'Noah', 
     rating: 4, 
     review: "Very good service! A few minor things to improve, but overall, it was an excellent experience.", 
-    profilePic: 'https://randomuser.me/api/portraits/men/6.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Noah&background=random'
   },
   { 
     name: 'Ava', 
     rating: 5, 
     review: "Totally impressed with the results. This is a game-changer for home cleaning. Highly recommend.", 
-    profilePic: 'https://randomuser.me/api/portraits/women/7.jpg' // Example profile pic URL
+    profilePic: 'https://ui-avatars.com/api/?name=Ava&background=random'
   },
 ];
 
@@ -68,14 +68,22 @@ function Testimony() {
   // Calculate the start and end index for the three testimonials to display
   const startIndex = Math.max(0, currentTestimonial - 1);
   const endIndex = Math.min(testimonialsData.length - 1, currentTestimonial + 1);
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentTestimonial((prevIndex) =>
+      prevIndex < testimonialsData.length - 1 ? prevIndex + 1 : 0
+    );
+  }, 1500); // Change testimonial every 2 seconds
 
+  return () => clearInterval(interval); // Clean up the interval on unmount
+}, []);
   const getClassName = (index) => {
     return index === currentTestimonial ? 'center' : 'other';
   };
 
   return (
 <Container maxWidth="md" sx={{ my: 4 }}>
-  <Typography variant="h5" textAlign="center" color="#2E8B57" gutterBottom paddingBottom={3}>
+  <Typography variant="h5" textAlign="center" color="#0099CC" gutterBottom paddingBottom={3}>
     Customer Testimonials
   </Typography>
 
@@ -88,7 +96,7 @@ function Testimony() {
         position: 'absolute',
         left: { xs: '10px', md: '-50px' }, // For mobile, move button closer, for large screens, keep it away from cards
         zIndex: 1,
-        color: '#2E8B57',
+        color: '#006699',
         display: { xs: 'block', md: 'block' }, // Show on all screens
         opacity: { xs: 1, sm: 0.8, md: 1 }, // Slightly transparent on smaller screens for better viewability
       }}
@@ -120,9 +128,9 @@ function Testimony() {
               boxShadow: 4,
             },
             ...(getClassName(startIndex + index) === 'center' && {
-              border: '2px solid #2E8B57', // Highlight the middle card with color
+              border: '2px solid #006699', // Highlight the middle card with color
               transform: 'scale(1.1)', // Make the middle testimonial slightly larger
-              boxShadow: '0px 4px 20px rgba(0, 123, 73, 0.3)', // Add a soft shadow for emphasis
+              boxShadow: '0px 4px 20px rgba(1, 158, 255, 0.3)', // Add a soft shadow for emphasis
             }),
           }}
         >
@@ -130,7 +138,7 @@ function Testimony() {
             <Box display="flex" alignItems="center" mb={1}>
               {/* Profile Picture */}
               <Avatar sx={{ width: 50, height: 50 }} src={testimonial.profilePic} />
-              <Typography variant="subtitle2" color="#2E8B57" sx={{ ml: 2 }}>
+              <Typography variant="subtitle2" color="#006699" sx={{ ml: 2 }}>
                 - {testimonial.name}
               </Typography>
             </Box>
@@ -148,7 +156,7 @@ function Testimony() {
               "{testimonial.review}"
             </Typography>
             <Box mt={1}>
-              <Rating value={testimonial.rating} readOnly sx={{ color: '#2E8B57' }} />
+              <Rating value={testimonial.rating} readOnly sx={{ color: '#FFD700' }} />
             </Box>
           </CardContent>
         </Card>
@@ -162,7 +170,7 @@ function Testimony() {
         position: 'absolute',
         right: { xs: '10px', md: '-50px' }, // Same as left button for mobile positioning
         zIndex: 1,
-        color: '#2E8B57',
+        color: '#0099CC',
         display: { xs: 'block', md: 'block' }, // Show on all screens
         opacity: { xs: 1, sm: 0.8, md: 1 }, // Slightly transparent on smaller screens for better viewability
       }}

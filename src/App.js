@@ -19,12 +19,18 @@ export default function MelbourneClean() {
 
   // Open the popup after 1.5 seconds when the page loads
   useEffect(() => {
+  const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
+
+  if (!hasSeenPopup) {
     const timer = setTimeout(() => {
-      setPopupOpen(true); // Opens the popup
+      setPopupOpen(true);
+      sessionStorage.setItem('hasSeenPopup', 'true');
     }, 1500); // 1.5 seconds delay
 
-    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
-  }, []);
+    return () => clearTimeout(timer);
+  }
+}, []);
+
 
   // Close the popup
   const closePopup = () => setPopupOpen(false);
@@ -44,9 +50,8 @@ export default function MelbourneClean() {
             <div>
               {/* Only render this content on the homepage */}
               <BookingForm />
-              <WhyChooseUs />
-              <CleaningRates />
               <Testimony />
+              <WhyChooseUs />
             </div>
           } />
 

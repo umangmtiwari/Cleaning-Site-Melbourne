@@ -58,14 +58,14 @@ const Popup = ({ open, onClose }) => {
         </Typography>
 
         <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: '24px', fontSize: '1.75rem' }}>
-          WOULD YOU LIKE <span style={{ color: '#4CAF50' }}>$40 OFF</span> YOUR FIRST SERVICE
+          WOULD YOU LIKE <span style={{ color: '#006699' }}>$40 OFF</span> YOUR FIRST SERVICE
         </Typography>
 
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
           <Button
             variant="contained"
             sx={{
-              backgroundColor: '#4CAF50', // Green background as per the design
+              backgroundColor: '#006699', // Green background as per the design
               color: 'white',
               padding: '12px 24px', // Adjust padding for a cleaner look
               textTransform: 'none',
@@ -73,7 +73,7 @@ const Popup = ({ open, onClose }) => {
               fontSize: '1.1rem',
               fontWeight: 'bold',
               '&:hover': {
-                backgroundColor: '#45a049', // Darker green on hover
+                backgroundColor: '#006699', // Darker green on hover
               },
             }}
             href="/contact-us"

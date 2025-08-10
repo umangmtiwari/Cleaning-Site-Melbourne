@@ -89,7 +89,7 @@ const Chatbot = () => {
           zIndex: 9999,
         }}
       >
-        <DialogTitle sx={{ backgroundColor: '#2E8B57', color: 'white', fontWeight: 'bold', position: 'relative' }}>
+        <DialogTitle sx={{ backgroundColor: '#006699', color: 'white', fontWeight: 'bold', position: 'relative' }}>
           Clean Commerce Chatbot
           <IconButton
             onClick={handleClose}
@@ -114,7 +114,7 @@ const Chatbot = () => {
                     display: 'inline-block',
                     padding: '8px 15px',
                     borderRadius: '20px',
-                    backgroundColor: msg.sender === 'bot' ? '#e5e5e5' : '#2E8B57',
+                    backgroundColor: msg.sender === 'bot' ? '#e5e5e5' : '#006699',
                     color: msg.sender === 'bot' ? '#333' : '#fff',
                     maxWidth: '70%',
                     wordBreak: 'break-word',
@@ -175,10 +175,10 @@ const Chatbot = () => {
                   right: '10px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  backgroundColor: '#2E8B57',
+                  backgroundColor: '#006699',
                   color: 'white',
                   '&:hover': {
-                    backgroundColor: '#1a6b40',
+                    backgroundColor: '#006699',
                   },
                 }}
               >
