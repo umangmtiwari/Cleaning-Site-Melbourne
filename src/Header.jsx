@@ -53,11 +53,8 @@ const ResponsiveAppBar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
-              <img src="cleaner.png" alt="Logo" style={{ height: 40 }} />
+              <img src="cleanlogo.png" alt="Logo" style={{ height: 60, width:150 }} />
             </IconButton>
-            <Typography variant="h6" sx={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1.5rem', color: 'white' }}>
-              Melbourne Clean
-            </Typography>
           </Link>
         </Box>
 
@@ -69,8 +66,8 @@ const ResponsiveAppBar = () => {
         </Box>
 
         {/* Menu links (visible on larger screens) */}
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Link to="/services" onClick={closeMobileMenu}>
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, ml: 28 }}>
+          <Link to="/" onClick={closeMobileMenu}>
             <StyledButton sx={{
               ml: 2,
               color: 'white',  // Default for larger screens
@@ -84,7 +81,7 @@ const ResponsiveAppBar = () => {
                 color: 'black',
                 borderColor: 'black',
               }
-            }}>Services</StyledButton>
+            }}>Home</StyledButton>
           </Link>
           <Link to="/pricing" onClick={closeMobileMenu}>
             <StyledButton sx={{
@@ -100,7 +97,23 @@ const ResponsiveAppBar = () => {
                 color: 'black',
                 borderColor: 'black',
               }
-            }}>Pricing</StyledButton>
+            }}>Services & Pricing</StyledButton>
+          </Link>
+          <Link to="/services" onClick={closeMobileMenu}>
+            <StyledButton sx={{
+              ml: 2,
+              color: 'white',  // Default for larger screens
+              borderColor: 'white',  // Default for larger screens
+              '&:hover': {
+                color: 'white',
+                borderColor: 'white'
+              },
+              // For smaller screens (under 600px) set black color and border
+              '@media (max-width:600px)': {
+                color: 'black',
+                borderColor: 'black',
+              }
+            }}>Why Choose Us</StyledButton>
           </Link>
           <Link to="/about-us" onClick={closeMobileMenu}>
             <StyledButton sx={{

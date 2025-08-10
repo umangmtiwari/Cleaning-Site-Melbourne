@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Container} from '@mui/material';
-import { Shield as ShieldIcon, CheckCircle as CheckCircleIcon, Star as StarIcon, Email as EmailIcon } from '@mui/icons-material';
+import { IconButton, Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { Email as EmailIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { Instagram, Email, Phone, Star } from '@mui/icons-material';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
     email: '',
-    message: '',
+    propertyType: '',
+    services: [],
+    frequency: '',
+    propertySize: '',
+    additionalInfo: '',
   });
 
   const handleChange = (e) => {
@@ -17,160 +25,290 @@ const ContactUs = () => {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      services: formData.services.includes(value)
+        ? formData.services.filter(service => service !== value)
+        : [...formData.services, value],
+    });
+  };
+
   const handleSubmit = () => {
     const subject = encodeURIComponent("Service Booking Request");
-    const body = encodeURIComponent(`Name: ${formData.name}\nContact: ${formData.contact}\nEmail: ${formData.email}`);
+    const body = encodeURIComponent(`Name: ${formData.firstName} ${formData.lastName}\nContact: ${formData.phone}\nEmail: ${formData.email}\nProperty Type: ${formData.propertyType}\nServices: ${formData.services.join(', ')}\nFrequency: ${formData.frequency}\nProperty Size: ${formData.propertySize}\nAdditional Info: ${formData.additionalInfo}`);
     window.location.href = `mailto:services@melbourneclean.com?subject=${subject}&body=${body}`;
   };
 
   return (
     <Container sx={{ mt: 5, mb: 5 }}>
+          <Box
+      sx={{
+        mt: 5,
+        mb: 5,
+        backgroundImage: 'url(/clean3.jpg)', // Background image from the public folder
+        backgroundSize: 'cover', // Ensures the image covers the container
+        backgroundPosition: 'center', // Centers the background image
+        height: '60vh', // Adjust this to control the height of the container
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '10px', // Optional: rounded corners for a softer look
+        position: 'relative', // Ensures overlay can be positioned over the content
+        textAlign: 'center', // Center the text
+        color: 'white', // White color for the text to stand out
+      }}
+    >
+      {/* Overlay for background image */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay to improve text visibility
+          borderRadius: '10px', // Optional: keeps rounded corners for overlay
+        }}
+      />
+      
       {/* Heading */}
-      <Typography variant="h4" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#2E8B57' }}>
-        Contact Us
+      <Typography 
+        variant="h4" 
+        gutterBottom 
+        sx={{ 
+          fontWeight: 'bold', 
+          color: 'white',  // White color for visibility
+          zIndex: 1,  // Ensures the text appears over the overlay
+          textShadow: '2px 2px 5px rgba(0, 0, 0, 0.5)', // Text shadow for better readability
+        }}
+      >
+        Get in Touch
       </Typography>
 
       {/* Trust-Building Content */}
-      <Typography variant="body1" paragraph align="center" sx={{ color: '#555' }}>
-        We are here to help you! Whether you have a question, need support, or simply want to provide feedback, feel free to reach out.
-        Our team is committed to responding quickly and professionally. Your inquiry is important to us, and we strive to provide the best service.
+      <Typography 
+        variant="body1" 
+        paragraph 
+        sx={{ 
+          color: '#f4f4f4', // Light text color for better contrast
+          zIndex: 1,  // Ensures the text appears over the overlay
+          textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)', // Text shadow for better readability
+        }}
+      >
+        We're here to assist with all your cleaning needs. Fill out the form below to book a service or get in touch.
       </Typography>
+    </Box>
 
-          <Container maxWidth="md" sx={{ my: 5 }}>
-      {/* Heading */}
-      <Typography variant="h5" sx={{ textAlign: 'center', color: '#2E8B57' }} gutterBottom>
-        Book a Service
-      </Typography>
+      <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+        {/* Left Side: Contact Info */}
+        <Box sx={{ flex: 1 }}>
+  <Typography variant="h6" sx={{ color: '#2E8B57', fontWeight: 'bold', marginBottom: 2 }}>Contact Info</Typography>
+  
+  <TextField
+    label="First Name"
+    name="firstName"
+    variant="outlined"
+    fullWidth
+    onChange={handleChange}
+    value={formData.firstName}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&:hover fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#2E8B57',
+        },
+      },
+      marginBottom: 2, // Add space below each input field
+    }}
+  />
+  
+  <TextField
+    label="Last Name"
+    name="lastName"
+    variant="outlined"
+    fullWidth
+    onChange={handleChange}
+    value={formData.lastName}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&:hover fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#2E8B57',
+        },
+      },
+      marginBottom: 2, // Add space below each input field
+    }}
+  />
+  
+  <TextField
+    label="Phone"
+    name="phone"
+    variant="outlined"
+    fullWidth
+    onChange={handleChange}
+    value={formData.phone}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&:hover fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#2E8B57',
+        },
+      },
+      marginBottom: 2, // Add space below each input field
+    }}
+  />
+  
+  <TextField
+    label="Email"
+    name="email"
+    type="email"
+    variant="outlined"
+    fullWidth
+    onChange={handleChange}
+    value={formData.email}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&:hover fieldset': {
+          borderColor: '#2E8B57',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#2E8B57',
+        },
+      },
+      marginBottom: 2, // Add space below each input field
+    }}
+  />
+  
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+              <Link href="https://www.instagram.com" target="_blank" sx={{ color: 'white', ml: 2 }}>
+                <IconButton>
+                  <Instagram />
+                </IconButton>
+              </Link>
+              <Link href="mailto:contact@melbourneclean.com" sx={{ color: 'white', ml: 2 }}>
+                <IconButton>
+                  <Email />
+                </IconButton>
+              </Link>
+              <Link href="tel:+61383917026" sx={{ color: 'white', ml: 2 }}>
+                <IconButton>
+                  <Phone />
+                </IconButton>
+              </Link>
+            </Box>
+</Box>
 
-      {/* Booking Form */}
-      <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', flexDirection: 'row', gap: 2 }}>
-        <TextField
-          label="Name"
-          name="name"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          value={formData.name}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#2E8B57', // Green border for text fields
-              },
-              '&:hover fieldset': {
-                borderColor: '#2E8B57', // Green on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#2E8B57', // Green when focused
-              },
-            },
-          }}
-        />
-        <TextField
-          label="Contact No"
-          name="contact"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          value={formData.contact}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#2E8B57',
-              },
-              '&:hover fieldset': {
-                borderColor: '#2E8B57',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#2E8B57',
-              },
-            },
-          }}
-        />
-        <TextField
-          label="Email"
-          name="email"
-          type="email"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          value={formData.email}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#2E8B57',
-              },
-              '&:hover fieldset': {
-                borderColor: '#2E8B57',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#2E8B57',
-              },
-            },
-          }}
-        />
-      </Box>
+        {/* Right Side: Service & Property Info */}
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h6" sx={{ color: '#2E8B57', fontWeight: 'bold' }} marginBottom={2}>Service Info</Typography>
+          <FormControl fullWidth>
+            <InputLabel>Property Type</InputLabel>
+            <Select
+              label="Property Type"
+              name="propertyType"
+              value={formData.propertyType}
+              onChange={handleChange}
+              sx={{ marginBottom: 2 }}
+            >
+              <MenuItem value="House">House</MenuItem>
+              <MenuItem value="Apartment">Apartment</MenuItem>
+              <MenuItem value="Office">Office</MenuItem>
+            </Select>
+          </FormControl>
 
-      {/* Trust-Building Icons */}
-      <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 2 }}>
-        <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
-          <ShieldIcon fontSize="small" />
-          200% Guarantee
-        </Typography>
-        <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
-          <CheckCircleIcon fontSize="small" />
-          Fully Insured
-        </Typography>
-        <Typography variant="body2" sx={{ color: '#2E8B57', display: 'flex', alignItems: 'center' }}>
-          <StarIcon fontSize="small" />
-          5 Star Rated Service
-        </Typography>
-      </Box>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={formData.services.includes('General Cleaning')} onChange={handleCheckboxChange} value="General Cleaning" />}
+              label="General Cleaning"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formData.services.includes('Window Cleaning')} onChange={handleCheckboxChange} value="Window Cleaning" />}
+              label="Window Cleaning"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formData.services.includes('Vacate Cleaning')} onChange={handleCheckboxChange} value="Vacate Cleaning" />}
+              label="Vacate Cleaning"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formData.services.includes('Deep Cleaning')} onChange={handleCheckboxChange} value="Deep Cleaning" />}
+              label="Deep Cleaning"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formData.services.includes('Carpet Cleaning')} onChange={handleCheckboxChange} value="Carpet Cleaning" />}
+              label="Carpet Cleaning"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={formData.services.includes('Construction Cleaning')} onChange={handleCheckboxChange} value="Construction Cleaning" />}
+              label="Construction Cleaning"
+            />
+          </FormGroup>
 
-      {/* Submit Button */}
-      <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'center', mt: 3 }}>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: '#2E8B57', // Green button color
-            color: 'white',
-            borderRadius: '50px', // Rounded corners for a modern look
-            fontSize: '1.1rem', // Slightly larger text for better readability
-            fontWeight: 'bold', // Bold text for more emphasis
-            padding: '12px 24px', // More padding for a comfortable click area
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
-            '&:hover': {
-              backgroundColor: '#248C48', // Darker green on hover
-              boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)', // Shadow becomes stronger on hover
-              transform: 'translateY(-3px)', // Slight lift effect when hovered
-            },
-            transition: 'all 0.3s ease', // Smooth transition for all effects
-          }}
-          startIcon={<EmailIcon />}
-          onClick={handleSubmit}
-        >
-          Book Service
-        </Button>
-      </Box>
-    </Container>
+          <TextField
+            label="Property Size"
+            name="propertySize"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            value={formData.propertySize}
+            sx={{ marginBottom: 2 }}
+          />
 
-      {/* Contact Details */}
-      <Box sx={{ textAlign: 'center', mt: 5 }}>
-        <Typography variant="h6" sx={{ color: '#2E8B57', fontWeight: 'bold' }}>
-          Other Ways to Reach Us
-        </Typography>
-        <Typography variant="body1" sx={{ color: '#555', mt: 2 }}>
-          You can also reach us through the following channels:
-        </Typography>
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body2" sx={{ color: '#555' }}>
-            Email: <strong>support@melbourneclean.com</strong>
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#555' }}>
-            Phone: <strong>+61 3 8391 7026</strong>
-          </Typography>
-          <Typography variant="body2" sx={{ color: '#555' }}>
-            Address: <strong>123 Melbourne Street, VIC 3000, Australia</strong>
-          </Typography>
+          <TextField
+            label="Additional Info"
+            name="additionalInfo"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={4}
+            onChange={handleChange}
+            value={formData.additionalInfo}
+            sx={{ marginBottom: 2 }}
+          />
+
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#2E8B57',
+              color: 'white',
+              borderRadius: '50px',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              padding: '12px 24px',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              '&:hover': {
+                backgroundColor: '#248C48',
+                boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',
+                transform: 'translateY(-3px)',
+              },
+              transition: 'all 0.3s ease',
+            }}
+            startIcon={<EmailIcon />}
+            onClick={handleSubmit}
+          >
+            Book Service
+          </Button>
         </Box>
       </Box>
     </Container>

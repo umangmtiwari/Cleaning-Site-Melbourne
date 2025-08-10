@@ -77,49 +77,6 @@ export default function CleaningRates() {
         </TableContainer>
       </Container>
 
-      {/* Additional Services Table */}
-      <Container maxWidth="md" sx={{ mb: 6 }}>
-        <Typography variant="h5" color="#2E8B57" gutterBottom sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>Additional Services</Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: '#e3fdf3ff' }}>
-                <TableCell>Service</TableCell>
-                <TableCell>Price</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {[
-                ['Spring Clean', '$60-100'],
-                ['End of Lease', 'From $418+'],
-                ['Inside Oven', '$75'],
-                ['Inside Fridge', '$39'],
-                ['Inside Drawers/Cabinets', '$35-119'],
-                ['Balcony', '$39'],
-                ['Green Supplies', '$5'],
-                ['Inside Windows', '$79-135'],
-                ['Laundry', '$39/load'],
-                ['Bed Changing', '$15/bed'],
-                ['Ironing', '$50/30 mins'],
-                ['Wall Cleaning', '$29 per wall'],
-                ['Steam Cleaning', '$55/bedroom'],
-                ['Dish Washing', '$39'],
-                ['Wet Wiping Blinds', '$29/blind']
-              ].map((row, idx) => (
-                <TableRow
-                  key={idx}
-                  sx={{
-                    '&:hover': { backgroundColor: '#e0f7fa' }, // Light background on hover
-                  }}
-                >
-                  {row.map((cell, i) => <TableCell key={i}>{cell}</TableCell>)}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-
       {/* Service Checklist Table */}
       <Container maxWidth="md" sx={{ mb: 6 }}>
         <Typography variant="h5" color="#2E8B57" gutterBottom sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>Service Checklist</Typography>
@@ -155,6 +112,49 @@ export default function CleaningRates() {
                 ['Inside All Drawers/Cabinets', <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CancelIcon sx={{ color: '#E53935' }} />],
                 ['Garages', <CancelIcon sx={{ color: '#E53935' }} />, <CancelIcon sx={{ color: '#E53935' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />]
                 // You can continue adding more rows as needed
+              ].map((row, idx) => (
+                <TableRow
+                  key={idx}
+                  sx={{
+                    '&:hover': { backgroundColor: '#e0f7fa' }, // Light background on hover
+                  }}
+                >
+                  {row.map((cell, i) => <TableCell key={i}>{cell}</TableCell>)}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+
+      {/* Additional Services Table */}
+      <Container maxWidth="md" sx={{ mb: 6 }}>
+        <Typography variant="h5" color="#2E8B57" gutterBottom sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>Additional Services</Typography>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: '#e3fdf3ff' }}>
+                <TableCell>Service</TableCell>
+                <TableCell>Price</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[
+                ['Spring Clean', '$60-100'],
+                ['End of Lease', 'From $418+'],
+                ['Inside Oven', '$75'],
+                ['Inside Fridge', '$39'],
+                ['Inside Drawers/Cabinets', '$35-119'],
+                ['Balcony', '$39'],
+                ['Green Supplies', '$5'],
+                ['Inside Windows', '$79-135'],
+                ['Laundry', '$39/load'],
+                ['Bed Changing', '$15/bed'],
+                ['Ironing', '$50/30 mins'],
+                ['Wall Cleaning', '$29 per wall'],
+                ['Steam Cleaning', '$55/bedroom'],
+                ['Dish Washing', '$39'],
+                ['Wet Wiping Blinds', '$29/blind']
               ].map((row, idx) => (
                 <TableRow
                   key={idx}
