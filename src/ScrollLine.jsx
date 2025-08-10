@@ -40,7 +40,7 @@ const ScrollLine = () => {
         left: 0,
         width: `${scrollPercentage * 100}%`,  // Adjust width based on scroll
         height: '8px',
-        backgroundColor: '#4CAF50',  // Vibrant Green (vigor-like color)
+        backgroundColor: '#ffffffff',  // Vibrant Green (vigor-like color)
         transition: 'width 0.1s ease, top 0.3s ease',  // Smooth transition for width and position change
       }}
     />

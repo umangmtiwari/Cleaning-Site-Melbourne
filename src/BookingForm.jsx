@@ -34,7 +34,7 @@ export default function BookingForm() {
   const handleSubmit = () => {
     const subject = encodeURIComponent("Service Booking Request");
     const body = encodeURIComponent(`Name: ${formData.name}\nContact: ${formData.contact}\nEmail: ${formData.email}`);
-    window.location.href = `mailto:services@melbourneclean.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:services@CleanCommerce.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -89,7 +89,7 @@ export default function BookingForm() {
             zIndex: 2, // Ensure text is above the overlay
           }}
         >
-          Book your professional home, bathroom, or kitchen cleaning service today with MelbourneClean.
+          Book your professional home, bathroom, or kitchen cleaning service today with Clean Commerce.
         </Typography>
       </Box>
 

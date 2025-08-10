@@ -1,104 +1,136 @@
 import React from 'react';
-import { Box, Typography, IconButton, Button } from '@mui/material';
+import {
+  Box,
+  Typography,
+  IconButton,
+  Button,
+  Grid,
+  Container,
+  Stack,
+  Link,
+} from '@mui/material';
 import { Instagram, Email, Phone, Star } from '@mui/icons-material';
-import './App.css';
-import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <Box sx={{ backgroundColor: '#2E8B57', color: 'white', py: 4, fontFamily: 'DM Sans, sans-serif' }}>
-      
-      {/* Top Section: Social Media Icons */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-        <Link href="https://www.instagram.com" target="_blank" sx={{ color: 'white', ml: 2 }}>
-          <IconButton>
-            <Instagram />
-          </IconButton>
-        </Link>
-        <Link href="mailto:contact@melbourneclean.com" sx={{ color: 'white', ml: 2 }}>
-          <IconButton>
-            <Email />
-          </IconButton>
-        </Link>
-        <Link href="tel:+61383917026" sx={{ color: 'white', ml: 2 }}>
-          <IconButton>
-            <Phone />
-          </IconButton>
-        </Link>
-      </Box>
-
-      {/* Tagline and Ratings Section */}
-      <Box sx={{ textAlign: 'center', mb: 3 }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-          Excellent Service Every Time
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          {[...Array(5)].map((_, index) => (
-            <Star key={index} sx={{ color: 'gold', fontSize: 30 }} />
-          ))}
-        </Box>
-      </Box>
-
-{/* Navigation Links */}
-<Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-  {['Services', 'Pricing', 'About Us', 'Contact Us'].map((text, index) => {
-    const path = `/${text.toLowerCase().replace(' ', '-')}`; // Generates the correct path
-    
-    return (
-      <Typography key={index} variant="body2" sx={{ ml: 2 }}>
-        {/* Use a regular anchor tag with href */}
-        <a href={path} style={{ color: 'white', textDecoration: 'none' }}>
-          {text}
-        </a>
-      </Typography>
-    );
-  })}
-</Box>
-
-
-
-      {/* Modern Book Now Button */}
-<Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-  {/* Use Link for navigation to the homepage */}
-    <Button
-      variant="contained"
+            <Box
+      component="footer"
       sx={{
-        backgroundColor: '#4CAF50',
-        color: 'white',
-        textTransform: 'none',
-        fontSize: '1.1rem',
+        backgroundColor: '#1b4332',
+        color: '#fff',
+        py: 6,
         fontFamily: 'DM Sans, sans-serif',
-        borderRadius: '50px',  // Rounded corners for modern look
-        padding: '12px 30px',  // Increased padding
-        boxShadow: 'none',  // Flat design
-        '&:hover': {
-          backgroundColor: '#45a049',  // Darker green on hover
-          transform: 'scale(1.05)',  // Slight zoom effect
-          transition: 'transform 0.3s ease-in-out',  // Smooth transition
-        },
-        '&:active': {
-          transform: 'scale(0.98)',  // Slight shrink on click
-        },
+        textAlign: 'center',
       }}
-      href="/"
     >
-      Book Now
-    </Button>
-</Box>
+      <Container maxWidth="lg">
+        {/* Parent container to center-align inner Grid */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            ml:-11,
+          }}
+        >
+          <Grid
+            container
+            spacing={4}
+            maxWidth="1000px"
+            justifyContent="center"
+            alignItems="flex-start"
+          >
+            {/* Left Column */}
+            <Grid item xs={12} md={4}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+                Why Choose Clean Commerce?
+              </Typography>
+              <Stack spacing={1} alignItems="center">
+                <Typography variant="body2">✓ Trusted Cleaning Professionals</Typography>
+                <Typography variant="body2">✓ Eco-Friendly & Safe Products</Typography>
+                <Typography variant="body2">✓ 100% Satisfaction Guarantee</Typography>
+                <Typography variant="body2">✓ Transparent & Affordable Pricing</Typography>
+              </Stack>
+            </Grid>
 
+            {/* Center Column */}
+            <Grid item xs={12} md={4} ml={5}>
+              <Stack direction="row" justifyContent="center" spacing={2} mb={2}>
+                <Link href="https://www.instagram.com" target="_blank" rel="noopener" color="inherit">
+                  <IconButton color="inherit"><Instagram /></IconButton>
+                </Link>
+                <Link href="mailto:contact@CleanCommerce.com" color="inherit">
+                  <IconButton color="inherit"><Email /></IconButton>
+                </Link>
+                <Link href="tel:+61383917026" color="inherit">
+                  <IconButton color="inherit"><Phone /></IconButton>
+                </Link>
+              </Stack>
 
-      {/* Contact Information */}
-      <Box sx={{ textAlign: 'center', mb: 3 }}>
-        <Typography>Phone: +61 400 123 456</Typography>
-        <Typography>Address: 123 Clean Street, Melbourne, VIC 3000</Typography>
-      </Box>
+              <Typography variant="h6" fontWeight={700} mb={1}>
+                Excellent Service Every Time
+              </Typography>
+              <Box mb={2}>
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} sx={{ color: 'gold', fontSize: 26 }} />
+                ))}
+              </Box>
 
-      {/* Copyright Notice */}
-      <Box sx={{ textAlign: 'center' }}>
-        <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-          &copy; 2025 MelbourneClean. All rights reserved.
-        </Typography>
-      </Box>
+              <Button
+                variant="contained"
+                href="/"
+                sx={{
+                  backgroundColor: '#2D6A4F',
+                  borderRadius: 30,
+                  px: 4,
+                  py: 1.5,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  transition: 'transform 0.3s ease-in-out',
+                  '&:hover': {
+                    backgroundColor: '#40916C',
+                    transform: 'scale(1.05)',
+                  },
+                }}
+              >
+                Book Now
+              </Button>
+
+              <Box mt={3}>
+                <Typography variant="body2">Phone: +61 400 123 456</Typography>
+                <Typography variant="body2">123 Clean Street, Melbourne, VIC 3000</Typography>
+              </Box>
+            </Grid>
+
+            {/* Right Column */}
+            <Grid item xs={12} md={4} ml={5}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+                Quick Links
+              </Typography>
+              <Stack spacing={1} alignItems="center">
+                {['Services', 'Pricing', 'About Us', 'Contact Us'].map((text) => (
+                  <Link
+                    key={text}
+                    href={`/${text.toLowerCase().replace(/\s+/g, '-')}`}
+                    underline="hover"
+                    color="inherit"
+                    variant="body2"
+                  >
+                    {text}
+                  </Link>
+                ))}
+              </Stack>
+            </Grid>
+          </Grid>
+        </Box>
+
+        {/* Bottom Bar */}
+        <Box mt={6} pt={3} borderTop="1px solid rgba(255,255,255,0.2)">
+          <Typography variant="caption">
+            &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
+          </Typography>
+        </Box>
+      </Container>
     </Box>
   );
 }

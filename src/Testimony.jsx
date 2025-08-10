@@ -7,7 +7,7 @@ const testimonialsData = [
   { 
     name: 'Emma', 
     rating: 5, 
-    review: "MelbourneClean transformed my home! So professional and efficient. Highly recommend.", 
+    review: "Clean Commerce transformed my home! So professional and efficient. Highly recommend.", 
     profilePic: 'https://randomuser.me/api/portraits/women/1.jpg' // Example profile pic URL
   },
   { 

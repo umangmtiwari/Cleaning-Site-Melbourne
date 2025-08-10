@@ -7,7 +7,7 @@ export default function WhyChooseUs() {
     <>
       {/* Why Choose Us Section */}
       <Container maxWidth="md" sx={{ fontFamily: 'DM Sans, sans-serif', my: 6, textAlign: 'center' }}>
-        <Typography variant="h5" gutterBottom>Why Choose MelbourneClean Services?</Typography>
+        <Typography variant="h5" gutterBottom>Why Choose Clean Commerce Services?</Typography>
         <Typography color="textSecondary">
           We deliver top-tier home and bathroom cleaning with eco-friendly products, trained professionals,
           and flexible scheduling. Trust us for reliable, efficient, and spotless results every time.

@@ -20,11 +20,23 @@ const StyledButton = styled(Button)(() => ({
 
 const BookNowButton = styled(Button)(() => ({
   fontFamily: 'DM Sans, sans-serif',
-  backgroundColor: '#4CAF50',  // Green background for "Book Now"
+  fontWeight: 700,
+  fontSize: '1rem',              // slightly smaller font
+  textTransform: 'none',
+  background: 'linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%)',
   color: 'white',
-  fontSize: '1.1rem',  // Increase font size
+  borderRadius: '30px',          // smaller rounding
+  padding: '10px 24px',          // reduced padding for smaller height & width
+  boxShadow: '0 3px 10px rgba(76, 175, 80, 0.4)',
+  transition: 'all 0.3s ease',
+  letterSpacing: '0.03em',
   '&:hover': {
-    backgroundColor: '#45a049',  // Darker green when hovered
+    background: 'linear-gradient(135deg, #388E3C 0%, #4CAF50 100%)',
+    boxShadow: '0 5px 15px rgba(56, 142, 60, 0.6)',
+    transform: 'scale(1.05)',
+  },
+  '&:active': {
+    transform: 'scale(0.98)',
   },
 }));
 
@@ -41,11 +53,12 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar 
-      position="static" 
+      position="sticky" 
       sx={{ 
-        backgroundColor: '#2E8B57', 
+        backgroundColor: '#1b4332', 
         borderBottom: '5px solid transparent',  
-        backgroundImage: `linear-gradient(to top, #2E8B57, #2E8B57), url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%2240%22 viewBox=%220 0 400 40%22%3E%3Cpath d=%22M0,0 Q50,15 100,0 T200,0 T300,0 T400,0 L400,40 L0,40 Z%22 fill=%22white%22/%3E%3C/svg%3E")`
+        backgroundImage: `linear-gradient(to top, #1b4332, #1b4332), url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%2240%22 viewBox=%220 0 400 40%22%3E%3Cpath d=%22M0,0 Q50,15 100,0 T200,0 T300,0 T400,0 L400,40 L0,40 Z%22 fill=%22%2366BB6A%22/%3E%3C/svg%3E")`
+
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -246,15 +259,11 @@ const ResponsiveAppBar = () => {
           </ListItem>
           <ListItem button>
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <BookNowButton fullWidth sx={{
-                mb: 2,
-                color: 'black',
-                '&:hover': {
-                  backgroundColor: '#45a049',
-                  color: 'black',
-                },
-              }}>Book Now</BookNowButton>
-            </Link>
+  <BookNowButton fullWidth sx={{ mb: 2 }}>
+    Book Now
+  </BookNowButton>
+</Link>
+
           </ListItem>
           <ListItem button>
             <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>

@@ -38,7 +38,7 @@ const ContactUs = () => {
   const handleSubmit = () => {
     const subject = encodeURIComponent("Service Booking Request");
     const body = encodeURIComponent(`Name: ${formData.firstName} ${formData.lastName}\nContact: ${formData.phone}\nEmail: ${formData.email}\nProperty Type: ${formData.propertyType}\nServices: ${formData.services.join(', ')}\nFrequency: ${formData.frequency}\nProperty Size: ${formData.propertySize}\nAdditional Info: ${formData.additionalInfo}`);
-    window.location.href = `mailto:services@melbourneclean.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:services@CleanCommerce.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -207,7 +207,7 @@ const ContactUs = () => {
                   <Instagram />
                 </IconButton>
               </Link>
-              <Link href="mailto:contact@melbourneclean.com" sx={{ color: 'white', ml: 2 }}>
+              <Link href="mailto:contact@CleanCommerce.com" sx={{ color: 'white', ml: 2 }}>
                 <IconButton>
                   <Email />
                 </IconButton>
@@ -307,7 +307,7 @@ const ContactUs = () => {
             startIcon={<EmailIcon />}
             onClick={handleSubmit}
           >
-            Book Service
+            Contact Us
           </Button>
         </Box>
       </Box>

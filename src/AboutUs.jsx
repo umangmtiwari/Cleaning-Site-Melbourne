@@ -11,56 +11,71 @@ const HeroSection = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const TeamCard = styled(Paper)({
-  padding: '20px',  // Static padding value
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',  // Static shadow value
-  borderRadius: '8px',
-  '& img': {
-    width: '100px',
-    height: '100px',
-    borderRadius: '50%',
-    marginBottom: '15px',
-  },
-});
-
-
 const AboutUs = () => {
   return (
     <div>
-      {/* Hero Section */}
-      <HeroSection>
-        <Typography variant="h3" gutterBottom>
-          Welcome to Melbourne Clean
-        </Typography>
-        <Typography variant="h6" paragraph>
-          We are a professional cleaning service dedicated to making your life easier. Our experienced team
-          provides top-notch cleaning for homes and businesses in Melbourne.
-        </Typography>
-<Button
-  variant="contained"
-  size="large"
-  sx={{
-    backgroundColor: '#4CAF50',  // Green background
-    color: 'white',
-    fontSize: '1.1rem',
-    padding: '12px 30px',
-    borderRadius: '50px',  // Rounded corners
-    boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',  // Subtle shadow
-    fontWeight: 'bold',
-    textTransform: 'none',  // No uppercase for button text
-    '&:hover': {
-      backgroundColor: '#45a049',  // Darker green on hover
-      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',  // Stronger shadow on hover
-      transform: 'scale(1.05)',  // Slight zoom effect
-      transition: 'transform 0.3s ease, background-color 0.3s ease',  // Smooth transition for all effects
-    },
-  }}
-  href="/contact-us"
->
-  Get in Touch
-</Button>
+;
 
-      </HeroSection>
+<HeroSection
+  sx={{
+    position: 'relative',
+    backgroundImage: 'url(/clean2.jpg)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    textAlign: 'center',
+    marginTop: '-26px',
+    overflow: 'hidden',
+    color: '#fff', // White text
+  }}
+>
+  {/* Dark overlay */}
+  <Box
+    sx={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black
+      zIndex: 1,
+    }}
+  />
+
+  {/* Content */}
+  <Box sx={{ position: 'relative', zIndex: 2, maxWidth: '800px', margin: '0 auto' }}>
+    <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+      Welcome to Clean Commerce
+    </Typography>
+    <Typography variant="h6" paragraph>
+      We are a professional cleaning service dedicated to making your life easier. Our experienced team
+      provides top-notch cleaning for homes and businesses in Melbourne.
+    </Typography>
+
+    <Button
+      variant="contained"
+      size="large"
+      sx={{
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        fontSize: '1.1rem',
+        padding: '12px 30px',
+        borderRadius: '50px',
+        boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',
+        fontWeight: 'bold',
+        textTransform: 'none',
+        '&:hover': {
+          backgroundColor: '#45a049',
+          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
+          transform: 'scale(1.05)',
+          transition: 'transform 0.3s ease, background-color 0.3s ease',
+        },
+      }}
+      href="/contact-us"
+    >
+      Get in Touch
+    </Button>
+  </Box>
+</HeroSection>
 
       {/* Company Information Section */}
       <Container sx={{ py: 6 }}>
@@ -68,7 +83,7 @@ const AboutUs = () => {
           Our Story
         </Typography>
         <Typography variant="body1" paragraph>
-          At Melbourne Clean, we believe in offering a service that not only meets but exceeds your expectations.
+          At Clean Commerce, we believe in offering a service that not only meets but exceeds your expectations.
           Established in 2010, our company has grown rapidly to become one of Melbourne’s trusted cleaning providers.
           We’re passionate about delivering high-quality results and we strive to create a clean, fresh, and
           comfortable environment for all our clients.
@@ -85,43 +100,68 @@ const AboutUs = () => {
       </Container>
 
 
-      {/* Call to Action Section */}
-      <Box sx={{ backgroundColor: '#4CAF50', color: 'white', py: 6 }}>
-        <Container>
-          <Typography variant="h4" align="center" gutterBottom>
-            Ready to experience a cleaner space?
-          </Typography>
-          <Typography variant="h6" align="center" paragraph>
-            Contact us today to book your cleaning service or to learn more about how we can help.
-          </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-<Button
-  variant="contained"
-  size="large"
+{/* Call to Action Section */}
+<Box
   sx={{
-    backgroundColor: '#4CAF50',  // Green background
+    position: 'relative',
+    backgroundImage: 'url(/clean4.jpg)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     color: 'white',
-    fontSize: '1.1rem',
-    padding: '12px 30px',
-    borderRadius: '50px',  // Rounded corners
-    boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',  // Subtle shadow
-    fontWeight: 'bold',
-    textTransform: 'none',  // No uppercase for button text
-    '&:hover': {
-      backgroundColor: '#45a049',  // Darker green on hover
-      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',  // Stronger shadow on hover
-      transform: 'scale(1.05)',  // Slight zoom effect
-      transition: 'transform 0.3s ease, background-color 0.3s ease',  // Smooth transition for all effects
-    },
+    py: 8,
+    overflow: 'hidden',
+    textAlign: 'center',
   }}
-  href="/contact-us"
 >
-  Get in Touch
-</Button>
+  {/* Dark overlay */}
+  <Box
+    sx={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark overlay
+      zIndex: 1,
+    }}
+  />
 
-          </Box>
-        </Container>
-      </Box>
+  {/* CTA Content */}
+  <Container sx={{ position: 'relative', zIndex: 2 }}>
+    <Typography variant="h4" gutterBottom>
+      Ready to experience a cleaner space?
+    </Typography>
+    <Typography variant="h6" paragraph>
+      Contact us today to book your cleaning service or to learn more about how we can help.
+    </Typography>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Button
+        variant="contained"
+        size="large"
+        sx={{
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          fontSize: '1.1rem',
+          padding: '12px 30px',
+          borderRadius: '50px',
+          boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',
+          fontWeight: 'bold',
+          textTransform: 'none',
+          '&:hover': {
+            backgroundColor: '#45a049',
+            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
+            transform: 'scale(1.05)',
+            transition: 'transform 0.3s ease, background-color 0.3s ease',
+          },
+        }}
+        href="/contact-us"
+      >
+        Get in Touch
+      </Button>
+    </Box>
+  </Container>
+</Box>
+
       <h1></h1>
     </div>
   );

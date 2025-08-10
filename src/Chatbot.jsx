@@ -45,7 +45,7 @@ const Chatbot = () => {
     } else if (userMessageText.toLowerCase().includes('discount')) {
       botResponse = 'We currently offer $40 off for customers in the Western Suburbs!';
     } else if (userMessageText.toLowerCase().includes('services')) {
-      botResponse = 'MelbourneClean offers a variety of cleaning services, including home, kitchen, and bathroom cleaning.';
+      botResponse = 'Clean Commerce offers a variety of cleaning services, including home, kitchen, and bathroom cleaning.';
     } else {
       botResponse = 'For more information, please call 1234567890.';
     }
@@ -90,7 +90,7 @@ const Chatbot = () => {
         }}
       >
         <DialogTitle sx={{ backgroundColor: '#2E8B57', color: 'white', fontWeight: 'bold', position: 'relative' }}>
-          Melbourne Clean Chatbot
+          Clean Commerce Chatbot
           <IconButton
             onClick={handleClose}
             sx={{

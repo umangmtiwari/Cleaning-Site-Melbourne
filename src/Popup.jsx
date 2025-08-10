@@ -76,6 +76,7 @@ const Popup = ({ open, onClose }) => {
                 backgroundColor: '#45a049', // Darker green on hover
               },
             }}
+            href="/contact-us"
           >
             YES PLEASE!
           </Button>
