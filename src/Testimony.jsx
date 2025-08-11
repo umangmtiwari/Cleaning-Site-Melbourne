@@ -83,7 +83,7 @@ useEffect(() => {
 
   return (
 <Container maxWidth="md" sx={{ my: 4 }}>
-  <Typography variant="h5" textAlign="center" color="#0099CC" gutterBottom paddingBottom={3}>
+  <Typography variant="h5" textAlign="center" color="#2049A3" gutterBottom paddingBottom={3}>
     Customer Testimonials
   </Typography>
 
@@ -170,7 +170,7 @@ useEffect(() => {
         position: 'absolute',
         right: { xs: '10px', md: '-50px' }, // Same as left button for mobile positioning
         zIndex: 1,
-        color: '#0099CC',
+        color: '#2049A3',
         display: { xs: 'block', md: 'block' }, // Show on all screens
         opacity: { xs: 1, sm: 0.8, md: 1 }, // Slightly transparent on smaller screens for better viewability
       }}

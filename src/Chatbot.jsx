@@ -59,7 +59,7 @@ const Chatbot = () => {
       {/* Chat Icon Button */}
       <Button
         variant="contained"
-        color="success"
+        color="blue"
         sx={{
           position: 'fixed',
           bottom: 20,
@@ -133,7 +133,7 @@ const Chatbot = () => {
                 <Button
                   variant="outlined"
                   fullWidth
-                  color="success"
+                  color="blue"
                   sx={{
                     marginBottom: '10px',
                     textTransform: 'none',
@@ -189,8 +189,6 @@ const Chatbot = () => {
         </DialogContent>
 
         <DialogActions sx={{ justifyContent: 'center' }}>
-          {/* Close Button (Optional) */}
-          {/* <Button onClick={handleClose} color="secondary" sx={{ fontWeight: 'bold' }}>Close</Button> */}
         </DialogActions>
       </Dialog>
     </div>

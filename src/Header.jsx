@@ -23,7 +23,7 @@ const BookNowButton = styled(Button)(() => ({
   fontWeight: 700,
   fontSize: '1rem',              // slightly smaller font
   textTransform: 'none',
-  background: 'linear-gradient(135deg, #006699 0%, #006699 100%)',
+  background: 'linear-gradient(135deg, #6FE4E1 0%, #6FE4E1 100%)',
   color: 'white',
   borderRadius: '30px',          // smaller rounding
   padding: '10px 24px',          // reduced padding for smaller height & width
@@ -31,12 +31,37 @@ const BookNowButton = styled(Button)(() => ({
   transition: 'all 0.3s ease',
   letterSpacing: '0.03em',
   '&:hover': {
-    background: 'linear-gradient(135deg, #006699 0%, #006699 100%)',
+    background: 'linear-gradient(135deg, #6FE4E1 0%, #6FE4E1 100%)',
     boxShadow: '0 5px 15px rgba(0, 123, 255, 0.6)',
     transform: 'scale(1.05)',
   },
   '&:active': {
     transform: 'scale(0.98)',
+  },
+}));
+
+const CallNowButton = styled(Button)(() => ({
+  fontFamily: 'DM Sans, sans-serif',
+  fontWeight: 700,
+  fontSize: '1rem',              // slightly smaller font
+  textTransform: 'none',
+  background: 'white',          // white background
+  color: '#6FE4E1',             // blue text color
+  borderRadius: '30px',         // rounded corners
+  padding: '10px 24px',         // adjusted padding for a balanced height/width
+  border: '2px solid #6FE4E1', // subtle border with the theme color
+  boxShadow: '0 3px 8px rgba(0, 140, 255, 0.2)', // softer shadow for a clean look
+  transition: 'all 0.3s ease',
+  letterSpacing: '0.03em',
+  '&:hover': {
+    background: '#f0f8ff',      // light blue background on hover for contrast
+    color: '#6FE4E1',           // keep text color consistent on hover
+    border: '2px solid #6FE4E1', // border stays the same
+    boxShadow: '0 5px 15px rgba(0, 123, 255, 0.4)', // stronger shadow on hover
+    transform: 'scale(1.05)',    // subtle zoom effect
+  },
+  '&:active': {
+    transform: 'scale(0.98)',    // small scale effect on active state
   },
 }));
 
@@ -55,9 +80,9 @@ const ResponsiveAppBar = () => {
     <AppBar 
       position="sticky" 
       sx={{ 
-        backgroundColor: '#0099CC', 
+        backgroundColor: '#2049A3', 
         borderBottom: '5px solid transparent',  
-        backgroundImage: `linear-gradient(to top, #0099CC, #0099CC), url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%2240%22 viewBox=%220 0 400 40%22%3E%3Cpath d=%22M0,0 Q50,15 100,0 T200,0 T300,0 T400,0 L400,40 L0,40 Z%22 fill=%22%2366BB6A%22/%3E%3C/svg%3E")`
+        backgroundImage: `linear-gradient(to top, #2049A3, #2049A3), url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%2240%22 viewBox=%220 0 400 40%22%3E%3Cpath d=%22M0,0 Q50,15 100,0 T200,0 T300,0 T400,0 L400,40 L0,40 Z%22 fill=%22%2366BB6A%22/%3E%3C/svg%3E")`
 
       }}
     >
@@ -168,23 +193,19 @@ const ResponsiveAppBar = () => {
             <BookNowButton sx={{
               ml: 2,
               '&:hover': {
-                backgroundColor: '#006699',  // Darker green on hover
+                backgroundColor: '#6FE4E1',  // Darker green on hover
               },
               // Adjust color for small screens
               '@media (max-width:600px)': {
-                backgroundColor: '#006699',  // Darker green for small screen
+                backgroundColor: '#6FE4E1',  // Darker green for small screen
                 color: 'black',
               }
-            }}>Book Now</BookNowButton>
+            }}>Get a Quote</BookNowButton>
           </Link>
           <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>
-            <StyledButton sx={{
+            <CallNowButton sx={{
               ml: 2,
-              fontWeight: 'bold',
-              color: 'white',  // Default for larger screens
-              borderColor: 'white',  // Default for larger screens
               '&:hover': {
-                color: 'white',
                 borderColor: 'white'
               },
               // For smaller screens (under 600px) set black color and border
@@ -192,7 +213,7 @@ const ResponsiveAppBar = () => {
                 color: 'black',
                 borderColor: 'black',
               }
-            }}>Call 03 8391 7026</StyledButton>
+            }}>Call Now</CallNowButton>
           </a>
         </Box>
       </Toolbar>
@@ -260,7 +281,7 @@ const ResponsiveAppBar = () => {
           <ListItem button>
             <Link to="/" style={{ textDecoration: 'none' }}>
   <BookNowButton fullWidth sx={{ mb: 2 }}>
-    Book Now
+    Get a Quote
   </BookNowButton>
 </Link>
 
@@ -276,7 +297,7 @@ const ResponsiveAppBar = () => {
                   color: 'black',
                   borderColor: 'black',
                 },
-              }}>Call 03 8391 7026</StyledButton>
+              }}>Call Now</StyledButton>
             </a>
           </ListItem>
         </List>

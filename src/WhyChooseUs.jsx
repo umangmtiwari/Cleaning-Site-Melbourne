@@ -154,7 +154,7 @@ export default function WhyChooseUs() {
     fontFamily: 'DM Sans, sans-serif',
     display: 'flex',
     flexDirection: { xs: 'column', md: 'row' },  // Stack on small screens, row on medium and up
-    bgcolor: '#0099CC',
+    bgcolor: '#2049A3',
     color: 'white',
     maxWidth: '1200px',
     margin: '0 auto',
@@ -260,7 +260,7 @@ Whether it’s a one-off deep clean or regular upkeep, we bring energy, care, an
           }}
           href="/contact-us"
         >
-          Book My Clean
+          Get a Quote
         </Button>
       </Grid>
     </Grid>

@@ -37,7 +37,7 @@ export default function MelbourneClean() {
 
   return (
     <Router> {/* Wrap everything in Router to manage routes */}
-      <Box sx={{ fontFamily: 'DM Sans, sans-serif', color: '#2E8B57' }}>
+      <Box sx={{ fontFamily: 'DM Sans, sans-serif', color: '#0099CC' }}>
         {/* Popup */}
         <Popup open={isPopupOpen} onClose={closePopup} />
 

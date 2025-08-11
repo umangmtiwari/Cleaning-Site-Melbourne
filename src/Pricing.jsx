@@ -108,7 +108,7 @@ const Pricing = () => {
           }}
           href="/"
         >
-          Subscribe & Get Your Discount
+          Contact Us & Get Your Discount
         </Button>
       </Box>
     </Container>
@@ -121,7 +121,7 @@ const Pricing = () => {
       </div>
 
       {/* Email Subscription Section */}
-      <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 5, backgroundColor: '#0099CC', color: 'white', padding: '30px 20px', borderRadius: '10px' }}>
+      <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 5, backgroundColor: '#2049A3', color: 'white', padding: '30px 20px', borderRadius: '10px' }}>
         <Typography variant="h5" sx={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 900, textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
  }}>
           Any particular requirement, Please let us know!
