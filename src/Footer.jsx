@@ -83,9 +83,9 @@ export default function Footer() {
 
               <Button
                 variant="contained"
-                href="/"
+                href="/contact-us"
                 sx={{
-                  backgroundColor: '#6FE4E1',
+                  backgroundColor: '#006699',
                   borderRadius: 30,
                   px: 4,
                   py: 1.5,
@@ -93,7 +93,7 @@ export default function Footer() {
                   textTransform: 'none',
                   transition: 'transform 0.3s ease-in-out',
                   '&:hover': {
-                    backgroundColor: '#6FE4E1',
+                    backgroundColor: '#006699',
                     transform: 'scale(1.05)',
                   },
                 }}
@@ -103,7 +103,7 @@ export default function Footer() {
 
               <Box mt={3}>
                 <Typography variant="body2">Phone: +61 400 123 456</Typography>
-                <Typography variant="body2"><LocationOnOutlinedIcon></LocationOnOutlinedIcon> Melbourne Victoria</Typography>
+                <Typography variant="body2"><LocationOnOutlinedIcon sx={{fontSize:12}}></LocationOnOutlinedIcon> Melbourne Victoria</Typography>
                 <Typography variant='body2'>ABN: 95279464367</Typography>
               </Box>
             </Grid>

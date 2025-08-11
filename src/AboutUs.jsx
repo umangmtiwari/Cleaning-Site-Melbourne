@@ -78,13 +78,13 @@ const AboutUs = () => {
 </HeroSection>
 
       {/* Company Information Section */}
-      <Container sx={{ py: 6 }}>
+      <Container sx={{ py: 6, color:'black' }}>
         <Typography variant="h4" align="center" gutterBottom>
           Our Story
         </Typography>
         <Typography variant="body1" paragraph>
           At Clean Commerce, we believe in offering a service that not only meets but exceeds your expectations.
-          Established in 2010, our company has grown rapidly to become one of Melbourne’s trusted cleaning providers.
+          Established in 2019, our company has grown rapidly to become one of Melbourne’s trusted cleaning providers.
           We’re passionate about delivering high-quality results and we strive to create a clean, fresh, and
           comfortable environment for all our clients.
         </Typography>

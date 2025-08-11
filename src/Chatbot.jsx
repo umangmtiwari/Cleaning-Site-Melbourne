@@ -43,7 +43,7 @@ const Chatbot = () => {
     } else if (userMessageText.toLowerCase().includes('area')) {
       botResponse = 'Yes! We provide cleaning services across Melbourne.';
     } else if (userMessageText.toLowerCase().includes('discount')) {
-      botResponse = 'We currently offer $40 off for customers in the Western Suburbs!';
+      botResponse = 'We currently offer $40 off for customers in the Western Suburbs! Offer valid for First Booking!';
     } else if (userMessageText.toLowerCase().includes('services')) {
       botResponse = 'Clean Commerce offers a variety of cleaning services, including home, kitchen, and bathroom cleaning.';
     } else {

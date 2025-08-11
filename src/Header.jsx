@@ -23,7 +23,7 @@ const BookNowButton = styled(Button)(() => ({
   fontWeight: 700,
   fontSize: '1rem',              // slightly smaller font
   textTransform: 'none',
-  background: 'linear-gradient(135deg, #6FE4E1 0%, #6FE4E1 100%)',
+  background: 'linear-gradient(135deg, #006699 0%, #006699 100%)',
   color: 'white',
   borderRadius: '30px',          // smaller rounding
   padding: '10px 24px',          // reduced padding for smaller height & width
@@ -31,7 +31,7 @@ const BookNowButton = styled(Button)(() => ({
   transition: 'all 0.3s ease',
   letterSpacing: '0.03em',
   '&:hover': {
-    background: 'linear-gradient(135deg, #6FE4E1 0%, #6FE4E1 100%)',
+    background: 'linear-gradient(135deg, #006699 0%, #006699 100%)',
     boxShadow: '0 5px 15px rgba(0, 123, 255, 0.6)',
     transform: 'scale(1.05)',
   },
@@ -46,18 +46,18 @@ const CallNowButton = styled(Button)(() => ({
   fontSize: '1rem',              // slightly smaller font
   textTransform: 'none',
   background: 'white',          // white background
-  color: '#6FE4E1',             // blue text color
+  color: '#000000ff',             // blue text color
   borderRadius: '30px',         // rounded corners
   padding: '10px 24px',         // adjusted padding for a balanced height/width
-  border: '2px solid #6FE4E1', // subtle border with the theme color
-  boxShadow: '0 3px 8px rgba(0, 140, 255, 0.2)', // softer shadow for a clean look
+  border: '2px solid #ffffff', // subtle border with the theme color
+  boxShadow: '0 3px 8px rgba(255, 255, 255, 0)', // softer shadow for a clean look
   transition: 'all 0.3s ease',
   letterSpacing: '0.03em',
   '&:hover': {
-    background: '#f0f8ff',      // light blue background on hover for contrast
-    color: '#6FE4E1',           // keep text color consistent on hover
-    border: '2px solid #6FE4E1', // border stays the same
-    boxShadow: '0 5px 15px rgba(0, 123, 255, 0.4)', // stronger shadow on hover
+    background: '#ffffff',      // light blue background on hover for contrast
+    color: '#000000ff',           // keep text color consistent on hover
+    border: '2px solid #ffffffff', // border stays the same
+    boxShadow: '0 5px 15px rgba(255, 255, 255, 0)', // stronger shadow on hover
     transform: 'scale(1.05)',    // subtle zoom effect
   },
   '&:active': {
@@ -190,17 +190,25 @@ const ResponsiveAppBar = () => {
         {/* Book Now and Call buttons */}
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <Link to="/" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-            <BookNowButton sx={{
-              ml: 2,
-              '&:hover': {
-                backgroundColor: '#6FE4E1',  // Darker green on hover
-              },
-              // Adjust color for small screens
-              '@media (max-width:600px)': {
-                backgroundColor: '#6FE4E1',  // Darker green for small screen
-                color: 'black',
-              }
-            }}>Get a Quote</BookNowButton>
+            <Button
+                            variant="contained"
+                            href="/contact-us"
+                            sx={{
+                              backgroundColor: '#006699',
+                              borderRadius: 30,
+                              px: 4,
+                              py: 1.5,
+                              fontWeight: 600,
+                              textTransform: 'none',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                backgroundColor: '#006699',
+                                transform: 'scale(1.05)',
+                              },
+                            }}
+                          >
+                            Get a Quote
+                          </Button>
           </Link>
           <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>
             <CallNowButton sx={{
@@ -279,8 +287,8 @@ const ResponsiveAppBar = () => {
             </Link>
           </ListItem>
           <ListItem button>
-            <Link to="/" style={{ textDecoration: 'none' }}>
-  <BookNowButton fullWidth sx={{ mb: 2 }}>
+            <Link to="/contact-us">
+  <BookNowButton>
     Get a Quote
   </BookNowButton>
 </Link>

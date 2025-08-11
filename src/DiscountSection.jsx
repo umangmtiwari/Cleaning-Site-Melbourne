@@ -10,7 +10,7 @@ const DiscountBadge = ({ discount, frequency }) => {
         width: 180,
         height: 180,
         borderRadius: '50%',
-        backgroundColor: 'rgba(228, 37, 37, 1)',
+        backgroundColor: 'rgba(0, 0, 0, 1)',
         color: 'white',
         display: 'flex',
         alignItems: 'center',
@@ -26,22 +26,37 @@ const DiscountBadge = ({ discount, frequency }) => {
         </Typography>
       </Box>
       <Box
-        sx={{
-          position: 'absolute',
-          bottom: -15,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: 'white',
-          color: 'black',
-          px: 2,
-          py: 0.5,
-          borderRadius: '5px',
-          fontWeight: 'bold',
-          fontSize: 14,
-        }}
-      >
-        {frequency}
-      </Box>
+  sx={{
+    position: 'absolute',
+    bottom: -20, // Adjusted for better positioning
+    left: '50%',
+    transform: 'translateX(-50%)',
+    backgroundColor: 'white',
+    color: 'black',
+    px: 3, // Padding for more space
+    py: 1, // Increased padding for a more prominent look
+    fontWeight: 'bold',
+    fontSize: 14,
+    borderRadius: '20px', // Rounding the corners
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)', // Soft shadow for depth
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      bottom: -8, // Position the triangle correctly
+      left: '50%',
+      transform: 'translateX(-50%)',
+      borderLeft: '8px solid transparent',
+      borderRight: '8px solid transparent',
+      borderTop: '8px solid white', // White triangle to form the ribbon notch
+    },
+  }}
+>
+  {frequency}
+</Box>
+
     </Box>
   );
 };
