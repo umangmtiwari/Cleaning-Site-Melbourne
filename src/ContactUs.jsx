@@ -277,7 +277,7 @@ const handleSubmit = () => {
         <Box sx={{ flex: 1, marginTop: 5 }}>
           
           {/* Type of Service */}
-          <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.serviceType === ''}>
+          <FormControl fullWidth sx={{ marginBottom: 2, marginTop: 1 }} error={isSubmitted && formData.serviceType === ''}>
   <InputLabel required>Type of Service</InputLabel>
   <Select
     label="Type of Service"

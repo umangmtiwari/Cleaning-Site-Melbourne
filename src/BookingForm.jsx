@@ -32,10 +32,50 @@ export default function BookingForm() {
   };
 
   const handleSubmit = () => {
+  if (validateForm()) {
     const subject = encodeURIComponent("Service Booking Request");
     const body = encodeURIComponent(`Name: ${formData.name}\nContact: ${formData.contact}\nEmail: ${formData.email}`);
     window.location.href = `mailto:services@CleanCommerce.com?subject=${subject}&body=${body}`;
-  };
+  }
+};
+
+
+  const [errors, setErrors] = useState({ name: '', contact: '', email: '' });
+
+const validateForm = () => {
+  let formIsValid = true;
+  let newErrors = { name: '', contact: '', email: '' };
+
+  // Name field is required
+  if (!formData.name) {
+    formIsValid = false;
+    newErrors.name = 'Name is required';
+  }
+
+  // Contact No field with regex check for a 10-digit number
+  const contactRegex = /^[0-9]{10}$/;
+  if (!formData.contact) {
+    formIsValid = false;
+    newErrors.contact = 'Contact number is required';
+  } else if (!contactRegex.test(formData.contact)) {
+    formIsValid = false;
+    newErrors.contact = 'Please enter a valid 10-digit contact number';
+  }
+
+  // Email field with regex check for a valid email format
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!formData.email) {
+    formIsValid = false;
+    newErrors.email = 'Email is required';
+  } else if (!emailRegex.test(formData.email)) {
+    formIsValid = false;
+    newErrors.email = 'Please enter a valid email address';
+  }
+
+  setErrors(newErrors);
+  return formIsValid;
+};
+
 
   return (
     <>
@@ -99,11 +139,13 @@ export default function BookingForm() {
         <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', flexDirection: 'row', gap: 2 }}>
           <TextField
             label="Name"
-            name="name"
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            value={formData.name}
+  name="name"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.name}
+  error={Boolean(errors.name)}
+  helperText={errors.name}
             sx={{
                 fontFamily: 'DM Sans, sans-serif',
               '& .MuiOutlinedInput-root': {
@@ -121,11 +163,13 @@ export default function BookingForm() {
           />
           <TextField
             label="Contact No"
-            name="contact"
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            value={formData.contact}
+  name="contact"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.contact}
+  error={Boolean(errors.contact)}
+  helperText={errors.contact}
             sx={{
                 fontFamily: 'DM Sans, sans-serif',
               '& .MuiOutlinedInput-root': {
@@ -143,12 +187,13 @@ export default function BookingForm() {
           />
           <TextField
             label="Email"
-            name="email"
-            type="email"
-            variant="outlined"
-            fullWidth
-            onChange={handleChange}
-            value={formData.email}
+  name="email"
+  variant="outlined"
+  fullWidth
+  onChange={handleChange}
+  value={formData.email}
+  error={Boolean(errors.email)}
+  helperText={errors.email}
             sx={{fontFamily: 'DM Sans, sans-serif',
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {

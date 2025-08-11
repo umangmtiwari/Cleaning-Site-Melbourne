@@ -40,31 +40,6 @@ const BookNowButton = styled(Button)(() => ({
   },
 }));
 
-const CallNowButton = styled(Button)(() => ({
-  fontFamily: 'DM Sans, sans-serif',
-  fontWeight: 700,
-  fontSize: '1rem',              // slightly smaller font
-  textTransform: 'none',
-  background: 'white',          // white background
-  color: '#000000ff',             // blue text color
-  borderRadius: '30px',         // rounded corners
-  padding: '10px 24px',         // adjusted padding for a balanced height/width
-  border: '2px solid #ffffff', // subtle border with the theme color
-  boxShadow: '0 3px 8px rgba(255, 255, 255, 0)', // softer shadow for a clean look
-  transition: 'all 0.3s ease',
-  letterSpacing: '0.03em',
-  '&:hover': {
-    background: '#ffffff',      // light blue background on hover for contrast
-    color: '#000000ff',           // keep text color consistent on hover
-    border: '2px solid #ffffffff', // border stays the same
-    boxShadow: '0 5px 15px rgba(255, 255, 255, 0)', // stronger shadow on hover
-    transform: 'scale(1.05)',    // subtle zoom effect
-  },
-  '&:active': {
-    transform: 'scale(0.98)',    // small scale effect on active state
-  },
-}));
-
 const ResponsiveAppBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -189,7 +164,7 @@ const ResponsiveAppBar = () => {
 
         {/* Book Now and Call buttons */}
         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Link to="/" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+          <Link to="/contact-us" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
             <Button
                             variant="contained"
                             href="/contact-us"
@@ -211,17 +186,26 @@ const ResponsiveAppBar = () => {
                           </Button>
           </Link>
           <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>
-            <CallNowButton sx={{
-              ml: 2,
-              '&:hover': {
-                borderColor: 'white'
-              },
-              // For smaller screens (under 600px) set black color and border
-              '@media (max-width:600px)': {
-                color: 'black',
-                borderColor: 'black',
-              }
-            }}>Call Now</CallNowButton>
+            <Button
+                            variant="contained"
+                            sx={{
+                              backgroundColor: '#ffffffff',
+                              color:'black',
+                              ml:2,
+                              borderRadius: 30,
+                              px: 4,
+                              py: 1.5,
+                              fontWeight: 600,
+                              textTransform: 'none',
+                              transition: 'transform 0.3s ease-in-out',
+                              '&:hover': {
+                                backgroundColor: '#ffffffff',
+                                transform: 'scale(1.05)',
+                              },
+                            }}
+                          >
+                            Call Now
+                          </Button>
           </a>
         </Box>
       </Toolbar>
@@ -294,6 +278,7 @@ const ResponsiveAppBar = () => {
 </Link>
 
           </ListItem>
+          
           <ListItem button>
             <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>
               <StyledButton fullWidth sx={{
