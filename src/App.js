@@ -13,6 +13,8 @@ import AboutUs from './AboutUs'; // Example About Us page
 import ContactUs from './ContactUs'; // Example Contact Us page
 import Services from './Services'; // Example Services page
 import Chatbot from './Chatbot';
+import TermsAndConditions from './TermsAndConditions';
+import PrivacyPolicy from './PrivacyPolicy';
 
 export default function MelbourneClean() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -60,6 +62,8 @@ export default function MelbourneClean() {
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/termsandconditions" element={<TermsAndConditions />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         </Routes>
         <Chatbot />
 

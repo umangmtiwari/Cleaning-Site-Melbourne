@@ -37,7 +37,7 @@ const Chatbot = () => {
     let botResponse = '';
 
     if (userMessageText.toLowerCase().includes('cost')) {
-      botResponse = 'Our cleaning services start at $80 for 2 hours of home cleaning.';
+      botResponse = 'Our cleaning services start at $169 of home cleaning.';
     } else if (userMessageText.toLowerCase().includes('booking')) {
       botResponse = 'You can make a booking directly on our website by choosing your service and preferred time.';
     } else if (userMessageText.toLowerCase().includes('area')) {
@@ -59,7 +59,6 @@ const Chatbot = () => {
       {/* Chat Icon Button */}
       <Button
         variant="contained"
-        color="blue"
         sx={{
           position: 'fixed',
           bottom: 20,
@@ -67,6 +66,10 @@ const Chatbot = () => {
           borderRadius: '50%',
           padding: 2,
           zIndex: 1000,
+          backgroundColor: '#006699',  // Custom blue color
+    '&:hover': {
+      backgroundColor: '#005780',  // Darker shade on hover
+    },
         }}
         onClick={handleClickOpen}
       >

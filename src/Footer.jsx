@@ -131,11 +131,23 @@ export default function Footer() {
         </Box>
 
         {/* Bottom Bar */}
-        <Box mt={6} pt={3} borderTop="1px solid rgba(255,255,255,0.2)">
-          <Typography variant="caption">
-            &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
-          </Typography>
-        </Box>
+<Box mt={6} pt={3} borderTop="1px solid rgba(255,255,255,0.2)">
+  <Typography variant="caption">
+    <div style={{ marginBottom: '8px' }}>
+      <Link href="/termsandconditions" style={{ color: '#ffffffff', textDecoration: 'none', marginRight: '8px' }}>
+        Terms and Conditions
+      </Link>
+      |
+      <Link href="/privacypolicy" style={{ color: '#ffffffff', textDecoration: 'none', marginLeft: '8px' }}>
+        Privacy Policy
+      </Link>
+    </div>
+    <div>
+      &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
+    </div>
+  </Typography>
+</Box>
+
       </Container>
     </Box>
   );
