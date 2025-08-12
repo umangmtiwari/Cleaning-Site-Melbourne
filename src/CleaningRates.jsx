@@ -288,7 +288,6 @@ Additional services and pricing are listed below of what’s included in our ful
 ['Dust/Clean Doors', <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
 ['Clean Accessible Light Switches/Power Points', <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
 ['Garages', <CancelIcon sx={{ color: '#E53935' }} />, <CancelIcon sx={{ color: '#E53935' }} />, <CancelIcon sx={{ color: '#E53935' }} />],
-['Vacuum/Clean Soft Furnishing', <CancelIcon sx={{ color: '#E53935' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CancelIcon sx={{ color: '#E53935' }} />],
 
 [<span style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{"Floors"}</span>, " ", " "],
 ['Vacuum/Mop All Accessible Floors', <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],

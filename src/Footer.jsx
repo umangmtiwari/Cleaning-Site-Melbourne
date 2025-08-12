@@ -131,22 +131,78 @@ export default function Footer() {
         </Box>
 
         {/* Bottom Bar */}
-<Box mt={6} pt={3} borderTop="1px solid rgba(255,255,255,0.2)">
-  <Typography variant="caption">
-    <div style={{ marginBottom: '8px' }}>
-      <Link href="/termsandconditions" style={{ color: '#ffffffff', textDecoration: 'none', marginRight: '8px' }}>
-        Terms and Conditions
-      </Link>
-      |
-      <Link href="/privacypolicy" style={{ color: '#ffffffff', textDecoration: 'none', marginLeft: '8px' }}>
-        Privacy Policy
-      </Link>
-    </div>
-    <div>
-      &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
-    </div>
-  </Typography>
-</Box>
+<Box mt={6} pt={3} borderTop="1px solid rgba(255, 255, 255, 0.2)">
+      <Typography variant="caption">
+        <div style={{ marginBottom: '8px' }}>
+          <Link
+            href="/termsandconditions"
+            sx={{
+              color: '#fff',
+              textDecoration: 'none',
+              marginRight: '8px',
+              position: 'relative',
+              fontWeight: 'bold',
+              '&:hover': {
+                color: '#ecececff', // Color on hover (adjust as needed)
+              },
+              '&:after': {
+                content: '""',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: '100%',
+                height: '2px',
+                backgroundColor: '#ecececff', // Underline color
+                transform: 'scaleX(0)',
+                transformOrigin: 'bottom right',
+                transition: 'transform 0.3s ease-out',
+              },
+              '&:hover:after': {
+                transform: 'scaleX(1)',
+                transformOrigin: 'bottom left',
+              },
+            }}
+          >
+            Terms and Conditions
+          </Link>
+          |
+          <Link
+            href="/privacypolicy"
+            sx={{
+              color: '#fff',
+              textDecoration: 'none',
+              marginLeft: '8px',
+              position: 'relative',
+              fontWeight: 'bold',
+              '&:hover': {
+                color: '#ecececff', // Color on hover (adjust as needed)
+              },
+              '&:after': {
+                content: '""',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: '100%',
+                height: '2px',
+                backgroundColor: '#ecececff', // Underline color
+                transform: 'scaleX(0)',
+                transformOrigin: 'bottom right',
+                transition: 'transform 0.3s ease-out',
+              },
+              '&:hover:after': {
+                transform: 'scaleX(1)',
+                transformOrigin: 'bottom left',
+              },
+            }}
+          >
+            Privacy Policy
+          </Link>
+        </div>
+        <div>
+          &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
+        </div>
+      </Typography>
+    </Box>
 
       </Container>
     </Box>

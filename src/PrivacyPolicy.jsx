@@ -1,7 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button, Container, List, ListItem } from '@mui/material';
-import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
+import { Box, Typography, Container } from '@mui/material';
 
 const PrivacyPolicy = () => {
   return (
@@ -12,7 +10,7 @@ const PrivacyPolicy = () => {
           sx={{
             mt: 5,
             mb: 5,
-            backgroundImage: 'url(/privacy.jpg)',
+            backgroundImage: 'url(/privacy.jpg)',  // You can update this image path
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '60vh',
@@ -125,66 +123,6 @@ const PrivacyPolicy = () => {
           <Typography variant="body1" paragraph>
             We conduct our business in accordance with these principles to ensure that the confidentiality and integrity of personal information is protected
             and maintained. Our staff are trained and held accountable for complying with this Privacy Policy.
-          </Typography>
-        </Box>
-
-        {/* Contact Information Section */}
-        <Typography variant="h4" align="center" gutterBottom>
-          Contact Information
-        </Typography>
-        <Typography variant="body1" paragraph>
-          <strong>Business Hours:</strong> Mon–Fri, 9am–5pm<br />
-          <strong>Weekend & Public Holiday Hours:</strong> 9am – 4pm<br />
-          <strong>Contact No:</strong> -------------------<br />
-          <strong>SMS Us:</strong> -------------- (SMS only – no photos)<br />
-          <strong>For photo submissions:</strong> email services@cleancommerce.com.au
-        </Typography>
-
-        {/* Additional Information Section */}
-        <Typography variant="h4" align="center" gutterBottom>
-          Additional Information
-        </Typography>
-        <Box sx={{ marginBottom: 4 }}>
-          <Typography variant="body1" paragraph>
-            <strong>200% Satisfaction Guarantee:</strong> If you are unsatisfied with your service, contact our support team within 48 hours and provide photos. Photos
-            are required to activate the 200% guarantee. If we cannot resolve the issue, a full refund may be considered depending on the circumstances.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            <strong>Move-Out Services:</strong> You have 7 days to contact support after a move-out clean. If necessary, a re-clean will be arranged within 7 days of the
-            original service.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            <strong>Steam Cleaning:</strong> The satisfaction guarantee does not apply to steam cleaning services, except in exceptional cases. Our professional
-            equipment will clean carpets/upholstery to the best possible standard. However, permanent stains may not be removable.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            <strong>COVID-19 Safety Measures:</strong> All team members strictly adhere to current government COVID-19 regulations at the time of your booking.
-            We maintain a comprehensive COVID-Safe Plan. Cleaners will carry masks, gloves, and shoe covers, and will wear them upon request.
-          </Typography>
-
-          {/* Service Exclusions Section */}
-          <Typography variant="body1" paragraph>
-            <strong>Service Exclusions:</strong>
-            <List sx={{ pl: 4 }}>
-              <ListItem>Moving heavy/large furniture</ListItem>
-              <ListItem>Floor grout cleaning</ListItem>
-              <ListItem>Ceiling cleaning</ListItem>
-              <ListItem>Oven glass sheet interiors</ListItem>
-              <ListItem>Rubbish removal</ListItem>
-              <ListItem>Human/animal waste removal</ListItem>
-              <ListItem>Stained silicone</ListItem>
-              <ListItem>Adhesive/paint removal</ListItem>
-              <ListItem>Air conditioning filters</ListItem>
-              <ListItem>Fly screen or curtain removal</ListItem>
-              <ListItem>High-pressure cleaning</ListItem>
-              <ListItem>Concrete stains</ListItem>
-              <ListItem>Garage cleaning</ListItem>
-              <ListItem>Exterior property cleaning (including windows, gardens, pools, BBQs)</ListItem>
-              <ListItem>Pest control</ListItem>
-            </List>
           </Typography>
         </Box>
       </Container>
