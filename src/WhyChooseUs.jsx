@@ -22,19 +22,20 @@ export default function WhyChooseUs() {
     {/* Expertise and Experience Card */}
     <Grid item xs={12} sm={6} md={6}>
       <Card
-        sx={{
-          boxShadow: 3,
-          height: '300px',
-          width: '450px',  // Keep original width for large screens
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Smooth transition
-          '&:hover': {
-            transform: 'scale(1.05)', // Slightly scale up the card on hover
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow for emphasis
-          },
-        }}
-      >
+  sx={{
+    boxShadow: 3,
+    height: { xs: 'auto', sm: '320px' },  // Allow flexible height on mobile
+    width: { xs: '100%', sm: '100%', md: '450px' }, // Responsive width
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+    },
+  }}
+>
+
         <CardMedia
           component="img"
           height="140"
@@ -54,19 +55,20 @@ export default function WhyChooseUs() {
     {/* Eco-Friendly Solutions Card */}
     <Grid item xs={12} sm={6} md={6}>
       <Card
-        sx={{
-          boxShadow: 3,
-          height: '300px',
-          width: '450px',  // Keep original width for large screens
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Smooth transition
-          '&:hover': {
-            transform: 'scale(1.05)', // Slightly scale up the card on hover
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow for emphasis
-          },
-        }}
-      >
+  sx={{
+    boxShadow: 3,
+    height: { xs: 'auto', sm: '320px' },  // Allow flexible height on mobile
+    width: { xs: '100%', sm: '100%', md: '450px' }, // Responsive width
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+    },
+  }}
+>
+
         <CardMedia
           component="img"
           height="140"
@@ -86,19 +88,20 @@ export default function WhyChooseUs() {
     {/* Reliable and Trustworthy Card */}
     <Grid item xs={12} sm={6} md={6}>
       <Card
-        sx={{
-          boxShadow: 3,
-          height: '300px',
-          width: '450px',  // Keep original width for large screens
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Smooth transition
-          '&:hover': {
-            transform: 'scale(1.05)', // Slightly scale up the card on hover
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow for emphasis
-          },
-        }}
-      >
+  sx={{
+    boxShadow: 3,
+    height: { xs: 'auto', sm: '320px' },  // Allow flexible height on mobile
+    width: { xs: '100%', sm: '100%', md: '450px' }, // Responsive width
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+    },
+  }}
+>
+
         <CardMedia
           component="img"
           height="140"
@@ -118,19 +121,20 @@ export default function WhyChooseUs() {
     {/* Attention to Detail Card */}
     <Grid item xs={12} sm={6} md={6}>
       <Card
-        sx={{
-          boxShadow: 3,
-          height: '300px',
-          width: '450px',  // Keep original width for large screens
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Smooth transition
-          '&:hover': {
-            transform: 'scale(1.05)', // Slightly scale up the card on hover
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)', // Add shadow for emphasis
-          },
-        }}
-      >
+  sx={{
+    boxShadow: 3,
+    height: { xs: 'auto', sm: '320px' },  // Allow flexible height on mobile
+    width: { xs: '100%', sm: '100%', md: '450px' }, // Responsive width
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+    },
+  }}
+>
+
         <CardMedia
           component="img"
           height="140"

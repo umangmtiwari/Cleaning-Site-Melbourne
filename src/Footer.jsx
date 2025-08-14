@@ -14,12 +14,12 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 export default function Footer() {
   return (
-            <Box
+    <Box
       component="footer"
       sx={{
         backgroundColor: '#2049A3',
         color: '#fff',
-        py: 6,
+        py: { xs: 4, sm: 6 },  // Less padding on mobile
         fontFamily: 'DM Sans, sans-serif',
         textAlign: 'center',
       }}
@@ -31,7 +31,7 @@ export default function Footer() {
             display: 'flex',
             justifyContent: 'center',
             width: '100%',
-            ml:-11,
+            ml: { xs: 0, sm: -11 },  // Adjust for mobile
           }}
         >
           <Grid
@@ -40,13 +40,17 @@ export default function Footer() {
             maxWidth="1000px"
             justifyContent="center"
             alignItems="flex-start"
+            sx={{
+              flexDirection: { xs: 'column', sm: 'row' },  // Stack on small screens
+              textAlign: { xs: 'center', sm: 'left' },  // Center text on mobile
+            }}
           >
             {/* Left Column */}
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={4}>
               <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
                 Why Choose Clean Commerce?
               </Typography>
-              <Stack spacing={1} alignItems="center">
+              <Stack spacing={1} alignItems="center" sx={{ textAlign: 'left' }}>
                 <Typography variant="body2">✓ Trusted Cleaning Professionals</Typography>
                 <Typography variant="body2">✓ Eco-Friendly & Safe Products</Typography>
                 <Typography variant="body2">✓ 100% Satisfaction Guarantee</Typography>
@@ -55,7 +59,7 @@ export default function Footer() {
             </Grid>
 
             {/* Center Column */}
-            <Grid item xs={12} md={4} ml={5}>
+            <Grid item xs={12} sm={4} sx={{ textAlign: 'center', pl:2 }}>
               <Stack direction="row" justifyContent="center" spacing={2} mb={2}>
                 <Link href="https://www.instagram.com" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Instagram /></IconButton>
@@ -63,7 +67,7 @@ export default function Footer() {
                 <Link href="https://www.facebook.com" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Facebook /></IconButton>
                 </Link>
-                
+
                 <Link href="mailto:contact@CleanCommerce.com" color="inherit">
                   <IconButton color="inherit"><Email /></IconButton>
                 </Link>
@@ -103,18 +107,21 @@ export default function Footer() {
 
               <Box mt={3}>
                 <Typography variant="body2">Phone: +61 400 123 456</Typography>
-                <Typography variant="body2"><LocationOnOutlinedIcon sx={{fontSize:12}}></LocationOnOutlinedIcon> Melbourne Victoria</Typography>
-                <Typography variant='body2'>ABN: 95279464367</Typography>
+                <Typography variant="body2">
+                  <LocationOnOutlinedIcon sx={{ fontSize: 12 }} />
+                  Melbourne Victoria
+                </Typography>
+                <Typography variant="body2">ABN: 95279464367</Typography>
               </Box>
             </Grid>
 
             {/* Right Column */}
-            <Grid item xs={12} md={4} ml={5}>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, pl:10 }}>
                 Quick Links
               </Typography>
-              <Stack spacing={1} alignItems="center">
-                {['Services', 'Pricing', 'About Us', 'Contact Us'].map((text) => (
+              <Stack spacing={1} alignItems="center" sx={{ textAlign: 'left', pl:10 }}>
+                {['Pricing', 'About Us', 'Contact Us'].map((text) => (
                   <Link
                     key={text}
                     href={`/${text.toLowerCase().replace(/\s+/g, '-')}`}
@@ -131,79 +138,11 @@ export default function Footer() {
         </Box>
 
         {/* Bottom Bar */}
-<Box mt={6} pt={3} borderTop="1px solid rgba(255, 255, 255, 0.2)">
-      <Typography variant="caption">
-        <div style={{ marginBottom: '8px' }}>
-          <Link
-            href="/termsandconditions"
-            sx={{
-              color: '#fff',
-              textDecoration: 'none',
-              marginRight: '8px',
-              position: 'relative',
-              fontWeight: 'bold',
-              '&:hover': {
-                color: '#ecececff', // Color on hover (adjust as needed)
-              },
-              '&:after': {
-                content: '""',
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                height: '2px',
-                backgroundColor: '#ecececff', // Underline color
-                transform: 'scaleX(0)',
-                transformOrigin: 'bottom right',
-                transition: 'transform 0.3s ease-out',
-              },
-              '&:hover:after': {
-                transform: 'scaleX(1)',
-                transformOrigin: 'bottom left',
-              },
-            }}
-          >
-            Terms and Conditions
-          </Link>
-          |
-          <Link
-            href="/privacypolicy"
-            sx={{
-              color: '#fff',
-              textDecoration: 'none',
-              marginLeft: '8px',
-              position: 'relative',
-              fontWeight: 'bold',
-              '&:hover': {
-                color: '#ecececff', // Color on hover (adjust as needed)
-              },
-              '&:after': {
-                content: '""',
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                height: '2px',
-                backgroundColor: '#ecececff', // Underline color
-                transform: 'scaleX(0)',
-                transformOrigin: 'bottom right',
-                transition: 'transform 0.3s ease-out',
-              },
-              '&:hover:after': {
-                transform: 'scaleX(1)',
-                transformOrigin: 'bottom left',
-              },
-            }}
-          >
-            Privacy Policy
-          </Link>
-        </div>
-        <div>
-          &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
-        </div>
-      </Typography>
-    </Box>
-
+        <Box mt={6} pt={3} borderTop="1px solid rgba(255,255,255,0.2)">
+          <Typography variant="caption">
+            &copy; {new Date().getFullYear()} Clean Commerce. All rights reserved.
+          </Typography>
+        </Box>
       </Container>
     </Box>
   );

@@ -218,20 +218,7 @@ const ResponsiveAppBar = () => {
         sx={{ display: { xs: 'block', md: 'none' } }}
       >
         <List sx={{ width: 250, padding: '20px 0' }}>
-          <ListItem button>
-            <Link to="/services" style={{ textDecoration: 'none' }}>
-              <StyledButton fullWidth sx={{
-                mb: 2,
-                color: 'black',  // Default for mobile
-                borderColor: 'black',
-                '&:hover': {
-                  color: 'black',
-                  borderColor: 'black',
-                },
-              }}>Services</StyledButton>
-            </Link>
-          </ListItem>
-          <ListItem button>
+          <ListItem button onClick={closeMobileMenu}>
             <Link to="/pricing" style={{ textDecoration: 'none' }}>
               <StyledButton fullWidth sx={{
                 mb: 2,
@@ -241,10 +228,10 @@ const ResponsiveAppBar = () => {
                   color: 'black',
                   borderColor: 'black',
                 },
-              }}>Pricing</StyledButton>
+              }}>Services & Pricing</StyledButton>
             </Link>
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={closeMobileMenu}>
             <Link to="/about-us" style={{ textDecoration: 'none' }}>
               <StyledButton fullWidth sx={{
                 mb: 2,
@@ -257,7 +244,7 @@ const ResponsiveAppBar = () => {
               }}>About Us</StyledButton>
             </Link>
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={closeMobileMenu}>
             <Link to="/contact-us" style={{ textDecoration: 'none' }}>
               <StyledButton fullWidth sx={{
                 mb: 2,
@@ -270,7 +257,7 @@ const ResponsiveAppBar = () => {
               }}>Contact Us</StyledButton>
             </Link>
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={closeMobileMenu}>
             <Link to="/contact-us">
   <BookNowButton>
     Get a Quote

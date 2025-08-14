@@ -54,353 +54,310 @@ const handleSubmit = () => {
 
 
   return (
-    <Container sx={{ mt: 5, mb: 5 }}>
-          <Box
+<Container sx={{ mt: 5, mb: 5 }}>
+  <Box
+    sx={{
+      mt: 5,
+      mb: 5,
+      backgroundImage: 'url(/clean3.jpg)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      height: '60vh',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '10px',
+      position: 'relative',
+      textAlign: 'center',
+      color: 'white',
+    }}
+  >
+    <Box
       sx={{
-        mt: 5,
-        mb: 5,
-        backgroundImage: 'url(/clean3.jpg)', // Background image from the public folder
-        backgroundSize: 'cover', // Ensures the image covers the container
-        backgroundPosition: 'center', // Centers the background image
-        height: '60vh', // Adjust this to control the height of the container
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '10px', // Optional: rounded corners for a softer look
-        position: 'relative', // Ensures overlay can be positioned over the content
-        textAlign: 'center', // Center the text
-        color: 'white', // White color for the text to stand out
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        borderRadius: '10px',
+      }}
+    />
+    <Typography
+      variant="h4"
+      gutterBottom
+      sx={{
+        fontWeight: 'bold',
+        color: 'white',
+        zIndex: 1,
+        textShadow: '2px 2px 5px rgba(0, 0, 0, 0.5)',
       }}
     >
-      {/* Overlay for background image */}
-      <Box
+      Get in Touch
+    </Typography>
+    <Typography
+      variant="body1"
+      paragraph
+      sx={{
+        color: '#f4f4f4',
+        zIndex: 1,
+        textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+      }}
+    >
+      We're here to assist with all your cleaning needs. Fill out the form below to book a service or get in touch.
+    </Typography>
+  </Box>
+
+  <Box
+    sx={{
+      fontFamily: 'DM Sans, sans-serif',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      '@media (min-width: 600px)': {
+        flexDirection: 'row',
+      },
+    }}
+  >
+    {/* Left Side: Contact Info */}
+    <Box sx={{ flex: 1 }}>
+      <Typography
+        variant="h6"
+        sx={{ color: '#006699', fontWeight: 'bold', marginBottom: 2 }}
+      >
+        Contact Info
+      </Typography>
+
+      <TextField
+        required
+        label="First Name"
+        name="firstName"
+        variant="outlined"
+        fullWidth
+        onChange={handleChange}
+        value={formData.firstName}
         sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay to improve text visibility
-          borderRadius: '10px', // Optional: keeps rounded corners for overlay
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': { borderColor: '#006699' },
+            '&.Mui-focused fieldset': { borderColor: '#006699' },
+          },
+          marginBottom: 2,
         }}
       />
       
-      {/* Heading */}
-      <Typography 
-        variant="h4" 
-        gutterBottom 
-        sx={{ 
-          fontWeight: 'bold', 
-          color: 'white',  // White color for visibility
-          zIndex: 1,  // Ensures the text appears over the overlay
-          textShadow: '2px 2px 5px rgba(0, 0, 0, 0.5)', // Text shadow for better readability
+      <TextField
+        required
+        label="Last Name"
+        name="lastName"
+        variant="outlined"
+        fullWidth
+        onChange={handleChange}
+        value={formData.lastName}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': { borderColor: '#006699' },
+            '&.Mui-focused fieldset': { borderColor: '#006699' },
+          },
+          marginBottom: 2,
         }}
-      >
-        Get in Touch
-      </Typography>
-
-      {/* Trust-Building Content */}
-      <Typography 
-        variant="body1" 
-        paragraph 
-        sx={{ 
-          color: '#f4f4f4', // Light text color for better contrast
-          zIndex: 1,  // Ensures the text appears over the overlay
-          textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)', // Text shadow for better readability
+      />
+      
+      <TextField
+        required
+        label="Phone"
+        name="phone"
+        variant="outlined"
+        fullWidth
+        onChange={handleChange}
+        value={formData.phone}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': { borderColor: '#006699' },
+            '&.Mui-focused fieldset': { borderColor: '#006699' },
+          },
+          marginBottom: 2,
         }}
-      >
-        We're here to assist with all your cleaning needs. Fill out the form below to book a service or get in touch.
-      </Typography>
-    </Box>
+      />
 
-      <Box sx={{ fontFamily: 'DM Sans, sans-serif', display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-        {/* Left Side: Contact Info */}
-        <Box sx={{ flex: 1 }}>
-  <Typography variant="h6" sx={{ color: '#006699', fontWeight: 'bold', marginBottom: 2 }}>Contact Info</Typography>
-  
-<TextField
-  required
-  label="First Name"
-  name="firstName"
-  variant="outlined"
-  fullWidth
-  onChange={handleChange}
-  value={formData.firstName}
-  sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#006699',
-      },
-      '&:hover fieldset': {
-        borderColor: '#006699',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#006699',
-      },
-    },
-    marginBottom: 2, // Add space below each input field
-  }}
-/>
+      <TextField
+        required
+        label="Email"
+        name="email"
+        type="email"
+        variant="outlined"
+        fullWidth
+        onChange={handleChange}
+        value={formData.email}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': { borderColor: '#006699' },
+            '&.Mui-focused fieldset': { borderColor: '#006699' },
+          },
+          marginBottom: 2,
+        }}
+      />
 
-<TextField
-  required
-  label="Last Name"
-  name="lastName"
-  variant="outlined"
-  fullWidth
-  onChange={handleChange}
-  value={formData.lastName}
-  sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#006699',
-      },
-      '&:hover fieldset': {
-        borderColor: '#006699',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#006699',
-      },
-    },
-    marginBottom: 2, // Add space below each input field
-  }}
-/>
+      <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.propertyType === ''}>
+        <InputLabel required>Property Type</InputLabel>
+        <Select
+          label="Property Type"
+          name="propertyType"
+          value={formData.propertyType}
+          onChange={handleChange}
+          required
+        >
+          <MenuItem value="House">House</MenuItem>
+          <MenuItem value="Apartment">Apartment</MenuItem>
+          <MenuItem value="Office">Office</MenuItem>
+          <MenuItem value="Unit">Unit</MenuItem>
+        </Select>
+      </FormControl>
 
-<TextField
-  required
-  label="Phone"
-  name="phone"
-  variant="outlined"
-  fullWidth
-  onChange={handleChange}
-  value={formData.phone}
-  sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#006699',
-      },
-      '&:hover fieldset': {
-        borderColor: '#006699',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#006699',
-      },
-    },
-    marginBottom: 2, // Add space below each input field
-  }}
-/>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mt:3 }}>
+        <Link href="https://www.instagram.com" target="_blank" sx={{ ml: 2 }}>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram" style={{ width: 25, height: 25 }} />
+        </Link>
 
-<TextField
-  required
-  label="Email"
-  name="email"
-  type="email"
-  variant="outlined"
-  fullWidth
-  onChange={handleChange}
-  value={formData.email}
-  sx={{
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#006699',
-      },
-      '&:hover fieldset': {
-        borderColor: '#006699',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#006699',
-      },
-    },
-    marginBottom: 2, // Add space below each input field
-  }}
-/>
+        <Link href="https://www.facebook.com" target="_blank" sx={{ ml: 2 }}>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" style={{ marginLeft: 10, width: 25, height: 25 }} />
+        </Link>
 
-{/* Property Type */}
-          <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.propertyType === ''}>
-  <InputLabel required>Property Type</InputLabel>
-  <Select
-    label="Property Type"
-    name="propertyType"
-    value={formData.propertyType}
-    onChange={handleChange}
-    required
-  >
-    <MenuItem value="House">House</MenuItem>
-    <MenuItem value="Apartment">Apartment</MenuItem>
-    <MenuItem value="Office">Office</MenuItem>
-    <MenuItem value="Unit">Unit</MenuItem>
-  </Select>
-</FormControl>
+        <Link href="mailto:contact@CleanCommerce.com" sx={{ ml: 2 }}>
+          <img src="https://cdn-icons-png.flaticon.com/512/9810/9810022.png" alt="Email" style={{ marginLeft: 10, width: 25, height: 25 }} />
+        </Link>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', spacing: 2 }}>
-      {/* Instagram Link */}
-      <Link href="https://www.instagram.com" target="_blank" sx={{ ml: 2 }}>
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" 
-          alt="Instagram"
-          style={{width: 25, height: 25 }} // Adjust the size accordingly
-        />
-      </Link>
-
-      {/* Facebook Link */}
-      <Link href="https://www.facebook.com" target="_blank" sx={{ ml: 2 }}>
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" 
-          alt="Facebook"
-          style={{ marginLeft: 10, width: 25, height: 25 }} // Adjust the size accordingly
-        />
-      </Link>
-
-      {/* Email (Message) Link */}
-      <Link href="mailto:contact@CleanCommerce.com" sx={{ ml: 2 }}>
-        <img 
-          src="https://cdn-icons-png.flaticon.com/512/9810/9810022.png" 
-          alt="Email"
-          style={{ marginLeft: 10, width: 25, height: 25 }} // Adjust the size accordingly
-        />
-      </Link>
-
-      {/* Phone Link */}
-      <Link href="tel:+61383917026" sx={{ ml: 2 }}>
-        <img 
-          src="https://pngimg.com/uploads/phone/phone_PNG48921.png" 
-          alt="Phone"
-          style={{ marginLeft: 10, width: 25, height: 25 }} // Adjust the size accordingly
-        />
-      </Link>
-    </Box>
-</Box>
-
-        {/* Right Side: Service & Property Info */}
-        <Box sx={{ flex: 1, marginTop: 5 }}>
-          
-          {/* Type of Service */}
-          <FormControl fullWidth sx={{ marginBottom: 2, marginTop: 1 }} error={isSubmitted && formData.serviceType === ''}>
-  <InputLabel required>Type of Service</InputLabel>
-  <Select
-    label="Type of Service"
-    name="serviceType"
-    value={formData.serviceType}
-    onChange={handleChange}
-    required
-  >
-    <MenuItem value="SuperClean">Super Clean</MenuItem>
-    <MenuItem value="SpringClean">Spring Clean</MenuItem>
-    <MenuItem value="EndOfLease">End of Lease (Empty)</MenuItem>
-  </Select>
-</FormControl>
-          
-{/* Service Frequency */}
-          <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.serviceNeed === ''}>
-  <InputLabel required>How often do you need this service?</InputLabel>
-  <Select
-    label="Service Need"
-    name="serviceNeed"
-    value={formData.serviceNeed}
-    onChange={handleChange}
-    required
-  >
-    <MenuItem value="OnceOff">Once-Off</MenuItem>
-    <MenuItem value="Weekly">Weekly</MenuItem>
-    <MenuItem value="Fortnightly">Fortnightly</MenuItem>
-    <MenuItem value="Monthly">Monthly</MenuItem>
-    <MenuItem value="Quarterly">Quarterly</MenuItem>
-    <MenuItem value="BiAnnually">Bi-Annually</MenuItem>
-  </Select>
-</FormControl>
-          
-          <Typography variant="subtitle1" color="black" gutterBottom>
-  Property Size
-</Typography>
-
-<Box display="flex" gap={2} flexWrap="wrap" marginBottom={2}>
-  {/* Bedroom */}
-  <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bedroom === ''}>
-  <InputLabel required>Bedroom</InputLabel>
-  <Select
-    name="bedroom"
-    value={formData.bedroom}
-    label="Bedroom"
-    onChange={handleChange}
-    required
-  >
-    {Array.from({ length: 7 }, (_, i) => (
-      <MenuItem key={i} value={i}>{i}</MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-<FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bathroom === ''}>
-  <InputLabel required>Bathroom</InputLabel>
-  <Select
-    name="bathroom"
-    value={formData.bathroom}
-    label="Bathroom"
-    onChange={handleChange}
-    required
-  >
-    {Array.from({ length: 7 }, (_, i) => (
-      <MenuItem key={i} value={i}>{i}</MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-<FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.kitchen === ''}>
-  <InputLabel required>Kitchen</InputLabel>
-  <Select
-    name="kitchen"
-    value={formData.kitchen}
-    label="Kitchen"
-    onChange={handleChange}
-    required
-  >
-    {Array.from({ length: 7 }, (_, i) => (
-      <MenuItem key={i} value={i}>{i}</MenuItem>
-    ))}
-  </Select>
-</FormControl>
-</Box>
-
-
-          <TextField
-            label="Additional Info"
-            name="additionalInfo"
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            onChange={handleChange}
-            value={formData.additionalInfo}
-            sx={{ marginBottom: 2 }}
-          />
-
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#006699',
-              color: 'white',
-              borderRadius: '50px',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              padding: '12px 24px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              '&:hover': {
-                backgroundColor: '#006699',
-                boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',
-                transform: 'translateY(-3px)',
-              },
-              transition: 'all 0.3s ease',
-            }}
-            startIcon={<EmailIcon />}
-            onClick={handleSubmit}
-          >
-            Contact Us
-          </Button>
-        </Box>
+        <Link href="tel:+61383917026" sx={{ ml: 2 }}>
+          <img src="https://pngimg.com/uploads/phone/phone_PNG48921.png" alt="Phone" style={{ marginLeft: 10, width: 25, height: 25 }} />
+        </Link>
       </Box>
-    </Container>
+    </Box>
+
+    {/* Right Side: Service & Property Info */}
+    <Box sx={{ flex: 1, marginTop: 5 }}>
+      <FormControl fullWidth sx={{ marginBottom: 2}} error={isSubmitted && formData.serviceType === ''}>
+        <InputLabel required>Type of Service</InputLabel>
+        <Select
+          label="Type of Service"
+          name="serviceType"
+          value={formData.serviceType}
+          onChange={handleChange}
+          required
+        >
+          <MenuItem value="SuperClean">Super Clean</MenuItem>
+          <MenuItem value="SpringClean">Spring Clean</MenuItem>
+          <MenuItem value="EndOfLease">End of Lease (Empty)</MenuItem>
+        </Select>
+      </FormControl>
+          
+      <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.serviceNeed === ''}>
+        <InputLabel required>How often do you need this service?</InputLabel>
+        <Select
+          label="Service Need"
+          name="serviceNeed"
+          value={formData.serviceNeed}
+          onChange={handleChange}
+          required
+        >
+          <MenuItem value="OnceOff">Once-Off</MenuItem>
+          <MenuItem value="Weekly">Weekly</MenuItem>
+          <MenuItem value="Fortnightly">Fortnightly</MenuItem>
+          <MenuItem value="Monthly">Monthly</MenuItem>
+          <MenuItem value="Quarterly">Quarterly</MenuItem>
+          <MenuItem value="BiAnnually">Bi-Annually</MenuItem>
+        </Select>
+      </FormControl>
+          
+      <Typography variant="subtitle1" color="black" gutterBottom>
+        Property Size
+      </Typography>
+
+      <Box display="flex" gap={2} flexWrap="wrap" marginBottom={2}>
+        <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bedroom === ''}>
+          <InputLabel required>Bedroom</InputLabel>
+          <Select
+            name="bedroom"
+            value={formData.bedroom}
+            label="Bedroom"
+            onChange={handleChange}
+            required
+          >
+            {Array.from({ length: 7 }, (_, i) => (
+              <MenuItem key={i} value={i}>{i}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bathroom === ''}>
+          <InputLabel required>Bathroom</InputLabel>
+          <Select
+            name="bathroom"
+            value={formData.bathroom}
+            label="Bathroom"
+            onChange={handleChange}
+            required
+          >
+            {Array.from({ length: 7 }, (_, i) => (
+              <MenuItem key={i} value={i}>{i}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.kitchen === ''}>
+          <InputLabel required>Kitchen</InputLabel>
+          <Select
+            name="kitchen"
+            value={formData.kitchen}
+            label="Kitchen"
+            onChange={handleChange}
+            required
+          >
+            {Array.from({ length: 7 }, (_, i) => (
+              <MenuItem key={i} value={i}>{i}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
+      <TextField
+        label="Additional Info"
+        name="additionalInfo"
+        variant="outlined"
+        fullWidth
+        multiline
+        rows={4}
+        onChange={handleChange}
+        value={formData.additionalInfo}
+        sx={{ marginBottom: 2 }}
+      />
+
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: '#006699',
+          color: 'white',
+          borderRadius: '50px',
+          fontSize: '1.1rem',
+          fontWeight: 'bold',
+          padding: '12px 24px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          '&:hover': {
+            backgroundColor: '#006699',
+            boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',
+            transform: 'translateY(-3px)',
+          },
+          transition: 'all 0.3s ease',
+        }}
+        startIcon={<EmailIcon />}
+        onClick={handleSubmit}
+      >
+        Contact Us
+      </Button>
+    </Box>
+  </Box>
+</Container>
+
   );
 };
 

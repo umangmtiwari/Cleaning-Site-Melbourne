@@ -37,9 +37,9 @@ const Chatbot = () => {
     let botResponse = '';
 
     if (userMessageText.toLowerCase().includes('cost')) {
-      botResponse = 'Our cleaning services start at $169 of home cleaning.';
+      botResponse = 'Our professional home cleaning services start from just $169.';
     } else if (userMessageText.toLowerCase().includes('booking')) {
-      botResponse = 'You can make a booking directly on our website by choosing your service and preferred time.';
+      botResponse = 'You can book directly through our website by selecting your preferred service.';
     } else if (userMessageText.toLowerCase().includes('area')) {
       botResponse = 'Yes! We provide cleaning services across Melbourne.';
     } else if (userMessageText.toLowerCase().includes('discount')) {

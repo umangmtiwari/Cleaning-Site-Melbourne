@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Emily Hartman",
+    "clean_type": "Spring Clean",
+    "email": "emily.hartman@example.com"
+  },
+  {
+    "name": "Jared Thompson",
+    "clean_type": "SuperClean",
+    "email": "jared.thompson@example.com"
+  },
+  {
+    "name": "Sophia Li",
+    "clean_type": "End of Lease",
+    "email": "sophia.li@example.com"
+  },
+  {
+    "name": "Marcus Green",
+    "clean_type": "Spring Clean",
+    "email": "marcus.green@example.com"
+  },
+  {
+    "name": "Isabella Rossi",
+    "clean_type": "SuperClean",
+    "email": "isabella.rossi@example.com"
+  }
+]

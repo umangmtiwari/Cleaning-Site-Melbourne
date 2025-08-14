@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import BookingForm from './BookingForm';
 import WhyChooseUs from './WhyChooseUs';
-import CleaningRates from './CleaningRates';
+import AdminHome from './pages/AdminHome'; // Import your AdminHome page
 import Testimony from './Testimony';
 import Popup from './Popup';
 import { useEffect, useState } from 'react';
@@ -15,6 +15,7 @@ import Services from './Services'; // Example Services page
 import Chatbot from './Chatbot';
 import TermsAndConditions from './TermsAndConditions';
 import PrivacyPolicy from './PrivacyPolicy';
+import Login from './pages/Login';
 
 export default function MelbourneClean() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -64,6 +65,10 @@ export default function MelbourneClean() {
           <Route path="/services" element={<Services />} />
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin/home" element={<AdminHome />} />
+        <Route path="/admin/login" element={<Login />} />
         </Routes>
         <Chatbot />
 

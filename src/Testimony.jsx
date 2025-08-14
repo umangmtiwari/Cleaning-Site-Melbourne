@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, CardContent, Typography, Avatar, Box, Rating, IconButton } from '@mui/material';
+import { Container, Card, CardContent, Typography, Avatar, Box, Rating, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'; // Import arrow icons
 
 // Updated testimonialsData with profile pictures
@@ -49,12 +49,15 @@ const testimonialsData = [
 ];
 
 function Testimony() {
-  const [currentTestimonial, setCurrentTestimonial] = useState(1); // Start with the second testimonial in the center
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // true if screen is small/mobile
 
-  const testimonialsPerView = 1; // We want to display 1 testimonial per navigation click
+  const [currentTestimonial, setCurrentTestimonial] = useState(1);
+
+  const testimonialsPerView = 1;
 
   const nextTestimonial = () => {
-    if (currentTestimonial < testimonialsData.length - 1) { // Ensure we do not go past the last testimonial
+    if (currentTestimonial < testimonialsData.length - 1) {
       setCurrentTestimonial((prevIndex) => prevIndex + testimonialsPerView);
     }
   };
@@ -65,121 +68,126 @@ function Testimony() {
     }
   };
 
-  // Calculate the start and end index for the three testimonials to display
-  const startIndex = Math.max(0, currentTestimonial - 1);
-  const endIndex = Math.min(testimonialsData.length - 1, currentTestimonial + 1);
-useEffect(() => {
-  const interval = setInterval(() => {
-    setCurrentTestimonial((prevIndex) =>
-      prevIndex < testimonialsData.length - 1 ? prevIndex + 1 : 0
-    );
-  }, 1500); // Change testimonial every 2 seconds
+  // On mobile: show only the current testimonial
+  // On desktop: show 3 centered testimonials
+  const visibleTestimonials = isMobile 
+    ? testimonialsData.slice(currentTestimonial, currentTestimonial + 1)
+    : testimonialsData.slice(
+        Math.max(0, currentTestimonial - 1), 
+        Math.min(testimonialsData.length - 1, currentTestimonial + 1) + 1
+      );
 
-  return () => clearInterval(interval); // Clean up the interval on unmount
-}, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prevIndex) =>
+        prevIndex < testimonialsData.length - 1 ? prevIndex + 1 : 0
+      );
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const getClassName = (index) => {
     return index === currentTestimonial ? 'center' : 'other';
   };
 
   return (
-<Container maxWidth="md" sx={{ my: 4 }}>
-  <Typography variant="h5" textAlign="center" color="#2049A3" gutterBottom paddingBottom={3}>
-    Customer Testimonials
-  </Typography>
+    <Container maxWidth="md" sx={{ my: 4 }}>
+      <Typography variant="h5" textAlign="center" color="#2049A3" gutterBottom paddingBottom={3}>
+        Customer Testimonials
+      </Typography>
 
-  <Box display="flex" justifyContent="center" alignItems="center" sx={{ position: 'relative' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" sx={{ position: 'relative' }}>
 
-    {/* Left Navigation Button */}
-    <IconButton
-      onClick={prevTestimonial}
-      sx={{
-        position: 'absolute',
-        left: { xs: '10px', md: '-50px' }, // For mobile, move button closer, for large screens, keep it away from cards
-        zIndex: 1,
-        color: '#006699',
-        display: { xs: 'block', md: 'block' }, // Show on all screens
-        opacity: { xs: 1, sm: 0.8, md: 1 }, // Slightly transparent on smaller screens for better viewability
-      }}
-    >
-      <ChevronLeft />
-    </IconButton>
-
-    {/* Display Testimonials */}
-    <Box
-      display="flex"
-      sx={{
-        overflow: 'hidden',
-        width: '100%',
-        justifyContent: 'center', // Ensure cards are aligned centrally
-        paddingLeft: { xs: '40px', sm: '50px', md: '0' }, // Add padding on the left for mobile to avoid the button overlapping
-        paddingRight: { xs: '40px', sm: '50px', md: '0' }, // Add padding on the right for mobile
-      }}
-    >
-      {testimonialsData.slice(startIndex, endIndex + 1).map((testimonial, index) => (
-        <Card
-          key={index}
+        {/* Left Navigation Button */}
+        <IconButton
+          onClick={prevTestimonial}
           sx={{
-            width: { xs: '80%', sm: '200px', md: '280px' }, // Adjust width for smaller screens
-            margin: { xs: '0 8px', sm: '0 15px' }, // Adjust margins for smaller screens
-            boxShadow: 2,
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-            '&:hover': {
-              transform: 'scale(1.05)',
-              boxShadow: 4,
-            },
-            ...(getClassName(startIndex + index) === 'center' && {
-              border: '2px solid #006699', // Highlight the middle card with color
-              transform: 'scale(1.1)', // Make the middle testimonial slightly larger
-              boxShadow: '0px 4px 20px rgba(1, 158, 255, 0.3)', // Add a soft shadow for emphasis
-            }),
+            position: 'absolute',
+            left: { xs: '10px', md: '-50px' },
+            zIndex: 1,
+            color: '#006699',
+            opacity: { xs: 1, sm: 0.8, md: 1 },
           }}
         >
-          <CardContent sx={{ p: 2 }}>
-            <Box display="flex" alignItems="center" mb={1}>
-              {/* Profile Picture */}
-              <Avatar sx={{ width: 50, height: 50 }} src={testimonial.profilePic} />
-              <Typography variant="subtitle2" color="#006699" sx={{ ml: 2 }}>
-                - {testimonial.name}
-              </Typography>
-            </Box>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              fontStyle="italic"
-              sx={{
-                display: 'block', // Allow text to take full width and not be constrained
-                whiteSpace: 'normal', // Ensure the text can wrap properly
-                overflow: 'visible', // Make sure it's visible without clipping
-                lineHeight: '1.5',
-              }}
-            >
-              "{testimonial.review}"
-            </Typography>
-            <Box mt={1}>
-              <Rating value={testimonial.rating} readOnly sx={{ color: '#FFD700' }} />
-            </Box>
-          </CardContent>
-        </Card>
-      ))}
-    </Box>
+          <ChevronLeft />
+        </IconButton>
 
-    {/* Right Navigation Button */}
-    <IconButton
-      onClick={nextTestimonial}
-      sx={{
-        position: 'absolute',
-        right: { xs: '10px', md: '-50px' }, // Same as left button for mobile positioning
-        zIndex: 1,
-        color: '#2049A3',
-        display: { xs: 'block', md: 'block' }, // Show on all screens
-        opacity: { xs: 1, sm: 0.8, md: 1 }, // Slightly transparent on smaller screens for better viewability
-      }}
-    >
-      <ChevronRight />
-    </IconButton>
-  </Box>
-</Container>
+        {/* Testimonials Container */}
+        <Box
+          display="flex"
+          sx={{
+            overflow: 'hidden',
+            width: '100%',
+            justifyContent: 'center',
+            paddingX: { xs: '10px', md: '0' }, // smaller padding on mobile
+          }}
+        >
+          {visibleTestimonials.map((testimonial, idx) => {
+            // index relative to all testimonials for getClassName
+            const absoluteIndex = isMobile ? currentTestimonial : Math.max(0, currentTestimonial - 1) + idx;
+            return (
+              <Card
+                key={absoluteIndex}
+                sx={{
+                  width: { xs: '90%', sm: '220px', md: '280px' },
+                  margin: { xs: '0 5px', sm: '0 15px' },
+                  boxShadow: 2,
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    boxShadow: 4,
+                  },
+                  ...(getClassName(absoluteIndex) === 'center' && {
+                    border: '2px solid #006699',
+                    transform: 'scale(1.1)',
+                    boxShadow: '0px 4px 20px rgba(1, 158, 255, 0.3)',
+                  }),
+                }}
+              >
+                <CardContent sx={{ p: 2 }}>
+                  <Box display="flex" alignItems="center" mb={1}>
+                    <Avatar sx={{ width: 40, height: 40 }} src={testimonial.profilePic} />
+                    <Typography variant="subtitle2" color="#006699" sx={{ ml: 2, fontSize: { xs: '0.9rem', md: '1rem' } }}>
+                      - {testimonial.name}
+                    </Typography>
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    fontStyle="italic"
+                    sx={{
+                      whiteSpace: 'normal',
+                      lineHeight: 1.5,
+                      fontSize: { xs: '0.9rem', md: '1rem' },
+                    }}
+                  >
+                    "{testimonial.review}"
+                  </Typography>
+                  <Box mt={1}>
+                    <Rating value={testimonial.rating} readOnly sx={{ color: '#FFD700', fontSize: { xs: 18, md: 20 } }} />
+                  </Box>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </Box>
 
+        {/* Right Navigation Button */}
+        <IconButton
+          onClick={nextTestimonial}
+          sx={{
+            position: 'absolute',
+            right: { xs: '10px', md: '-50px' },
+            zIndex: 1,
+            color: '#2049A3',
+            opacity: { xs: 1, sm: 0.8, md: 1 },
+          }}
+        >
+          <ChevronRight />
+        </IconButton>
+      </Box>
+    </Container>
   );
 }
 
