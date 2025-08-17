@@ -158,52 +158,32 @@ function Home() {
 
       <h2 style={styles.subHeading}>Customer List</h2>
 
-      <div style={styles.filterContainer}>
-        <input
-          type="text"
-          value={searchName}
-          onChange={handleSearchChange}
-          placeholder="Search by name"
-          style={styles.inputField}
-        />
-        <select
-          value={filterCleanType}
-          onChange={handleFilterChange}
-          style={styles.inputField}
-        >
-          <option value="">Filter by Clean Type</option>
-          {cleanTypes.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <table style={styles.customerTable}>
-        <thead>
-          <tr>
-            <th style={styles.tableHeader}>Name</th>
-            <th style={styles.tableHeader}>Clean Type</th>
-            <th style={styles.tableHeader}>Email</th>
-            <th style={styles.tableHeader}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredCustomers.map((customer) => (
-            <tr key={customer.email}>
-              <td style={styles.tableData}>{customer.name}</td>
-              <td style={styles.tableData}>{customer.clean_type}</td>
-              <td style={styles.tableData}>{customer.email}</td>
-              <td style={styles.tableData}>
-                <button onClick={() => handleEditCustomer(customer)} style={styles.btnEdit}>Edit</button>
-                <span style={styles.buttonSpacer}></span> {/* Spacer between Edit and Delete */}
-                <button onClick={() => openDeleteDialog(customer)} style={styles.btnDelete}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+<div style={styles.tableWrapper}>
+  <table style={styles.customerTable}>
+    <thead>
+      <tr>
+        <th style={styles.tableHeader}>Name</th>
+        <th style={styles.tableHeader}>Clean Type</th>
+        <th style={styles.tableHeader}>Email</th>
+        <th style={styles.tableHeader}>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredCustomers.map((customer) => (
+        <tr key={customer.email}>
+          <td style={styles.tableData}>{customer.name}</td>
+          <td style={styles.tableData}>{customer.clean_type}</td>
+          <td style={styles.tableData}>{customer.email}</td>
+          <td style={styles.tableData}>
+            <button onClick={() => handleEditCustomer(customer)} style={styles.btnEdit}>Edit</button>
+            <span style={styles.buttonSpacer}></span>
+            <button onClick={() => openDeleteDialog(customer)} style={styles.btnDelete}>Delete</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
       {editCustomer && (
         <div style={styles.modal}>
@@ -294,6 +274,10 @@ const styles = {
     border: '1px solid #ccc',
     borderRadius: '5px',
   },
+  tableWrapper: {
+  overflowX: 'auto',
+  width: '100%',
+},
   btnAdd: {
     backgroundColor: '#2ecc71',
     color: '#fff',
@@ -333,7 +317,9 @@ const styles = {
   },
   filterContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '10px',
+    justifyContent: 'center',
     marginBottom: '20px',
   },
   customerTable: {

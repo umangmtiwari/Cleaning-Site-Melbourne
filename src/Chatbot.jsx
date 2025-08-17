@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Grid, IconButton } from '@mui/material';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogTitle,
+  TextField, Grid, IconButton, useMediaQuery, Box
+} from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
 
 const Chatbot = () => {
   const [open, setOpen] = useState(false);
@@ -11,7 +15,9 @@ const Chatbot = () => {
     { sender: 'bot', message: 'Hey! Need help? Ask me anything!' }
   ]);
 
-  // Predefined questions
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const predefinedQuestions = [
     "How much do your services cost?",
     "How can I make a booking?",
@@ -32,8 +38,6 @@ const Chatbot = () => {
     const userMessageText = message.trim();
     if (userMessageText === '') return;
 
-    setChatHistory([...chatHistory, { sender: 'user', message: userMessageText }]);
-
     let botResponse = '';
 
     if (userMessageText.toLowerCase().includes('cost')) {
@@ -50,13 +54,17 @@ const Chatbot = () => {
       botResponse = 'For more information, please call 1234567890.';
     }
 
-    setChatHistory([...chatHistory, { sender: 'user', message: userMessageText }, { sender: 'bot', message: botResponse }]);
+    setChatHistory(prev => [
+      ...prev,
+      { sender: 'user', message: userMessageText },
+      { sender: 'bot', message: botResponse }
+    ]);
     setUserMessage('');
   };
 
   return (
     <div>
-      {/* Chat Icon Button */}
+      {/* Floating Chat Icon */}
       <Button
         variant="contained"
         sx={{
@@ -66,10 +74,8 @@ const Chatbot = () => {
           borderRadius: '50%',
           padding: 2,
           zIndex: 1000,
-          backgroundColor: '#006699',  // Custom blue color
-    '&:hover': {
-      backgroundColor: '#005780',  // Darker shade on hover
-    },
+          backgroundColor: '#006699',
+          '&:hover': { backgroundColor: '#005780' },
         }}
         onClick={handleClickOpen}
       >
@@ -80,19 +86,25 @@ const Chatbot = () => {
       <Dialog
         open={open}
         onClose={handleClose}
+        fullScreen={isMobile}
         fullWidth
         maxWidth="xs"
-        sx={{
-          position: 'fixed',
-          bottom: 20,
-          right: 20,
-          borderRadius: '16px',
-          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-          backgroundColor: 'transparent', // Transparent background
-          zIndex: 9999,
+        PaperProps={{
+          sx: {
+            borderRadius: isMobile ? 0 : '16px',
+            position: isMobile ? 'relative' : 'fixed',
+            bottom: isMobile ? 'auto' : 20,
+            right: isMobile ? 'auto' : 20,
+            m: isMobile ? 0 : 1,
+          }
         }}
       >
-        <DialogTitle sx={{ backgroundColor: '#006699', color: 'white', fontWeight: 'bold', position: 'relative' }}>
+        <DialogTitle sx={{
+          backgroundColor: '#006699',
+          color: 'white',
+          fontWeight: 'bold',
+          position: 'relative'
+        }}>
           Clean Commerce Chatbot
           <IconButton
             onClick={handleClose}
@@ -106,39 +118,44 @@ const Chatbot = () => {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ maxHeight: '500px', overflowY: 'auto' }}>  {/* Increased maxHeight here */}
 
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1, paddingBottom: 2 }}>
           {/* Chat History */}
-          <div style={{ marginBottom: '10px' }}>
+          <Box sx={{ flexGrow: 1, overflowY: 'auto', maxHeight: isMobile ? '40vh' : '300px', px: 1 }}>
             {chatHistory.map((msg, index) => (
-              <div key={index} style={{ textAlign: msg.sender === 'bot' ? 'left' : 'right', marginBottom: '10px' }}>
-                <div
-                  style={{
+              <Box
+                key={index}
+                sx={{
+                  textAlign: msg.sender === 'bot' ? 'left' : 'right',
+                  mb: 1
+                }}
+              >
+                <Box
+                  sx={{
                     display: 'inline-block',
-                    padding: '8px 15px',
+                    px: 2,
+                    py: 1,
                     borderRadius: '20px',
                     backgroundColor: msg.sender === 'bot' ? '#e5e5e5' : '#006699',
                     color: msg.sender === 'bot' ? '#333' : '#fff',
-                    maxWidth: '70%',
-                    wordBreak: 'break-word',
+                    maxWidth: '80%',
+                    wordBreak: 'break-word'
                   }}
                 >
                   {msg.message}
-                </div>
-              </div>
+                </Box>
+              </Box>
             ))}
-          </div>
+          </Box>
 
           {/* Predefined Questions */}
-          <Grid container spacing={1} sx={{ marginBottom: '0px' }}> 
+          <Grid container spacing={1} sx={{ mt: 1 }}>
             {predefinedQuestions.map((question, index) => (
-              <Grid item xs={12} key={index}>
+              <Grid item xs={12} sm={6} key={index}>
                 <Button
                   variant="outlined"
                   fullWidth
-                  color="blue"
                   sx={{
-                    marginBottom: '10px',
                     textTransform: 'none',
                     fontSize: '14px',
                     fontWeight: 500,
@@ -152,21 +169,19 @@ const Chatbot = () => {
             ))}
           </Grid>
 
-          {/* User Input Text Field with Send Icon */}
-          <div style={{ position: 'relative', marginTop: '10px' }}>
+          {/* Input with Send */}
+          <Box sx={{ position: 'relative', mt: 2 }}>
             <TextField
               fullWidth
               label="Type your message"
               value={userMessage}
               onChange={(e) => setUserMessage(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' ? handleSendMessage(userMessage) : null}
+              onKeyDown={(e) => e.key === 'Enter' && handleSendMessage(userMessage)}
               variant="outlined"
               sx={{
-                borderRadius: '20px',
-                paddingRight: '40px', // Make space for the send icon
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '20px',
-                  padding: '8px 12px',
+                  pr: 6,
                 },
               }}
             />
@@ -175,23 +190,24 @@ const Chatbot = () => {
                 onClick={() => handleSendMessage(userMessage)}
                 sx={{
                   position: 'absolute',
-                  right: '10px',
+                  right: 8,
                   top: '50%',
                   transform: 'translateY(-50%)',
                   backgroundColor: '#006699',
                   color: 'white',
                   '&:hover': {
-                    backgroundColor: '#006699',
+                    backgroundColor: '#005780',
                   },
                 }}
               >
                 <SendIcon />
               </IconButton>
             )}
-          </div>
+          </Box>
         </DialogContent>
 
         <DialogActions sx={{ justifyContent: 'center' }}>
+          {/* Optional footer actions */}
         </DialogActions>
       </Dialog>
     </div>

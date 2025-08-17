@@ -66,7 +66,7 @@ const ResponsiveAppBar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <IconButton edge="start" color="inherit" sx={{ ml: 2 }}>
-              <img src="cleanlogo.png" alt="Logo" style={{ height: 60, width:150 }} />
+              <img src="/cleanlogo.png" alt="Logo" style={{ height: 60, width:150 }} />
             </IconButton>
           </Link>
         </Box>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import { Email as EmailIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
@@ -29,29 +29,56 @@ const ContactUs = () => {
   };
 
   // Handle form submission (build the mailto link)
-const handleSubmit = () => {
+const handleSubmit = async () => {
   setIsSubmitted(true);
 
-  // Add validation checks here for required fields
-  if (!formData.firstName || !formData.lastName || !formData.phone || !formData.email || !formData.propertyType || !formData.serviceType || !formData.serviceNeed || !formData.bedroom || !formData.bathroom || !formData.kitchen) {
+  // Basic validation
+  const requiredFields = [
+    'firstName', 'lastName', 'phone', 'email', 'propertyType',
+    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen'
+  ];
+
+  const isFormValid = requiredFields.every(field => formData[field]);
+  if (!isFormValid) {
     alert('Please fill in all required fields.');
     return;
   }
 
-  const subject = encodeURIComponent("Service Booking Request");
-  const body = encodeURIComponent(`
-    Name: ${formData.firstName} ${formData.lastName}
-    Contact: ${formData.phone}
-    Email: ${formData.email}
-    Property Type: ${formData.propertyType}
-    Services: ${formData.services.join(', ')}
-    Frequency: ${formData.serviceNeed}
-    Additional Info: ${formData.additionalInfo}
-  `);
+  try {
+    const response = await fetch('https://server.cleancommerce.com.au/bookingdetails.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
 
-  window.location.href = `mailto:services@cleancommerce.com.au?subject=${subject}&body=${body}`;
+    const result = await response.json();
+
+    if (result.success) {
+      alert('Booking submitted successfully!');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        propertyType: '',
+        services: [],
+        serviceType: '',
+        serviceNeed: '',
+        additionalInfo: '',
+        bedroom: '',
+        bathroom: '',
+        kitchen: ''
+      });
+    } else {
+      alert('Failed to submit booking: ' + (result.error || 'Unknown error'));
+    }
+  } catch (error) {
+    console.error('Error submitting booking:', error);
+    alert('Something went wrong. Please try again later.');
+  }
 };
-
 
   return (
 <Container sx={{ mt: 5, mb: 5 }}>

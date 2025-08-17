@@ -31,13 +31,36 @@ export default function BookingForm() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
   if (validateForm()) {
-    const subject = encodeURIComponent("Service Booking Request");
-    const body = encodeURIComponent(`Name: ${formData.name}\nContact: ${formData.contact}\nEmail: ${formData.email}`);
-    window.location.href = `mailto:services@CleanCommerce.com?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch('https://server.cleancommerce.com.au/sendmail.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          contact: formData.contact,
+          email: formData.email
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Quote request sent successfully!');
+        setFormData({ name: '', contact: '', email: '' }); // Reset form
+      } else {
+        alert('Failed to send quote: ' + (result.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong. Please try again.');
+    }
   }
 };
+
 
 
   const [errors, setErrors] = useState({ name: '', contact: '', email: '' });

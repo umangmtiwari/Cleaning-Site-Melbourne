@@ -7,46 +7,59 @@ const testimonialsData = [
   { 
     name: 'Emma', 
     rating: 5, 
-    review: "Clean Commerce transformed my home! So professional and efficient. Highly recommend.", 
+    review: "Clean Commerce gave my home a top-notch clean! Super professional and efficient – I couldn’t be happier. Highly recommend to anyone looking for a reliable team.", 
     profilePic: 'https://ui-avatars.com/api/?name=Emma&background=random'
   },
   { 
     name: 'Raj', 
     rating: 4, 
-    review: "The service was great, with fantastic attention to detail. Very happy with the results.", 
+    review: "Really impressed with their attention to detail. The service was spot on, and my place has never looked better. Will definitely book again.", 
     profilePic: 'https://ui-avatars.com/api/?name=Raj&background=random'
   },
   { 
     name: 'Sophie', 
     rating: 5, 
-    review: "Absolutely amazing! My house looks spotless. The team was friendly and fast!", 
+    review: "Absolutely stoked with the clean! The team was friendly, quick, and left my house sparkling. Couldn’t ask for more.", 
     profilePic: 'https://ui-avatars.com/api/?name=Sophie&background=random'
   },
   { 
     name: 'Liam', 
     rating: 4, 
-    review: "Great service, but I think they could improve the scheduling process a bit. Still a great experience!", 
+    review: "Great overall service. Scheduling could be a bit smoother, but the cleaners did an excellent job. Would definitely recommend.", 
     profilePic: 'https://ui-avatars.com/api/?name=Liam&background=random'
   },
   { 
     name: 'Olivia', 
     rating: 5, 
-    review: "Best cleaning service ever! On time, professional, and my house looks incredible.", 
+    review: "Hands down the best cleaning service I’ve used! On time, professional, and my home looks incredible. Worth every cent.", 
     profilePic: 'https://ui-avatars.com/api/?name=Olivia&background=random'
   },
   { 
     name: 'Noah', 
     rating: 4, 
-    review: "Very good service! A few minor things to improve, but overall, it was an excellent experience.", 
+    review: "Very happy with the service. Just a couple of minor things that could improve, but overall a fantastic clean and friendly team.", 
     profilePic: 'https://ui-avatars.com/api/?name=Noah&background=random'
   },
   { 
     name: 'Ava', 
     rating: 5, 
-    review: "Totally impressed with the results. This is a game-changer for home cleaning. Highly recommend.", 
+    review: "Really impressed with how fresh and tidy my place is now. This service is a real game-changer. Highly recommend to Aussies who want a quality clean.", 
     profilePic: 'https://ui-avatars.com/api/?name=Ava&background=random'
   },
+  { 
+    name: 'Jack', 
+    rating: 5, 
+    review: "The team at Clean Commerce are legends! Punctual, thorough, and left my home spotless. I’ll be booking regularly for sure.", 
+    profilePic: 'https://ui-avatars.com/api/?name=Jack&background=random'
+  },
+  { 
+    name: 'Mia', 
+    rating: 5, 
+    review: "Fantastic service from start to finish. The cleaners were friendly, respectful, and did a brilliant job. My home feels brand new!", 
+    profilePic: 'https://ui-avatars.com/api/?name=Mia&background=random'
+  },
 ];
+
 
 function Testimony() {
   const theme = useTheme();
