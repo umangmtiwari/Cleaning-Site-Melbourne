@@ -9,14 +9,17 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (email === 'cleancommerce@gmail.com' && password === 'clean123') {
-      localStorage.setItem('isLoggedIn', 'true');
-      navigate('/admin');
-    } else {
-      setError('Invalid email or password.');
-    }
-  };
+const handleLogin = () => {
+  const adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
+  const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+
+  if (email === adminEmail && password === adminPassword) {
+    localStorage.setItem('isLoggedIn', 'true');
+    navigate('/admin');
+  } else {
+    setError('Invalid email or password.');
+  }
+};
 
   return (
     <Container maxWidth="xs">

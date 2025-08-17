@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import { Email as EmailIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 const ContactUs = () => {
   // Initializing state with empty default values for the fields
@@ -17,67 +18,104 @@ const ContactUs = () => {
     additionalInfo: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [token, setToken] = useState('');
+  const [showTurnstile, setShowTurnstile] = useState(false);
+  const [readyToSubmit, setReadyToSubmit] = useState(false);
 
 
   // Handle change for all form fields
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
 
-  // Handle form submission (build the mailto link)
-const handleSubmit = async () => {
-  setIsSubmitted(true);
-
-  // Basic validation
-  const requiredFields = [
-    'firstName', 'lastName', 'phone', 'email', 'propertyType',
-    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen'
-  ];
-
-  const isFormValid = requiredFields.every(field => formData[field]);
-  if (!isFormValid) {
-    alert('Please fill in all required fields.');
-    return;
+const handleTurnstileSuccess = (token) => {
+  setToken(token);
+  // After token is stored, you could call a separate function to send data
+  if (readyToSubmit) {
+    handleSubmitFinal(token);
+    setReadyToSubmit(false); // Reset the flag
   }
-
+};
+const handleSubmitFinal = async (token) => {
   try {
-    const response = await fetch('https://server.cleancommerce.com.au/bookingdetails.php', {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/bookingdetails.php`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...formData, turnstileToken: token }),
     });
 
     const result = await response.json();
 
     if (result.success) {
-      alert('Booking submitted successfully!');
+      alert('Quote request sent successfully!');
       setFormData({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        propertyType: '',
-        services: [],
-        serviceType: '',
-        serviceNeed: '',
-        additionalInfo: '',
-        bedroom: '',
-        bathroom: '',
-        kitchen: ''
-      });
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  propertyType: '',
+  services: [],
+  serviceType: '',
+  serviceNeed: '',
+  additionalInfo: '',
+  bedroom: '',
+  bathroom: '',
+  kitchen: '',
+});
+setIsSubmitted(false);
+      setToken('');
+      setShowTurnstile(false);
     } else {
-      alert('Failed to submit booking: ' + (result.error || 'Unknown error'));
+      alert('Failed to send quote: ' + (result.error || 'Unknown error'));
     }
   } catch (error) {
-    console.error('Error submitting booking:', error);
-    alert('Something went wrong. Please try again later.');
+    console.error('Error:', error);
+    alert('Something went wrong. Please try again.');
   }
+};
+
+  // Handle form submission (build the mailto link)
+const handleSubmitClick = () => {
+  setIsSubmitted(true);
+
+  const requiredFields = [
+    'firstName', 'lastName', 'phone', 'email', 'propertyType',
+    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen'
+  ];
+
+  const isFormValid = requiredFields.every(field =>
+    formData[field] !== null &&
+    formData[field] !== undefined &&
+    String(formData[field]).trim() !== ''
+  );
+
+  if (!isFormValid) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  if (!token) {
+    alert('Please complete the Cloudflare verification.');
+    return;
+  }
+
+  handleSubmitFinal(token);
+};
+
+const isFormValid = () => {
+  const requiredFields = [
+    'firstName', 'lastName', 'phone', 'email', 'propertyType',
+    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen'
+  ];
+  return requiredFields.every(field =>
+    formData[field] !== null &&
+    formData[field] !== undefined &&
+    String(formData[field]).trim() !== ''
+  );
 };
 
   return (
@@ -226,7 +264,7 @@ const handleSubmit = async () => {
         }}
       />
 
-      <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.propertyType === ''}>
+      <FormControl fullWidth sx={{ marginBottom: 2 }}>
         <InputLabel required>Property Type</InputLabel>
         <Select
           label="Property Type"
@@ -263,7 +301,7 @@ const handleSubmit = async () => {
 
     {/* Right Side: Service & Property Info */}
     <Box sx={{ flex: 1, marginTop: 5 }}>
-      <FormControl fullWidth sx={{ marginBottom: 2}} error={isSubmitted && formData.serviceType === ''}>
+      <FormControl fullWidth sx={{ marginBottom: 2}}>
         <InputLabel required>Type of Service</InputLabel>
         <Select
           label="Type of Service"
@@ -278,7 +316,7 @@ const handleSubmit = async () => {
         </Select>
       </FormControl>
           
-      <FormControl fullWidth sx={{ marginBottom: 2 }} error={isSubmitted && formData.serviceNeed === ''}>
+      <FormControl fullWidth sx={{ marginBottom: 2 }}>
         <InputLabel required>How often do you need this service?</InputLabel>
         <Select
           label="Service Need"
@@ -301,7 +339,7 @@ const handleSubmit = async () => {
       </Typography>
 
       <Box display="flex" gap={2} flexWrap="wrap" marginBottom={2}>
-        <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bedroom === ''}>
+        <FormControl fullWidth sx={{ maxWidth: 120 }}>
           <InputLabel required>Bedroom</InputLabel>
           <Select
             name="bedroom"
@@ -316,7 +354,7 @@ const handleSubmit = async () => {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.bathroom === ''}>
+        <FormControl fullWidth sx={{ maxWidth: 120 }}>
           <InputLabel required>Bathroom</InputLabel>
           <Select
             name="bathroom"
@@ -331,7 +369,7 @@ const handleSubmit = async () => {
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{ maxWidth: 120 }} error={formData.kitchen === ''}>
+        <FormControl fullWidth sx={{ maxWidth: 120 }}>
           <InputLabel required>Kitchen</InputLabel>
           <Select
             name="kitchen"
@@ -358,29 +396,40 @@ const handleSubmit = async () => {
         value={formData.additionalInfo}
         sx={{ marginBottom: 2 }}
       />
+<Box >
+  <Turnstile
+  siteKey="0x4AAAAAABsfYvULtHW6Zt9O"
+  onSuccess={handleTurnstileSuccess}
+  onExpire={() => {
+    setToken('');
+  }}
+  theme="light"
+/>
 
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: '#006699',
-          color: 'white',
-          borderRadius: '50px',
-          fontSize: '1.1rem',
-          fontWeight: 'bold',
-          padding: '12px 24px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          '&:hover': {
-            backgroundColor: '#006699',
-            boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',
-            transform: 'translateY(-3px)',
-          },
-          transition: 'all 0.3s ease',
-        }}
-        startIcon={<EmailIcon />}
-        onClick={handleSubmit}
-      >
-        Contact Us
-      </Button>
+<Button
+  variant="contained"
+  sx={{
+    backgroundColor: '#006699',
+    color: 'white',
+    borderRadius: '50px',
+    fontSize: '1.1rem',
+    fontWeight: 'bold',
+    padding: '12px 24px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    '&:hover': {
+      backgroundColor: '#006699',
+      boxShadow: '0 8px 14px rgba(0, 0, 0, 0.2)',
+      transform: 'translateY(-3px)',
+    },
+    transition: 'all 0.3s ease',
+  }}
+  startIcon={<EmailIcon />}
+  onClick={handleSubmitClick}
+  disabled={!isFormValid() || !token} // 👈 Disable logic
+>
+  Contact Us
+</Button>
+      </Box>
     </Box>
   </Box>
 </Container>

@@ -4,10 +4,16 @@ import EmailIcon from '@mui/icons-material/Email';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShieldIcon from '@mui/icons-material/Shield';
 import StarIcon from '@mui/icons-material/Star';
+import { Turnstile } from '@marsidev/react-turnstile';
+
 
 export default function BookingForm() {
   const [formData, setFormData] = useState({ name: '', contact: '', email: '' });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [token, setToken] = useState('');
+  const [showTurnstile, setShowTurnstile] = useState(false);
+
+
 
   // List of images for the slideshow
   const images = [
@@ -31,37 +37,38 @@ export default function BookingForm() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmitClick = () => {
   if (validateForm()) {
-    try {
-      const response = await fetch('https://server.cleancommerce.com.au/sendmail.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          contact: formData.contact,
-          email: formData.email
-        }),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert('Quote request sent successfully!');
-        setFormData({ name: '', contact: '', email: '' }); // Reset form
-      } else {
-        alert('Failed to send quote: ' + (result.error || 'Unknown error'));
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Something went wrong. Please try again.');
-    }
+    setShowTurnstile(true);
   }
 };
+const handleTurnstileSuccess = async (token) => {
+  setToken(token);
 
+  try {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/sendmail.php`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...formData, turnstileToken: token }),
+    });
 
+    const result = await response.json();
+
+    if (result.success) {
+      alert('Quote request sent successfully!');
+      setFormData({ name: '', contact: '', email: '' });
+      setToken('');
+      setShowTurnstile(false);
+    } else {
+      alert('Failed to send quote: ' + (result.error || 'Unknown error'));
+      setShowTurnstile(false);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong. Please try again.');
+    setShowTurnstile(false);
+  }
+};
 
   const [errors, setErrors] = useState({ name: '', contact: '', email: '' });
 
@@ -266,14 +273,21 @@ const validateForm = () => {
     </Typography>
   </Box>
 
-  <Box sx={{
-    fontFamily: 'DM Sans, sans-serif',
-    display: 'flex',
-    justifyContent: 'center',
-    mt: 3
-  }}>
-    <Button
-      variant="contained"
+  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, flexDirection: 'column', alignItems: 'center' }}>
+  {showTurnstile && (
+    <Turnstile
+      siteKey="0x4AAAAAABsfYvULtHW6Zt9O"
+      onSuccess={handleTurnstileSuccess}
+      onExpire={() => {
+        setToken('');
+        setShowTurnstile(false);
+      }}
+      theme="light"
+    />
+  )}
+
+  <Button
+    variant="contained"
       sx={{
         fontFamily: 'DM Sans, sans-serif',
         backgroundColor: '#006699', // Green button color
@@ -291,11 +305,12 @@ const validateForm = () => {
         transition: 'all 0.3s ease', // Smooth transition for all effects
       }}
       startIcon={<EmailIcon />}
-      onClick={handleSubmit}
-    >
-      Get a Quote
-    </Button>
-  </Box>
+    onClick={handleSubmitClick}  // <-- update here
+  >
+    Get a Quote
+  </Button>
+</Box>
+
 </Container>
 
     </>
