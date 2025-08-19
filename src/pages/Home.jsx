@@ -11,6 +11,8 @@ function Home() {
   const [filterCleanType, setFilterCleanType] = useState('');
 
   const cleanTypes = ['Spring Clean', 'End of Lease', 'Super Clean'];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     // Fetch the data from the clean.json file in the public folder
@@ -105,60 +107,97 @@ function Home() {
   };
 
   const filterCustomers = (name, cleanType) => {
-    let filtered = customers;
-    if (name) {
-      filtered = filtered.filter((customer) =>
-        customer.name.toLowerCase().includes(name.toLowerCase())
-      );
-    }
-    if (cleanType) {
-      filtered = filtered.filter((customer) => customer.clean_type === cleanType);
-    }
-    setFilteredCustomers(filtered);
-  };
+  let filtered = [...customers];
+  if (name) {
+    filtered = filtered.filter((customer) =>
+      customer.name.toLowerCase().includes(name.toLowerCase())
+    );
+  }
+  if (cleanType) {
+    filtered = filtered.filter((customer) => customer.clean_type === cleanType);
+  }
+
+  // Sort alphabetically
+  filtered.sort((a, b) => {
+    if (sortOrder === 'asc') return a.name.localeCompare(b.name);
+    return b.name.localeCompare(a.name);
+  });
+
+  setFilteredCustomers(filtered);
+  setCurrentPage(1); // reset to first page when filter changes
+};
+
+const itemsPerPage = 5;
+const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
+const paginatedCustomers = filteredCustomers.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
 
   return (
     <div style={styles.container}>
 
-      <div style={styles.addCustomer}>
-        <h2 style={styles.subHeading}>Add New Customer</h2>
-        <div style={styles.formContainer}>
-          <input
-            type="text"
-            name="name"
-            value={newCustomer.name}
-            onChange={handleInputChange}
-            placeholder="Name"
-            style={styles.inputField}
-          />
-          <select
-            name="clean_type"
-            value={newCustomer.clean_type}
-            onChange={handleInputChange}
-            style={styles.inputField}
-          >
-            <option value="">Select Clean Type</option>
-            {cleanTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-          <input
-            type="email"
-            name="email"
-            value={newCustomer.email}
-            onChange={handleInputChange}
-            placeholder="Email"
-            style={styles.inputField}
-          />
-          <button onClick={handleAddCustomer} style={styles.btnAdd}>Add Now</button>
-        </div>
-      </div>
+      {/* Add Customer Section */}
+  <h2 style={styles.subHeading}>Add New Customer</h2>
+  <div style={styles.formRow}>
+    <input
+      type="text"
+      name="name"
+      value={newCustomer.name}
+      onChange={handleInputChange}
+      placeholder="Full Name"
+      style={styles.inputField}
+    />
+    <input
+      type="email"
+      name="email"
+      value={newCustomer.email}
+      onChange={handleInputChange}
+      placeholder="Email Address"
+      style={styles.inputField}
+    />
+    <select
+      name="clean_type"
+      value={newCustomer.clean_type}
+      onChange={handleInputChange}
+      style={styles.inputField}
+    >
+      <option value="">Select Clean Type</option>
+      {cleanTypes.map((type) => (
+        <option key={type} value={type}>
+          {type}
+        </option>
+      ))}
+    </select>
+    <button onClick={handleAddCustomer} style={styles.btnAdd}>Add Now</button>
+</div>
 
       <h2 style={styles.subHeading}>Customer List</h2>
 
 <div style={styles.tableWrapper}>
+  <div style={styles.filterContainer}>
+  <input
+    type="text"
+    placeholder="Search by name..."
+    value={searchName}
+    onChange={handleSearchChange}
+    style={styles.inputField}
+  />
+  <select value={filterCleanType} onChange={handleFilterChange} style={styles.inputField}>
+    <option value="">All Types</option>
+    {cleanTypes.map((type) => (
+      <option key={type} value={type}>{type}</option>
+    ))}
+  </select>
+  <select value={sortOrder} onChange={(e) => {
+    setSortOrder(e.target.value);
+    filterCustomers(searchName, filterCleanType);
+  }} style={styles.inputField}>
+    <option value="asc">Sort A-Z</option>
+    <option value="desc">Sort Z-A</option>
+  </select>
+</div>
+
   <table style={styles.customerTable}>
     <thead>
       <tr>
@@ -169,7 +208,7 @@ function Home() {
       </tr>
     </thead>
     <tbody>
-      {filteredCustomers.map((customer) => (
+      {paginatedCustomers.map((customer) => (
         <tr key={customer.email}>
           <td style={styles.tableData}>{customer.name}</td>
           <td style={styles.tableData}>{customer.clean_type}</td>
@@ -183,6 +222,26 @@ function Home() {
       ))}
     </tbody>
   </table>
+  <div style={{ textAlign: 'center', marginTop: '15px' }}>
+  <button
+    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+    disabled={currentPage === 1}
+    style={styles.paginationBtn}
+  >
+    &lt;
+  </button>
+  <span style={{ margin: '0 10px' }}>
+    Page {currentPage} of {totalPages}
+  </span>
+  <button
+    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+    disabled={currentPage === totalPages}
+    style={styles.paginationBtn}
+  >
+    &gt;
+  </button>
+</div>
+
 </div>
 
       {editCustomer && (
@@ -268,12 +327,12 @@ const styles = {
     margin: '0 auto',
   },
   inputField: {
-    width: '100%',
-    padding: '10px',
-    margin: '10px 0',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  },
+  flex: '1',
+  minWidth: '200px',
+  padding: '10px',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+},
   tableWrapper: {
   overflowX: 'auto',
   width: '100%',
@@ -315,6 +374,15 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
   },
+  paginationBtn: {
+  backgroundColor: '#3498db',
+  color: '#fff',
+  border: 'none',
+  padding: '8px 12px',
+  borderRadius: '5px',
+  cursor: 'pointer',
+  fontSize: '1rem',
+},
   filterContainer: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -357,6 +425,39 @@ const styles = {
     borderRadius: '10px',
     textAlign: 'center',
   },
+  card: {
+  backgroundColor: '#fff',
+  padding: '20px',
+  borderRadius: '8px',
+  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+  marginBottom: '30px',
+},
+
+formRow: {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '10px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: '10px',
+},
+
+filterRow: {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '10px',
+  justifyContent: 'center',
+  marginTop: '10px',
+},
+
+sectionTitle: {
+  fontSize: '1.2rem',
+  fontWeight: '600',
+  marginBottom: '10px',
+  color: '#2c3e50',
+  textAlign: 'center',
+},
+
   // Media Queries for Mobile Responsiveness
   '@media (max-width: 768px)': {
     container: {

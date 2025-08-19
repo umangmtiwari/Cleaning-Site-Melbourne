@@ -61,17 +61,17 @@ export default function Footer() {
             {/* Center Column */}
             <Grid item xs={12} sm={4} sx={{ textAlign: 'center', pl:2 }}>
               <Stack direction="row" justifyContent="center" spacing={2} mb={2}>
-                <Link href="https://www.instagram.com" target="_blank" rel="noopener" color="inherit">
+                <Link href="https://www.instagram.com/clean_commerce/" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Instagram /></IconButton>
                 </Link>
-                <Link href="https://www.facebook.com" target="_blank" rel="noopener" color="inherit">
+                <Link href="https://www.facebook.com/profile.php?id=61579098015865/" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Facebook /></IconButton>
                 </Link>
 
                 <Link href="mailto:contact@CleanCommerce.com" color="inherit">
                   <IconButton color="inherit"><Email /></IconButton>
                 </Link>
-                <Link href="tel:+61383917026" color="inherit">
+                <Link href="tel:+61403600961" color="inherit">
                   <IconButton color="inherit"><Phone /></IconButton>
                 </Link>
               </Stack>
@@ -106,7 +106,7 @@ export default function Footer() {
               </Button>
 
               <Box mt={3}>
-                <Typography variant="body2">Phone: +61 400 123 456</Typography>
+                <Typography variant="body2">Phone: +61 403600961</Typography>
                 <Typography variant="body2">
                   <LocationOnOutlinedIcon sx={{ fontSize: 12 }} />
                   Melbourne Victoria

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import { Email as EmailIcon } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
 import { Turnstile } from '@marsidev/react-turnstile';
 
 const ContactUs = () => {
@@ -280,23 +279,36 @@ const isFormValid = () => {
         </Select>
       </FormControl>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mt:3 }}>
-        <Link href="https://www.instagram.com" target="_blank" sx={{ ml: 2 }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram" style={{ width: 25, height: 25 }} />
-        </Link>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mt: 3 }}>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+    alt="Instagram"
+    style={{ width: 25, height: 25, cursor: 'pointer' }}
+    onClick={() => window.open('https://www.instagram.com/clean_commerce/', '_blank')}
+  />
 
-        <Link href="https://www.facebook.com" target="_blank" sx={{ ml: 2 }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" style={{ marginLeft: 10, width: 25, height: 25 }} />
-        </Link>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+    alt="Facebook"
+    style={{ width: 25, height: 25, cursor: 'pointer' }}
+    onClick={() => window.open('https://www.facebook.com/profile.php?id=61579098015865', '_blank')}
+  />
 
-        <Link href="mailto:contact@CleanCommerce.com" sx={{ ml: 2 }}>
-          <img src="https://cdn-icons-png.flaticon.com/512/9810/9810022.png" alt="Email" style={{ marginLeft: 10, width: 25, height: 25 }} />
-        </Link>
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/9810/9810022.png"
+    alt="Email"
+    style={{ width: 25, height: 25, cursor: 'pointer' }}
+    onClick={() => (window.location.href = 'mailto:contact@CleanCommerce.com')}
+  />
 
-        <Link href="tel:+61383917026" sx={{ ml: 2 }}>
-          <img src="https://pngimg.com/uploads/phone/phone_PNG48921.png" alt="Phone" style={{ marginLeft: 10, width: 25, height: 25 }} />
-        </Link>
-      </Box>
+  <img
+    src="https://pngimg.com/uploads/phone/phone_PNG48921.png"
+    alt="Phone"
+    style={{ width: 25, height: 25, cursor: 'pointer' }}
+    onClick={() => (window.location.href = 'tel:+61403600961')}
+  />
+</Box>
+
     </Box>
 
     {/* Right Side: Service & Property Info */}
