@@ -17,6 +17,9 @@ const StyledButton = styled(Button)(() => ({
     backgroundColor: 'transparent',  // Keep transparent background
   },
 }));
+const handleClick = () => {
+    window.scrollTo(0, 0);  // Scrolls to the top left corner of the page
+};
 
 const BookNowButton = styled(Button)(() => ({
   fontFamily: 'DM Sans, sans-serif',
@@ -49,6 +52,7 @@ const ResponsiveAppBar = () => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);  // This will close the menu
+    window.scrollTo(0, 0);  
   };
 
   return (
@@ -64,7 +68,7 @@ const ResponsiveAppBar = () => {
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Logo and Company Name Section */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <Link to="/" onClick={handleClick} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <IconButton edge="start" color="inherit" sx={{ ml: 2 }}>
               <img src="/cleanlogo.png" alt="Logo" style={{ height: 60, width:150 }} />
             </IconButton>
@@ -185,7 +189,7 @@ const ResponsiveAppBar = () => {
                             Get a Quote
                           </Button>
           </Link>
-          <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>
+          <a href="tel:+61403600961" style={{ textDecoration: 'none' }}>
             <Button
                             variant="contained"
                             sx={{
@@ -219,7 +223,7 @@ const ResponsiveAppBar = () => {
       >
         <List sx={{ width: 250, padding: '20px 0' }}>
           <ListItem button onClick={closeMobileMenu}>
-            <Link to="/pricing" style={{ textDecoration: 'none' }}>
+            <Link to="/pricing" onClick={handleClick} style={{ textDecoration: 'none' }}>
               <StyledButton fullWidth sx={{
                 mb: 2,
                 color: 'black',  // Default for mobile
@@ -267,7 +271,7 @@ const ResponsiveAppBar = () => {
           </ListItem>
           
           <ListItem button>
-            <a href="tel:+61383917026" style={{ textDecoration: 'none' }}>
+            <a href="tel:+61403600961" style={{ textDecoration: 'none' }}>
               <StyledButton fullWidth sx={{
                 mb: 2,
                 fontWeight: 'bold',

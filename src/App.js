@@ -40,26 +40,18 @@ export default function MelbourneClean() {
   const closePopup = () => setPopupOpen(false);
 
   return (
-    <Router> {/* Wrap everything in Router to manage routes */}
+    <Router>
       <Box sx={{ fontFamily: 'DM Sans, sans-serif', color: '#0099CC' }}>
-        {/* Popup */}
         <Popup open={isPopupOpen} onClose={closePopup} />
-
-        {/* Header - always visible */}
         <Header />
-
-        {/* Routes and Components */}
         <Routes>
           <Route path="/" element={
             <div>
-              {/* Only render this content on the homepage */}
               <BookingForm />
               <Testimony />
               <WhyChooseUs />
             </div>
           } />
-
-          {/* Pages for individual routes */}
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
@@ -73,8 +65,6 @@ export default function MelbourneClean() {
           <Route path="/admin/billing" element={<Billing/>} />
         </Routes>
         <Chatbot />
-
-        {/* Footer - always visible */}
         <Footer />
       </Box>
     </Router>

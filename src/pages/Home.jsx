@@ -1,4 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Snackbar,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
+} from '@mui/material';
 
 function Home() {
   const [customers, setCustomers] = useState([]);
@@ -9,22 +29,35 @@ function Home() {
   const [customerToDelete, setCustomerToDelete] = useState(null);
   const [searchName, setSearchName] = useState('');
   const [filterCleanType, setFilterCleanType] = useState('');
-
+  const [notification, setNotification] = useState({
+  open: false,
+  message: '',
+  severity: 'success', // 'success' or 'error'
+});
   const cleanTypes = ['Spring Clean', 'End of Lease', 'Super Clean'];
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('asc');
 
-  useEffect(() => {
-    // Fetch the data from the clean.json file in the public folder
-    fetch('/clean.json')
-      .then((response) => response.json())
-      .then((data) => {
-        setCustomers(data);
-        setFilteredCustomers(data);
-        localStorage.setItem('cleanData', JSON.stringify(data));
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+  const showNotification = (message, severity = 'success') => {
+  setNotification({ open: true, message, severity });
+};
+
+const handleCloseNotification = (event, reason) => {
+  if (reason === 'clickaway') return;
+  setNotification(prev => ({ ...prev, open: false }));
+};
+
+
+useEffect(() => {
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`)
+    .then((res) => res.json())
+    .then((data) => {
+      setCustomers(data);
+      setFilteredCustomers(data);
+    })
+    .catch((err) => console.error("API Error:", err));
+}, []);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,57 +67,127 @@ function Home() {
     });
   };
 
-  const handleAddCustomer = () => {
-    // Email validation using regex
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!newCustomer.name || !newCustomer.clean_type || !newCustomer.email) {
-      alert('All fields are required!');
-      return;
-    }
-    if (!emailRegex.test(newCustomer.email)) {
-      alert('Please enter a valid email address.');
-      return;
-    }
+const handleAddCustomer = () => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    const updatedCustomers = [...customers, newCustomer];
-    setCustomers(updatedCustomers);
-    setFilteredCustomers(updatedCustomers);
-    localStorage.setItem('cleanData', JSON.stringify(updatedCustomers));
-    setNewCustomer({ name: '', clean_type: '', email: '' });
-  };
+  if (!newCustomer.name || !newCustomer.clean_type || !newCustomer.email) {
+    showNotification('All fields are required!', 'error');
+    return;
+  }
+
+  if (!emailRegex.test(newCustomer.email)) {
+    showNotification('Please enter a valid email address.', 'error');
+    return;
+  }
+
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newCustomer),
+  })
+    .then(res => res.json())
+    .then(response => {
+      console.log('Add customer response:', response); // You can remove this after debugging
+
+      if (response.success === true) {
+        // Re-fetch the customers after adding
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`)
+          .then(res => res.json())
+          .then(data => {
+            setCustomers(data);
+            setFilteredCustomers(data);
+            setNewCustomer({ name: '', clean_type: '', email: '' });
+            showNotification('Customer added successfully!', 'success');
+          })
+          .catch(() => {
+            showNotification('Customer added, but failed to refresh list.', 'warning');
+          });
+      } else {
+        showNotification('Failed to add customer.', 'error');
+      }
+    })
+    .catch(err => {
+      console.error('Error adding customer:', err);
+      showNotification('An unexpected error occurred.', 'error');
+    });
+};
+
+
 
   const handleEditCustomer = (customer) => {
     setEditCustomer(customer);
   };
 
-  const handleConfirmEdit = () => {
-    // Email validation using regex
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!editCustomer.name || !editCustomer.clean_type || !editCustomer.email) {
-      alert('All fields are required!');
-      return;
-    }
-    if (!emailRegex.test(editCustomer.email)) {
-      alert('Please enter a valid email address.');
-      return;
-    }
+const handleConfirmEdit = () => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    const updatedCustomers = customers.map((customer) =>
-      customer.email === editCustomer.email ? editCustomer : customer
-    );
-    setCustomers(updatedCustomers);
-    setFilteredCustomers(updatedCustomers);
-    localStorage.setItem('cleanData', JSON.stringify(updatedCustomers));
-    setEditCustomer(null);
-  };
+  if (!editCustomer.name || !editCustomer.clean_type || !editCustomer.email) {
+    showNotification('All fields are required!', 'error');
+    return;
+  }
 
-  const handleDeleteCustomer = () => {
-    const updatedCustomers = customers.filter((customer) => customer.email !== customerToDelete.email);
-    setCustomers(updatedCustomers);
-    setFilteredCustomers(updatedCustomers);
-    localStorage.setItem('cleanData', JSON.stringify(updatedCustomers));
-    setDeleteDialogOpen(false);
-  };
+  if (!emailRegex.test(editCustomer.email)) {
+    showNotification('Please enter a valid email address.', 'error');
+    return;
+  }
+
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(editCustomer),
+  })
+    .then(res => res.json())
+    .then(response => {
+      if (response.success === true) {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`)
+          .then(res => res.json())
+          .then(data => {
+            setCustomers(data);
+            setFilteredCustomers(data);
+            setEditCustomer(null);
+            showNotification('Customer updated successfully!', 'success');
+          })
+          .catch(() => {
+            showNotification('Customer updated, but failed to refresh list.', 'warning');
+          });
+      } else {
+        showNotification('Failed to update customer.', 'error');
+      }
+    })
+    .catch(err => {
+      console.error('Error editing customer:', err);
+      showNotification('An unexpected error occurred while editing.', 'error');
+    });
+};
+const handleDeleteCustomer = () => {
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `email=${encodeURIComponent(customerToDelete.email)}`,
+  })
+    .then(res => res.json())
+    .then(response => {
+      if (response.success === true) {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/customers.php`)
+          .then(res => res.json())
+          .then(data => {
+            setCustomers(data);
+            setFilteredCustomers(data);
+            setDeleteDialogOpen(false);
+            showNotification('Customer deleted successfully!', 'success');
+          })
+          .catch(() => {
+            showNotification('Customer deleted, but failed to refresh list.', 'warning');
+          });
+      } else {
+        showNotification('Failed to delete customer.', 'error');
+      }
+    })
+    .catch(err => {
+      console.error('Error deleting customer:', err);
+      showNotification('An unexpected error occurred while deleting.', 'error');
+    });
+};
 
   const openDeleteDialog = (customer) => {
     setCustomerToDelete(customer);
@@ -135,423 +238,254 @@ const paginatedCustomers = filteredCustomers.slice(
 );
 
   return (
-    <div style={styles.container}>
-
+    <Box sx={{ p: 2, maxWidth: '1200px', mx: 'auto' }}>
       {/* Add Customer Section */}
-  <h2 style={styles.subHeading}>Add New Customer</h2>
-  <div style={styles.formRow}>
-    <input
-      type="text"
-      name="name"
-      value={newCustomer.name}
-      onChange={handleInputChange}
-      placeholder="Full Name"
-      style={styles.inputField}
-    />
-    <input
-      type="email"
-      name="email"
-      value={newCustomer.email}
-      onChange={handleInputChange}
-      placeholder="Email Address"
-      style={styles.inputField}
-    />
-    <select
-      name="clean_type"
-      value={newCustomer.clean_type}
-      onChange={handleInputChange}
-      style={styles.inputField}
+      <Typography variant="h5" align="center" gutterBottom>
+        Add New Customer
+      </Typography>
+
+      <Grid container spacing={2} justifyContent="center" mb={3}>
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
+            fullWidth
+            name="name"
+            label="Full Name"
+            value={newCustomer.name}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
+            fullWidth
+            name="email"
+            label="Email Address"
+            type="email"
+            value={newCustomer.email}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Select
+            fullWidth
+            name="clean_type"
+            value={newCustomer.clean_type}
+            onChange={handleInputChange}
+            displayEmpty
+          >
+            <MenuItem value="">
+              <em>Select Clean Type</em>
+            </MenuItem>
+            {cleanTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Button fullWidth variant="contained" color="success" onClick={handleAddCustomer}>
+            Add Now
+          </Button>
+        </Grid>
+      </Grid>
+
+      {/* Customer List Section */}
+      <Typography variant="h5" align="center" gutterBottom>
+        Customer List
+      </Typography>
+
+      {/* Filter Section */}
+      <Grid container spacing={2} justifyContent="center" mb={2}>
+        <Grid item xs={12} sm={4} md={3}>
+          <TextField
+            fullWidth
+            placeholder="Search by name..."
+            value={searchName}
+            onChange={handleSearchChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4} md={3}>
+          <Select
+            fullWidth
+            value={filterCleanType}
+            onChange={handleFilterChange}
+            displayEmpty
+          >
+            <MenuItem value="">
+              <em>All Types</em>
+            </MenuItem>
+            {cleanTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={4} md={3}>
+          <Select
+            fullWidth
+            value={sortOrder}
+            onChange={(e) => {
+              setSortOrder(e.target.value);
+              filterCustomers(searchName, filterCleanType);
+            }}
+          >
+            <MenuItem value="asc">Sort A-Z</MenuItem>
+            <MenuItem value="desc">Sort Z-A</MenuItem>
+          </Select>
+        </Grid>
+      </Grid>
+
+      {/* Table */}
+      <Box sx={{ overflowX: 'auto' }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Clean Type</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedCustomers.map((customer) => (
+              <TableRow key={customer.email}>
+                <TableCell>{customer.name}</TableCell>
+                <TableCell>{customer.clean_type}</TableCell>
+                <TableCell>{customer.email}</TableCell>
+<TableCell>
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: { xs: 'column', sm: 'row' },
+      gap: 1,
+      alignItems: 'flex-start',
+    }}
+  >
+    <Button
+      variant="contained"
+      color="warning"
+      size="small"
+      onClick={() => handleEditCustomer(customer)}
     >
-      <option value="">Select Clean Type</option>
-      {cleanTypes.map((type) => (
-        <option key={type} value={type}>
-          {type}
-        </option>
-      ))}
-    </select>
-    <button onClick={handleAddCustomer} style={styles.btnAdd}>Add Now</button>
-</div>
+      Edit
+    </Button>
+    <Button
+      variant="contained"
+      color="error"
+      size="small"
+      onClick={() => openDeleteDialog(customer)}
+    >
+      Delete
+    </Button>
+  </Box>
+</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
 
-      <h2 style={styles.subHeading}>Customer List</h2>
+      {/* Pagination */}
+      <Box sx={{ textAlign: 'center', mt: 2 }}>
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          &lt;
+        </Button>
+        <Typography component="span" sx={{ mx: 2 }}>
+          Page {currentPage} of {totalPages}
+        </Typography>
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          &gt;
+        </Button>
+      </Box>
 
-<div style={styles.tableWrapper}>
-  <div style={styles.filterContainer}>
-  <input
-    type="text"
-    placeholder="Search by name..."
-    value={searchName}
-    onChange={handleSearchChange}
-    style={styles.inputField}
-  />
-  <select value={filterCleanType} onChange={handleFilterChange} style={styles.inputField}>
-    <option value="">All Types</option>
-    {cleanTypes.map((type) => (
-      <option key={type} value={type}>{type}</option>
-    ))}
-  </select>
-  <select value={sortOrder} onChange={(e) => {
-    setSortOrder(e.target.value);
-    filterCustomers(searchName, filterCleanType);
-  }} style={styles.inputField}>
-    <option value="asc">Sort A-Z</option>
-    <option value="desc">Sort Z-A</option>
-  </select>
-</div>
-
-  <table style={styles.customerTable}>
-    <thead>
-      <tr>
-        <th style={styles.tableHeader}>Name</th>
-        <th style={styles.tableHeader}>Clean Type</th>
-        <th style={styles.tableHeader}>Email</th>
-        <th style={styles.tableHeader}>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {paginatedCustomers.map((customer) => (
-        <tr key={customer.email}>
-          <td style={styles.tableData}>{customer.name}</td>
-          <td style={styles.tableData}>{customer.clean_type}</td>
-          <td style={styles.tableData}>{customer.email}</td>
-          <td style={styles.tableData}>
-            <button onClick={() => handleEditCustomer(customer)} style={styles.btnEdit}>Edit</button>
-            <span style={styles.buttonSpacer}></span>
-            <button onClick={() => openDeleteDialog(customer)} style={styles.btnDelete}>Delete</button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-  <div style={{ textAlign: 'center', marginTop: '15px' }}>
-  <button
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-    style={styles.paginationBtn}
-  >
-    &lt;
-  </button>
-  <span style={{ margin: '0 10px' }}>
-    Page {currentPage} of {totalPages}
-  </span>
-  <button
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-    style={styles.paginationBtn}
-  >
-    &gt;
-  </button>
-</div>
-
-</div>
-
-      {editCustomer && (
-        <div style={styles.modal}>
-          <h2>Edit Customer</h2>
-          <div style={styles.formContainer}>
-            <input
-              type="text"
+      {/* Edit Customer Dialog */}
+      <Dialog open={!!editCustomer} onClose={() => setEditCustomer(null)} fullWidth maxWidth="xs">
+        <DialogTitle>Edit Customer</DialogTitle>
+        <DialogContent>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              fullWidth
               name="name"
-              value={editCustomer.name}
+              label="Full Name"
+              value={editCustomer?.name || ''}
               onChange={(e) => setEditCustomer({ ...editCustomer, name: e.target.value })}
-              placeholder="Name"
-              style={styles.inputField}
             />
-            <select
+            <Select
+              fullWidth
               name="clean_type"
-              value={editCustomer.clean_type}
+              value={editCustomer?.clean_type || ''}
               onChange={(e) => setEditCustomer({ ...editCustomer, clean_type: e.target.value })}
-              style={styles.inputField}
+              displayEmpty
             >
-              <option value="">Select Clean Type</option>
+              <MenuItem value="">
+                <em>Select Clean Type</em>
+              </MenuItem>
               {cleanTypes.map((type) => (
-                <option key={type} value={type}>
+                <MenuItem key={type} value={type}>
                   {type}
-                </option>
+                </MenuItem>
               ))}
-            </select>
-            <input
-              type="email"
+            </Select>
+            <TextField
+              fullWidth
               name="email"
-              value={editCustomer.email}
-              onChange={(e) => setEditCustomer({ ...editCustomer, email: e.target.value })}
-              placeholder="Email"
-              style={styles.inputField}
+              label="Email"
+              type="email"
+              value={editCustomer?.email || ''}
+              disabled
             />
-            <button onClick={handleConfirmEdit} style={styles.btnConfirm}>Confirm Edit</button>
-            <button onClick={() => setEditCustomer(null)} style={styles.btnCancel}>Cancel</button>
-          </div>
-        </div>
-      )}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="success" onClick={handleConfirmEdit}>
+            Confirm
+          </Button>
+          <Button variant="contained" color="inherit" onClick={() => setEditCustomer(null)}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      {isDeleteDialogOpen && (
-        <div style={styles.modal}>
-          <div style={styles.modalContent}>
-            <h3>Are you sure you want to delete this customer?</h3>
-            <button onClick={handleDeleteCustomer} style={styles.btnDelete}>Yes, Delete</button>
-            <button onClick={closeDeleteDialog} style={styles.btnCancel}>Cancel</button>
-          </div>
-        </div>
-      )}
-    </div>
+      <Dialog open={isDeleteDialogOpen} onClose={closeDeleteDialog}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this customer?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="error" onClick={handleDeleteCustomer}>
+            Yes, Delete
+          </Button>
+          <Button variant="outlined" onClick={closeDeleteDialog}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={4000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseNotification}
+          severity={notification.severity}
+          sx={{ width: '100%' }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
-}
-
-const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#f4f7fc',
-    color: '#333',
-    margin: 0,
-    padding: '20px',
-    boxSizing: 'border-box',
-    maxWidth: '1200px',
-    margin: 'auto',
-  },
-  heading: {
-    textAlign: 'center',
-    fontSize: '2.5rem',
-    color: '#2c3e50',
-  },
-  subHeading: {
-    marginTop: '20px',
-    fontSize: '1.8rem',
-    textAlign: 'center',
-    color: '#34495e',
-  },
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    maxWidth: '400px',
-    margin: '0 auto',
-  },
-  inputField: {
-  flex: '1',
-  minWidth: '200px',
-  padding: '10px',
-  border: '1px solid #ccc',
-  borderRadius: '5px',
-},
-  tableWrapper: {
-  overflowX: 'auto',
-  width: '100%',
-},
-  btnAdd: {
-    backgroundColor: '#2ecc71',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '1rem',
-  },
-  btnEdit: {
-    backgroundColor: '#f39c12',
-    color: '#fff',
-    padding: '10px 15px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  btnDelete: {
-    backgroundColor: '#e74c3c',
-    color: '#fff',
-    padding: '10px 15px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  btnConfirm: {
-    backgroundColor: '#2ecc71',
-    color: '#fff',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  btnCancel: {
-    backgroundColor: '#95a5a6',
-    color: '#fff',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  paginationBtn: {
-  backgroundColor: '#3498db',
-  color: '#fff',
-  border: 'none',
-  padding: '8px 12px',
-  borderRadius: '5px',
-  cursor: 'pointer',
-  fontSize: '1rem',
-},
-  filterContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '10px',
-    justifyContent: 'center',
-    marginBottom: '20px',
-  },
-  customerTable: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginTop: '20px',
-  },
-  tableHeader: {
-    backgroundColor: '#34495e',
-    color: '#fff',
-    padding: '10px 15px',
-    textAlign: 'left',
-  },
-  tableData: {
-    padding: '10px 15px',
-    borderBottom: '1px solid #ccc',
-  },
-  buttonSpacer: {
-    margin: '0 10px',
-  },
-  modal: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '10px',
-    textAlign: 'center',
-  },
-  card: {
-  backgroundColor: '#fff',
-  padding: '20px',
-  borderRadius: '8px',
-  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-  marginBottom: '30px',
-},
-
-formRow: {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '10px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: '10px',
-},
-
-filterRow: {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '10px',
-  justifyContent: 'center',
-  marginTop: '10px',
-},
-
-sectionTitle: {
-  fontSize: '1.2rem',
-  fontWeight: '600',
-  marginBottom: '10px',
-  color: '#2c3e50',
-  textAlign: 'center',
-},
-
-  // Media Queries for Mobile Responsiveness
-  '@media (max-width: 768px)': {
-    container: {
-      padding: '10px',
-    },
-    subHeading: {
-      fontSize: '1.5rem',
-    },
-    formContainer: {
-      maxWidth: '100%',
-      padding: '0 10px',
-    },
-    inputField: {
-      padding: '8px',
-      margin: '8px 0',
-    },
-    btnAdd: {
-      padding: '8px 16px',
-      fontSize: '0.9rem',
-    },
-    filterContainer: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    customerTable: {
-      fontSize: '0.9rem', // Reduce font size
-    },
-    tableHeader: {
-      padding: '8px 10px',
-    },
-    tableData: {
-      padding: '8px 10px',
-    },
-    btnEdit: {
-      padding: '8px 12px',
-    },
-    btnDelete: {
-      padding: '8px 12px',
-    },
-    btnConfirm: {
-      padding: '8px 16px',
-    },
-    btnCancel: {
-      padding: '8px 16px',
-    },
-  },
-
-  '@media (max-width: 480px)': {
-    heading: {
-      fontSize: '2rem', // Smaller font size on small screens
-    },
-    subHeading: {
-      fontSize: '1.3rem',
-    },
-    formContainer: {
-      maxWidth: '100%',
-      padding: '0 5px',
-    },
-    inputField: {
-      fontSize: '0.9rem',
-      padding: '6px',
-    },
-    btnAdd: {
-      padding: '6px 12px',
-      fontSize: '0.8rem',
-    },
-    filterContainer: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    customerTable: {
-      fontSize: '0.8rem', // Even smaller font size
-    },
-    tableHeader: {
-      padding: '6px 8px',
-    },
-    tableData: {
-      padding: '6px 8px',
-    },
-    btnEdit: {
-      padding: '6px 10px',
-    },
-    btnDelete: {
-      padding: '6px 10px',
-    },
-    btnConfirm: {
-      padding: '6px 12px',
-    },
-    btnCancel: {
-      padding: '6px 12px',
-    },
-  },
 };
 
 export default Home;

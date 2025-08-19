@@ -38,11 +38,11 @@ export default function Billing() {
     street: "",
     city: "",
     state: "",
-    zip: "",
+    post: "",
   });
 
   const [items, setItems] = useState([emptyItem()]);
-  const [taxRate, setTaxRate] = useState(18);
+  const [GSTRate, setGSTRate] = useState(10);
   const [discount, setDiscount] = useState(0);
   const [notes, setNotes] = useState("");
   const [showPreview, setShowPreview] = useState(false);
@@ -54,10 +54,10 @@ export default function Billing() {
       (sum, it) => sum + (Number(it.qty) || 0) * (Number(it.price) || 0),
       0
     );
-    const tax = subtotal * (Number(taxRate) / 100);
-    const total = Math.max(subtotal + tax - Number(discount || 0), 0);
-    return { subtotal, tax, total };
-  }, [items, taxRate, discount]);
+    const GST = subtotal * (Number(GSTRate) / 100);
+    const total = Math.max(subtotal + GST - Number(discount || 0), 0);
+    return { subtotal, GST, total };
+  }, [items, GSTRate, discount]);
 
   const updatePersonal = (field, value) =>
     setPersonal((p) => ({ ...p, [field]: value }));
@@ -76,8 +76,6 @@ export default function Billing() {
   const validate = () => {
     const errors = [];
     if (!personal.fullName.trim()) errors.push("Full Name is required");
-    if (!personal.email.trim()) errors.push("Email Address is required");
-    if (!personal.phone.trim()) errors.push("Phone Number is required");
     const hasValidItem = items.some(
       (it) => it.name.trim() && Number(it.qty) > 0 && Number(it.price) >= 0
     );
@@ -97,34 +95,73 @@ export default function Billing() {
     setShowPreview(true);
   };
 
-  const downloadPDF = async () => {
-    if (!previewRef.current) return;
-    const node = previewRef.current;
-    const canvas = await html2canvas(node, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
-    const imgData = canvas.toDataURL("image/png");
+const downloadPDF = async () => {
+  if (!previewRef.current) return;
 
-    const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
+  window.scrollTo(0, 0);
+  const input = previewRef.current;
 
-    const imgWidth = pageWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  const a4Width = 794;   // px (≈ 210mm at 96 DPI)
+  const a4Height = 1123; // px (≈ 297mm at 96 DPI)
+  const scale = 2;
 
-    let y = 0;
-    if (imgHeight < pageHeight) {
-      y = (pageHeight - imgHeight) / 2;
-    }
+  // Render the full content to canvas
+  const canvas = await html2canvas(input, {
+    scale,
+    useCORS: true,
+    allowTaint: true,
+    scrollY: -window.scrollY,
+    windowWidth: a4Width,
+  });
 
-    pdf.addImage(imgData, "PNG", 0, y, imgWidth, imgHeight);
-    const filename = `Invoice_${personal.fullName || "Customer"}_${new Date()
-      .toISOString()
-      .slice(0, 10)}.pdf`;
-    pdf.save(filename);
-  };
+  const fullCanvasWidth = canvas.width;
+  const fullCanvasHeight = canvas.height;
+
+  const pdf = new jsPDF("p", "pt", "a4");
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const pageWidth = pdf.internal.pageSize.getWidth();
+
+  let position = 0;
+  const pageCanvas = document.createElement("canvas");
+  const pageCtx = pageCanvas.getContext("2d");
+  
+  function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size));
+  }
+  return chunks;
+}
+
+
+  const pageHeightPx = (a4Height * scale);
+  pageCanvas.width = canvas.width;
+  pageCanvas.height = pageHeightPx;
+
+  while (position < fullCanvasHeight) {
+    const remainingHeight = Math.min(pageHeightPx, fullCanvasHeight - position);
+
+    pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
+    pageCtx.drawImage(
+      canvas,
+      0, position, canvas.width, remainingHeight,
+      0, 0, canvas.width, remainingHeight
+    );
+
+    const imgData = pageCanvas.toDataURL("image/png");
+const pdfWidthRatio = pageWidth / canvas.width;
+const pdfHeight = remainingHeight * pdfWidthRatio;
+
+if (position > 0) pdf.addPage();
+pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pdfHeight);
+
+
+    position += remainingHeight;
+  }
+
+  pdf.save(`Invoice_${personal.fullName || "Customer"}_${new Date().toISOString().slice(0, 10)}.pdf`);
+};
+
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 2, md: 4 }, px: { xs: 1, md: 2 } }}>
@@ -144,10 +181,10 @@ export default function Billing() {
                 street: "",
                 city: "",
                 state: "",
-                zip: "",
+                post: "",
               });
               setItems([emptyItem()]);
-              setTaxRate(18);
+              setGSTRate(10);
               setDiscount(0);
               setNotes("");
             }}
@@ -187,7 +224,6 @@ export default function Billing() {
                     label="Email Address"
                     value={personal.email}
                     onChange={(e) => updatePersonal("email", e.target.value)}
-                    required
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -197,7 +233,6 @@ export default function Billing() {
                     label="Phone Number"
                     value={personal.phone}
                     onChange={(e) => updatePersonal("phone", e.target.value)}
-                    required
                   />
                 </Grid>
                 <Grid item xs={12} md={6}></Grid>
@@ -228,9 +263,9 @@ export default function Billing() {
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Zip Code"
-                    value={personal.zip}
-                    onChange={(e) => updatePersonal("zip", e.target.value)}
+                    label="Post Code"
+                    value={personal.post}
+                    onChange={(e) => updatePersonal("post", e.target.value)}
                   />
                 </Grid>
               </Grid>
@@ -238,115 +273,129 @@ export default function Billing() {
           </Card>
 
           {/* Items */}
-          <Box mt={3}>
-            <Card>
-              <CardHeader title="Billing Items" />
-              <CardContent>
-                <Box sx={{ overflowX: "auto" }}>
-  <Table size="small" sx={{ minWidth: 650 }}>
-    <TableHead>
-      <TableRow>
-        <TableCell>Item</TableCell>
-        <TableCell>Description</TableCell>
-        <TableCell align="right">Qty</TableCell>
-        <TableCell align="right">Price</TableCell>
-        <TableCell align="right">Amount</TableCell>
-        <TableCell></TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {items.map((it) => {
-        const amount =
-          (Number(it.qty) || 0) * (Number(it.price) || 0);
-        return (
-          <TableRow key={it.id}>
-            <TableCell>
-              <TextField
-                fullWidth
-                size="small"
-                placeholder="Item name"
-                value={it.name}
-                onChange={(e) =>
-                  updateItem(it.id, "name", e.target.value)
-                }
-              />
-            </TableCell>
-            <TableCell>
-              <TextField
-                fullWidth
-                size="small"
-                placeholder="Description"
-                value={it.description}
-                onChange={(e) =>
-                  updateItem(it.id, "description", e.target.value)
-                }
-              />
-            </TableCell>
-            <TableCell align="right">
-              <TextField
-                size="small"
-                type="number"
-                value={it.qty}
-                onChange={(e) =>
-                  updateItem(it.id, "qty", e.target.value)
-                }
-              />
-            </TableCell>
-            <TableCell align="right">
-              <TextField
-                size="small"
-                type="number"
-                value={it.price}
-                onChange={(e) =>
-                  updateItem(it.id, "price", e.target.value)
-                }
-              />
-            </TableCell>
-            <TableCell align="right">
-              {currency.format(amount)}
-            </TableCell>
-            <TableCell align="right">
-              <IconButton onClick={() => removeItem(it.id)}>
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        );
-      })}
-    </TableBody>
-  </Table>
-</Box>
+<Box mt={3}>
+  <Card>
+    <CardHeader title="Billing Items" />
+    <CardContent>
+      <Box sx={{ overflowX: "auto" }}>
+        <Table size="small" sx={{ minWidth: 600 }}>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ minWidth: 120 }}>Item</TableCell>
+              <TableCell sx={{ minWidth: 150 }}>Description</TableCell>
+              <TableCell align="right" sx={{ minWidth: 60 }}>Qty</TableCell>
+              <TableCell align="right" sx={{ minWidth: 80 }}>Price</TableCell>
+              <TableCell align="right" sx={{ minWidth: 80 }}>Amount</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
 
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  mt={2}
-                  gap={2}
-                >
-                  <Button variant="outlined" onClick={addItem}>
-                    + Add Item
-                  </Button>
-                  <Box display="flex" gap={2} flexWrap="wrap">
+          <TableBody>
+            {items.map((it) => {
+              const amount =
+                (Number(it.qty) || 0) * (Number(it.price) || 0);
+
+              return (
+                <TableRow key={it.id} sx={{ breakInside: "avoid" }}>
+                  <TableCell>
                     <TextField
-                      type="number"
-                      label="Tax %"
+                      fullWidth
                       size="small"
-                      value={taxRate}
-                      onChange={(e) => setTaxRate(e.target.value)}
+                      placeholder="Item name"
+                      value={it.name}
+                      onChange={(e) =>
+                        updateItem(it.id, "name", e.target.value)
+                      }
                     />
+                  </TableCell>
+
+                  <TableCell>
                     <TextField
-                      type="number"
-                      label="Discount"
+                      fullWidth
                       size="small"
-                      value={discount}
-                      onChange={(e) => setDiscount(e.target.value)}
+                      placeholder="Description"
+                      value={it.description}
+                      onChange={(e) =>
+                        updateItem(it.id, "description", e.target.value)
+                      }
                     />
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-          </Box>
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <TextField
+                      size="small"
+                      type="number"
+                      inputProps={{ min: 0 }}
+                      value={it.qty}
+                      onChange={(e) =>
+                        updateItem(it.id, "qty", e.target.value)
+                      }
+                      sx={{ width: { xs: "60px", sm: "80px" } }}
+                    />
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <TextField
+                      size="small"
+                      type="number"
+                      inputProps={{ min: 0 }}
+                      value={it.price}
+                      onChange={(e) =>
+                        updateItem(it.id, "price", e.target.value)
+                      }
+                      sx={{ width: { xs: "80px", sm: "100px" } }}
+                    />
+                  </TableCell>
+
+                  <TableCell align="right">
+                    {currency.format(amount)}
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <IconButton onClick={() => removeItem(it.id)}>
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Box>
+
+      {/* Bottom section */}
+      <Grid container spacing={2} mt={2}>
+        <Grid item xs={12} sm="auto">
+          <Button variant="outlined" onClick={addItem} fullWidth>
+            + Add Item
+          </Button>
+        </Grid>
+
+        <Grid item xs={6} sm="auto">
+          <TextField
+            type="number"
+            label="GST %"
+            size="small"
+            fullWidth
+            value={GSTRate}
+            onChange={(e) => setGSTRate(e.target.value)}
+          />
+        </Grid>
+
+        <Grid item xs={6} sm="auto">
+          <TextField
+            type="number"
+            label="Discount"
+            size="small"
+            fullWidth
+            value={discount}
+            onChange={(e) => setDiscount(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+    </CardContent>
+  </Card>
+</Box>
 
           {/* Notes */}
           <Box mt={3}>
@@ -375,7 +424,7 @@ export default function Billing() {
                 Subtotal: {currency.format(totals.subtotal)}
               </Typography>
               <Typography variant="body2">
-                Tax ({Number(taxRate)}%): {currency.format(totals.tax)}
+                GST ({Number(GSTRate)}%): {currency.format(totals.GST)}
               </Typography>
               {Number(discount) > 0 && (
                 <Typography variant="body2">
@@ -409,8 +458,28 @@ export default function Billing() {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent dividers>
-          <Box ref={previewRef} p={3}>
+        <DialogContent
+  dividers
+  sx={{
+    overflowX: 'auto',
+    overflowY: 'auto',
+    maxHeight: '80vh', // optional: limit height on small screens
+  }}
+>
+<Box
+  ref={previewRef}
+  p={3}
+  sx={{
+    width: '100%',
+    maxWidth: '794px',
+    margin: '0 auto',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    '& *': { boxSizing: 'border-box' },
+  }}
+>
+
+
             {/* Header with logo and company info */}
             <Box
   display="flex"
@@ -456,7 +525,7 @@ export default function Billing() {
     <Typography>{personal.email}</Typography>
     <Typography>{personal.phone}</Typography>
     <Typography>
-      {[personal.street, personal.city, personal.state, personal.zip]
+      {[personal.street, personal.city, personal.state, personal.post]
         .filter(Boolean)
         .join(", ")}
     </Typography>
@@ -472,7 +541,7 @@ export default function Billing() {
 </Box>
 
             {/* Items table */}
-            <Table size="small" sx={{ mt: 2 }}>
+            <Table size="small" sx={{ width: '100%' }}>
               <TableHead sx={{ bgcolor: "#f5f5f5" }}>
                 <TableRow>
                   <TableCell>Item</TableCell>
@@ -484,7 +553,7 @@ export default function Billing() {
               </TableHead>
               <TableBody>
                 {items.map((it) => (
-                  <TableRow key={it.id}>
+                  <TableRow key={it.id} sx={{ breakInside: 'avoid' }}>
                     <TableCell>{it.name}</TableCell>
                     <TableCell>{it.description}</TableCell>
                     <TableCell align="right">{it.qty}</TableCell>
@@ -503,7 +572,7 @@ export default function Billing() {
             <Box mt={2} textAlign="right">
               <Typography>Subtotal: {currency.format(totals.subtotal)}</Typography>
               <Typography>
-                Tax ({Number(taxRate)}%): {currency.format(totals.tax)}
+                GST ({Number(GSTRate)}%): {currency.format(totals.GST)}
               </Typography>
               {Number(discount) > 0 && (
                 <Typography>Discount: -{currency.format(discount)}</Typography>

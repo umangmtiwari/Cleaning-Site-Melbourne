@@ -64,11 +64,11 @@ export default function Footer() {
                 <Link href="https://www.instagram.com/clean_commerce/" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Instagram /></IconButton>
                 </Link>
-                <Link href="https://www.facebook.com/profile.php?id=61579098015865/" target="_blank" rel="noopener" color="inherit">
+                <Link href="https://www.facebook.com/people/Clean-Commerce/61579098015865/" target="_blank" rel="noopener" color="inherit">
                   <IconButton color="inherit"><Facebook /></IconButton>
                 </Link>
 
-                <Link href="mailto:contact@CleanCommerce.com" color="inherit">
+                <Link href="mailto:services@cleancommerce.com.au" color="inherit">
                   <IconButton color="inherit"><Email /></IconButton>
                 </Link>
                 <Link href="tel:+61403600961" color="inherit">
@@ -106,7 +106,7 @@ export default function Footer() {
               </Button>
 
               <Box mt={3}>
-                <Typography variant="body2">Phone: +61 403600961</Typography>
+                <Typography variant="body2">Phone: +61403600961</Typography>
                 <Typography variant="body2">
                   <LocationOnOutlinedIcon sx={{ fontSize: 12 }} />
                   Melbourne Victoria

@@ -51,7 +51,7 @@ const Chatbot = () => {
     } else if (userMessageText.toLowerCase().includes('services')) {
       botResponse = 'Clean Commerce offers a variety of cleaning services, including home, kitchen, and bathroom cleaning.';
     } else {
-      botResponse = 'For more information, please call 1234567890.';
+      botResponse = 'For more information, please call +61403600961';
     }
 
     setChatHistory(prev => [

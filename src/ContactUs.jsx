@@ -291,14 +291,14 @@ const isFormValid = () => {
     src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
     alt="Facebook"
     style={{ width: 25, height: 25, cursor: 'pointer' }}
-    onClick={() => window.open('https://www.facebook.com/profile.php?id=61579098015865', '_blank')}
+    onClick={() => window.open('https://www.facebook.com/people/Clean-Commerce/61579098015865/', '_blank')}
   />
 
   <img
     src="https://cdn-icons-png.flaticon.com/512/9810/9810022.png"
     alt="Email"
     style={{ width: 25, height: 25, cursor: 'pointer' }}
-    onClick={() => (window.location.href = 'mailto:contact@CleanCommerce.com')}
+    onClick={() => (window.location.href = 'mailto:services@cleancommerce.com.au')}
   />
 
   <img
