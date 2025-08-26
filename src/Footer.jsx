@@ -109,7 +109,7 @@ export default function Footer() {
                 <Typography variant="body2">Phone: +61403600961</Typography>
                 <Typography variant="body2">
                   <LocationOnOutlinedIcon sx={{ fontSize: 12 }} />
-                  Melbourne Victoria
+                  Suite 5, Building C4, 2 Main Street <br></br>Point Cook VIC 3030
                 </Typography>
                 <Typography variant="body2">ABN: 95279464367</Typography>
               </Box>
