@@ -321,8 +321,8 @@ Additional services and pricing are listed below of what’s included in our ful
 ['Polish Stainless Steel Surfaces', <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
 ['Dust All Surfaces', <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
 ['Remove Food and Wipe Inside Dishwasher', <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#D32F2F' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
-['Inside Oven', <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#D32F2F' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
-['Inside All Drawers/Cabinets', <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#D32F2F' }} />, <CheckCircleIcon sx={{ color: '#2E8B57' }} />],
+['Inside Oven', <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#E53935' }} />],
+['Inside All Drawers/Cabinets', <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#D32F2F' }} />, <CancelIcon sx={{ color: '#E53935' }} />],
 
 
 [<span style={{ fontSize: '1.2em', fontWeight: 'bold' }}>{"Bedrooms/Living Areas"}</span>, " ", " "],
