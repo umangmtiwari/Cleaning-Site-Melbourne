@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
 import { Email as EmailIcon } from '@mui/icons-material';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
 const ContactUs = () => {
   // Initializing state with empty default values for the fields
@@ -15,6 +19,9 @@ const ContactUs = () => {
     serviceType: '',  // Empty string as default
     serviceNeed: '',  // Empty string as default
     additionalInfo: '',
+    date: '',
+    time: '',
+    address: '',
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [token, setToken] = useState('');
@@ -64,6 +71,9 @@ const handleSubmitFinal = async (token) => {
   bedroom: '',
   bathroom: '',
   kitchen: '',
+  date: '',
+  time: '',
+  address: '',
 });
 setIsSubmitted(false);
       setToken('');
@@ -83,7 +93,7 @@ const handleSubmitClick = () => {
 
   const requiredFields = [
     'firstName', 'lastName', 'phone', 'email', 'propertyType',
-    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen'
+    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen', 'date', 'time', 'address'
   ];
 
   const isFormValid = requiredFields.every(field =>
@@ -108,7 +118,7 @@ const handleSubmitClick = () => {
 const isFormValid = () => {
   const requiredFields = [
     'firstName', 'lastName', 'phone', 'email', 'propertyType',
-    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen'
+    'serviceType', 'serviceNeed', 'bedroom', 'bathroom', 'kitchen', 'date', 'time', 'address'
   ];
   return requiredFields.every(field =>
     formData[field] !== null &&
@@ -278,6 +288,38 @@ const isFormValid = () => {
           <MenuItem value="Unit">Unit</MenuItem>
         </Select>
       </FormControl>
+      <FormControl fullWidth sx={{ marginBottom: 2}}>
+        <InputLabel required>Type of Service</InputLabel>
+        <Select
+          label="Type of Service"
+          name="serviceType"
+          value={formData.serviceType}
+          onChange={handleChange}
+          required
+        >
+          <MenuItem value="SuperClean">Super Clean</MenuItem>
+          <MenuItem value="SpringClean">Spring Clean</MenuItem>
+          <MenuItem value="EndOfLease">End of Lease (Empty)</MenuItem>
+        </Select>
+      </FormControl>
+          
+      <FormControl fullWidth sx={{ marginBottom: 2 }}>
+        <InputLabel required>How often do you need this service?</InputLabel>
+        <Select
+          label="Service Need"
+          name="serviceNeed"
+          value={formData.serviceNeed}
+          onChange={handleChange}
+          required
+        >
+          <MenuItem value="OnceOff">Once-Off</MenuItem>
+          <MenuItem value="Weekly">Weekly</MenuItem>
+          <MenuItem value="Fortnightly">Fortnightly</MenuItem>
+          <MenuItem value="Monthly">Monthly</MenuItem>
+          <MenuItem value="Quarterly">Quarterly</MenuItem>
+          <MenuItem value="BiAnnually">Bi-Annually</MenuItem>
+        </Select>
+      </FormControl>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mt: 3 }}>
   <img
@@ -313,38 +355,6 @@ const isFormValid = () => {
 
     {/* Right Side: Service & Property Info */}
     <Box sx={{ flex: 1, marginTop: 5 }}>
-      <FormControl fullWidth sx={{ marginBottom: 2}}>
-        <InputLabel required>Type of Service</InputLabel>
-        <Select
-          label="Type of Service"
-          name="serviceType"
-          value={formData.serviceType}
-          onChange={handleChange}
-          required
-        >
-          <MenuItem value="SuperClean">Super Clean</MenuItem>
-          <MenuItem value="SpringClean">Spring Clean</MenuItem>
-          <MenuItem value="EndOfLease">End of Lease (Empty)</MenuItem>
-        </Select>
-      </FormControl>
-          
-      <FormControl fullWidth sx={{ marginBottom: 2 }}>
-        <InputLabel required>How often do you need this service?</InputLabel>
-        <Select
-          label="Service Need"
-          name="serviceNeed"
-          value={formData.serviceNeed}
-          onChange={handleChange}
-          required
-        >
-          <MenuItem value="OnceOff">Once-Off</MenuItem>
-          <MenuItem value="Weekly">Weekly</MenuItem>
-          <MenuItem value="Fortnightly">Fortnightly</MenuItem>
-          <MenuItem value="Monthly">Monthly</MenuItem>
-          <MenuItem value="Quarterly">Quarterly</MenuItem>
-          <MenuItem value="BiAnnually">Bi-Annually</MenuItem>
-        </Select>
-      </FormControl>
           
       <Typography variant="subtitle1" color="black" gutterBottom>
         Property Size
@@ -396,8 +406,61 @@ const isFormValid = () => {
           </Select>
         </FormControl>
       </Box>
+<Box >
+  <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <DatePicker
+  required
+  label="Select Date"
+  value={formData.date ? dayjs(formData.date, 'YYYY-MM-DD') : null}
+  onChange={(newValue) =>
+    setFormData((prev) => ({
+      ...prev,
+      // Keep only the selected date in YYYY-MM-DD format
+      date: newValue ? dayjs(newValue).format('YYYY-MM-DD') : '',
+    }))
+  }
+  slotProps={{
+    textField: {
+      fullWidth: true,
+      sx: { marginBottom: 2 },
+    },
+  }}
+/>
 
-      <TextField
+<TimePicker
+  required
+  label="Select Time"
+  value={formData.time ? dayjs(formData.time, 'hh:mm A') : null}
+  onChange={(newValue) =>
+    setFormData((prev) => ({
+      ...prev,
+      // Store time as selected by user, e.g. "06:30 PM"
+      time: newValue ? dayjs(newValue).format('hh:mm A') : '',
+    }))
+  }
+  slotProps={{
+    textField: {
+      fullWidth: true,
+      sx: { marginBottom: 2 },
+    },
+  }}
+/>
+
+</LocalizationProvider>
+
+<TextField
+  required
+  label="Address"
+  name="address"
+  variant="outlined"
+  fullWidth
+  multiline
+  rows={4}
+  onChange={handleChange}
+  value={formData.address}
+  sx={{ marginBottom: 2 }}
+/>
+<TextField
         label="Additional Info"
         name="additionalInfo"
         variant="outlined"
@@ -408,7 +471,7 @@ const isFormValid = () => {
         value={formData.additionalInfo}
         sx={{ marginBottom: 2 }}
       />
-<Box >
+
   <Turnstile
   siteKey="0x4AAAAAABsfYvULtHW6Zt9O"
   onSuccess={handleTurnstileSuccess}
